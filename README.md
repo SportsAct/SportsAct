@@ -25,13 +25,18 @@ Objective of this app is to organize people so they can go play sports/games. So
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
-* ...
+* User can create a profile within the app 
+    * Set username/name
+    * set sport preferences
+    * look for friends
+* Users can create events (private or public) and send invitations via email or username once signed up. If the person invited does not have an account, they will be prompted to create one.
+    * creating events will also create a groupchat for that event
+
 
 **Optional Nice-to-have Stories**
 
-* [fill in your required user stories here]
-* ...
+* Set Location (Google Maps Api)
+* User can import contacts
 
 ### 2. Screen Archetypes 
 
