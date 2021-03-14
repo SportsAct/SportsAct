@@ -84,7 +84,8 @@ Objective of this app is to organize people so they can go play sports/games. So
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
 <img src= "https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330e50b87d1f8_0.1_8054eba0_f7fc0910_b3f62c97_93d0e29e_750b716d%25252FPHOTO-2021-03-14-18-21-43.jpg">
-<img src="https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330eafde57670_0.1_dda7a95c_cc026d3a_8f672210_b07e0760_4269b4e7%25252FPHOTO-2021-03-14-18-21-53.jpg" width=600>
+<img src="![image](https://user-images.githubusercontent.com/67083832/111088518-d07a0680-84e4-11eb-8d3d-2b4869a04f3e.png)
+" width=600>
 
 
 ### [BONUS] Digital Wireframes & Mockups
