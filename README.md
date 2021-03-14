@@ -98,10 +98,8 @@ Optional:
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-<img src= "![image](https://user-images.githubusercontent.com/67083832/111088805-3915b300-84e6-11eb-83de-c1ed42fcd3b8.png)
-">
-<img src="![image](https://user-images.githubusercontent.com/67083832/111088518-d07a0680-84e4-11eb-8d3d-2b4869a04f3e.png)
-" width=600>
+<img src= "PIC ONE HERE">
+<img src= "PIC TWO HERE">
 
 
 ### [BONUS] Digital Wireframes & Mockups
