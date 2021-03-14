@@ -98,7 +98,8 @@ Optional:
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-<img src= "https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330e50b87d1f8_0.1_8054eba0_f7fc0910_b3f62c97_93d0e29e_750b716d%25252FPHOTO-2021-03-14-18-21-43.jpg">
+<img src= "![image](https://user-images.githubusercontent.com/67083832/111088805-3915b300-84e6-11eb-83de-c1ed42fcd3b8.png)
+">
 <img src="![image](https://user-images.githubusercontent.com/67083832/111088518-d07a0680-84e4-11eb-8d3d-2b4869a04f3e.png)
 " width=600>
 
