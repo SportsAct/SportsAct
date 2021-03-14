@@ -1,4 +1,4 @@
-# APP_NAME_HERE
+# Sport Connect
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -31,7 +31,9 @@ Objective of this app is to organize people so they can go play sports/games. So
     * look for friends
 * Users can create events (private or public) and send invitations via email or username once signed up. If the person invited does not have an account, they will be prompted to create one.
     * creating events will also create a groupchat for that event
-
+ * User can send and receive message from the groups they are join
+ * Users can see a list of events from their friends
+    * Also they can join the events, and write to that group chat 
 
 **Optional Nice-to-have Stories**
 
@@ -47,12 +49,18 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Looking fo games screen
   * User can see the current public games or private friends games that are going to happen in the future
 * Creating game screen
-    * User can create games or events for others to see 
+    * User can create games or events for others to see
+* Confirmation game created screen
+    * User can confirm the event that they created, and invit people to join that event 
 * Messaging Screen - Chat for users to communicate (direct 1-on-1 or via group game)
    * Upon entering a group game, the user is going to be part of that group chat
    * Also users can chat between them
+* Chat Screen
+   * Screen where user can see all chats he is part of
 * Profile Screen 
    * Allows user to upload a photo and fill in sport information that is interesting to them and others, also you can manage your friends
+* Edit profile screen
+    * Lets the user edit their profile
 * Settings Screen
    * Lets people change language, and app notification settings.
 
@@ -65,26 +73,34 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Home Tab
 * Profile Tab
 
+Optional:
+* Google map to see games close in a map
+* Feed for people to share their best plays
+
 **Flow Navigation** (Screen to Screen)
 
-* Home Screen
-   * from home screen user can create a new event
-   * ...
-* Event Created Screen
-   * user defines the details of the even
-   * ...
- * Group Messaging Screen
-   * Once event is created user can invite friends
-   and chat with them.  
-   * Friends can accept or decline invitation ??
- * Profile Screen
-   * User can change profile settings and view frineds
-   * ...
+* Login/Register is forced
+   * Login to register, and register to login
+   * When user login or register will be taken to the game events feed
+* Event Screen(looking for games screen)
+   * Park detail screen (stretch story)
+   * Chat of that game when user join, or wants to message the group
+* Chat Screen
+   * User can go to the specific message chat that he select, either a group or a friend
+* Profile Screen
+   * User can to a screen where he can search and add friends
+   * User can go to a screen to update his profile
+* Create event screen
+   * When finish user go to confirmation screen
+* Confirm Creation Screen
+   * When user confirm, user is taken to the chat of the group
+   * User has an option to invite people to join the event
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-<img src= "ADD_PICTURE_1">
-<img src= "ADD_PICTURE_2" width=600>
+<img src= "https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330e50b87d1f8_0.1_8054eba0_f7fc0910_b3f62c97_93d0e29e_750b716d%25252FPHOTO-2021-03-14-18-21-43.jpg">
+<img src="![image](https://user-images.githubusercontent.com/67083832/111088518-d07a0680-84e4-11eb-8d3d-2b4869a04f3e.png)
+" width=600>
 
 
 ### [BONUS] Digital Wireframes & Mockups
