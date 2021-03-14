@@ -61,22 +61,31 @@ Objective of this app is to organize people so they can go play sports/games. So
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* Chat/Messaging Tab
+* Home Tab
+* Profile Tab
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
+* Home Screen
+   * from home screen user can create a new event
    * ...
-* [list second screen here]
-   * [list screen navigation here]
+* Event Created Screen
+   * user defines the details of the even
+   * ...
+ * Group Messaging Screen
+   * Once event is created user can invite friends
+   and chat with them.  
+   * Friends can accept or decline invitation ??
+ * Profile Screen
+   * User can change profile settings and view frineds
    * ...
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src= "https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330e50b87d1f8_0.1_8054eba0_f7fc0910_b3f62c97_93d0e29e_750b716d%25252FPHOTO-2021-03-14-18-21-43.jpg">
+<img src="https://mail.google.com/mail/u/1/?ui=2&view=btop&ver=1j3j1tobv9w1#attid%253Datt_178330eafde57670_0.1_dda7a95c_cc026d3a_8f672210_b07e0760_4269b4e7%25252FPHOTO-2021-03-14-18-21-53.jpg" width=600>
+
 
 ### [BONUS] Digital Wireframes & Mockups
 
