@@ -97,8 +97,8 @@ Optional:
    * User has an option to invite people to join the event
 
 ## Wireframes 
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="500" height="500">
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg" width="500" height="500">
+<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="1000" height="500">
+<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg" width="1000" height="500">
 
 ### [BONUS] Digital Wireframes & Mockups
 
