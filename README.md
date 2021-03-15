@@ -98,6 +98,7 @@ Optional:
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
+![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg)
 <img src= "![image](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg)
 ">
 <img src="![image](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg)
