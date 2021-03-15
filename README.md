@@ -98,8 +98,10 @@ Optional:
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-<img src= "PIC ONE HERE">
-<img src= "PIC TWO HERE">
+<img src= "![image](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg)
+">
+<img src="![image](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg)
+" width=600>
 
 
 ### [BONUS] Digital Wireframes & Mockups
