@@ -98,8 +98,8 @@ Optional:
 
 ## Wireframes 
 [Add picture of your hand sketched wireframes in this section]
-![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg)
-![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg)
+![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg = 500x)
+![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg = 500x)
 
 ### [BONUS] Digital Wireframes & Mockups
 
