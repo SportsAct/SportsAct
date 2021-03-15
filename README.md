@@ -97,7 +97,7 @@ Optional:
    * User has an option to invite people to join the event
 
 ## Wireframes 
-- ![](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg | width=100)
+<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="100" height="100">
 ![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg =500x)
 ![alt text](https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg =500x)
 
