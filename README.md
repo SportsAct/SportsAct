@@ -113,17 +113,31 @@ Optional:
   
   Home Page
   -[Read/GET] Gets all the feed
+ 
+ <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getHomeFeed.PNG" width="1200" height="500">
+  
   Chat
+  
   -[Read/get] Gets all messages
+  
   -[Create/Post] Post a message
+  
   -[Update/Put] Join the event
+  
   Profile
+  
   -[Update/put] Update the profile 
+  
   -[Read/get] Get user info
+  
   Confirm Create Event Screen
+  
   -[Create/Post] create an event
+  
   -[Create/Post] create a chat
+  
   Add Friend
+  
   -[Read/Get] username (stretch to search by also name)
   
 - [Create basic snippets for each Parse network request]
