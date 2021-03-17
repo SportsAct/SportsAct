@@ -109,36 +109,50 @@ Optional:
 ### Models
 [Add table of models]
 ### Networking
-- [Add list of network requests by screen ]
   
   Home Page
   -[Read/GET] Gets all the feed
  
  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getHomeFeed.PNG" width="1200" height="500">
+ 
+ -[Read/GET] Gets all the friends of a user
+ 
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getFriends.PNG" width="1200" height="500">
   
   Chat
   
   -[Read/get] Gets all messages
   
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getMessages.PNG" width="1200" height="500">
+  
   -[Create/Post] Post a message
   
-  -[Update/Put] Join the event
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/sendingAMssage.PNG" width="1200" height="500">
+  
+  -[Create/Post] Join the event
+  
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/UserJoiningEvent.PNG" width="1200" height="500">
   
   Profile
   
   -[Update/put] Update the profile 
   
-  -[Read/get] Get user info
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/updateProfile.PNG" width="1200" height="500">
   
   Confirm Create Event Screen
   
   -[Create/Post] create an event
   
+   <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/CreatingEvent.PNG" width="1200" height="500">
+  
   -[Create/Post] create a chat
+  
+  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/createChat.PNG" width="1200" height="500">
   
   Add Friend
   
   -[Read/Get] username (stretch to search by also name)
   
-- [Create basic snippets for each Parse network request]
+   <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/searchByUsername.PNG" width="1200" height="500">
+  
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
