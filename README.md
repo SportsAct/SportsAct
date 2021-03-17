@@ -97,8 +97,8 @@ Optional:
    * User has an option to invite people to join the event
 
 ## Wireframes 
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="1000" height="900">
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg" width="1000" height="900">
+<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="800" height="750">
+<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg" width="800" height="750">
 
 ### [BONUS] Digital Wireframes & Mockups
 
@@ -110,5 +110,21 @@ Optional:
 [Add table of models]
 ### Networking
 - [Add list of network requests by screen ]
+  
+  Home Page
+  -[Read/GET] Gets all the feed
+  Chat
+  -[Read/get] Gets all messages
+  -[Create/Post] Post a message
+  -[Update/Put] Join the event
+  Profile
+  -[Update/put] Update the profile 
+  -[Read/get] Get user info
+  Confirm Create Event Screen
+  -[Create/Post] create an event
+  -[Create/Post] create a chat
+  Add Friend
+  -[Read/Get] username (stretch to search by also name)
+  
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
