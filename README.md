@@ -64,6 +64,7 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Settings Screen
    * Lets people change language, and app notification settings.
 
+Changing from my branch
 
 ### 3. Navigation
 
