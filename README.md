@@ -40,6 +40,8 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Set Location (Google Maps Api)
 * User can import contacts
 
+
+
 ### 2. Screen Archetypes 
 
 * Login 
