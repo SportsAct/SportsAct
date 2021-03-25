@@ -65,7 +65,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:scaleType="fitCenter"
+                    tools:srcCompat="@drawable/empty_profile" />
             </androidx.cardview.widget.CardView>
 
             <TextView

@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
 
     private void getHomeFeed(){
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
+        query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
