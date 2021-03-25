@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="4dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,16 +26,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Schedule for:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvTimeOfEventHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="4dp"
                 android:textColor="@color/black"
-                tools:text="Event Schedule for: Wed Feb 24, 2018 at 8:00 PM" />
-
+                tools:text="Wed Feb 24, 2018 at 8:00 PM"/>
         </LinearLayout>
 
 
@@ -67,8 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/black"
-                tools:text="Created By:" />
+                android:text="Created By:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvHostNameHome"
@@ -156,6 +162,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvParticipantsGoingHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -168,6 +175,7 @@
                 android:text="going," />
 
             <TextView
+                android:id="@+id/tvRemainingSpotsHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
@@ -179,6 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
+                android:autoSizeTextType="none"
                 android:text="SEE WHO IS GOING"
                 android:textAlignment="textEnd" />
 
@@ -188,7 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:weightSum="2">
 
             <Button
