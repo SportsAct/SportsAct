@@ -14,6 +14,9 @@ import com.codepath.jorge.mainactivity.fragments.AccountFragment;
 import com.codepath.jorge.mainactivity.fragments.ChatFragment;
 import com.codepath.jorge.mainactivity.fragments.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
