@@ -14,9 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.models.SportEvent;
+import com.parse.ParseFile;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
@@ -87,17 +90,39 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
 
         public void bind(SportEvent sportEvent) {
+
+            //setting date pattern
+            String pattern = "EEE MMM dd, yyyy 'at' hh:mm aaa";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(sportEvent.getEventDate());
+
+            //getting user profile image
+            ParseFile profileImage = (ParseFile) sportEvent.getUser().get("profilePicture");
+
+            //getting sport image
+            ParseFile sportImage = sportEvent.getSport().getSportImage();
+
             //binding the view
             tvEventTitle.setText(sportEvent.getTitle());
-            tvTimeOfEvent.setText("Wed Feb 24, 2018 at 8:00 PM"); //TODO fix time
-            //todo put image of user
-            tvUserName.setText(sportEvent.getUser().getUsername()); //todo get name
+            tvTimeOfEvent.setText(date);
+            tvUserName.setText((String) sportEvent.getUser().get("name"));
             tvLocation.setText(sportEvent.getLocation());
-            //todo sport image here
-            tvSportPlayed.setText("Soccer");//todo get sport
+            tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();
             tvRemainingSpots.setText(remainingSpots + " more spots open.");
+
+            //loading user picture
+            if(profileImage != null){
+                Glide.with(context).load(profileImage.getUrl()).into(ivUserProfilePic);
+            }
+            else{
+                ivUserProfilePic.setImageResource(R.drawable.empty_profile);
+            }
+            //loading sport image
+            if(sportEvent!= null){
+                Glide.with(context).load(sportImage.getUrl()).into(ivSportImage);
+            }
 
             //seting buttons listeners
             //todo See who is going

@@ -4,6 +4,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 @ParseClassName("Events")
 public class SportEvent extends ParseObject {
 
@@ -23,7 +25,9 @@ public class SportEvent extends ParseObject {
 
     public void setTitle(String title){put(KEY_TITLE,title);}
 
-    //TODO do the date
+    public Date getEventDate(){return getDate(KEY_DATE);}
+
+    public void setEventDate(Date date){put(KEY_DATE, date);}
 
     public ParseUser getUser(){
         return getParseUser(KEY_USER);
@@ -37,7 +41,9 @@ public class SportEvent extends ParseObject {
 
     public void setPrivacy(Boolean privacy){put(KEY_PRIVACY,privacy);}
 
-    //TODO do sport, create a model for sport
+    public SportGame getSport(){return (SportGame) getParseObject(KEY_SPORT);}
+
+    public void setSport(SportGame sport){put(KEY_SPORT,sport);}
 
     //stretch for location to get parks from google
     public String getLocation(){return getString(KEY_LOCATION);}
