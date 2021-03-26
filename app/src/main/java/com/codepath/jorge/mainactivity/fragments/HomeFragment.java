@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.models.SportEvent;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
 
     //widgets
     private RecyclerView recyclerViewHome;
+    private FloatingActionButton fabCreateEvent;
 
     //adapters
     private EventsAdapter adapter;
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment {
 
         //finding views
         recyclerViewHome = view.findViewById(R.id.rvRecyclerViewHome);
+        fabCreateEvent = view.findViewById(R.id.fbAddEventButton);
 
         //initializing event list
         sportEventList = new ArrayList<>();
@@ -60,6 +65,15 @@ public class HomeFragment extends Fragment {
         adapter = new EventsAdapter(getContext(),sportEventList);
         recyclerViewHome.setAdapter(adapter);
         recyclerViewHome.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //listener create event
+        fabCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CreateEventActivity.class);
+                startActivity(i);
+            }
+        });
         
         //getting events
         getHomeFeed();
