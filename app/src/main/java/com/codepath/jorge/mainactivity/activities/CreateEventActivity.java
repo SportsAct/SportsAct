@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -38,9 +41,23 @@ import java.util.TimeZone;
 class Event{
 
     Date dateTime;
+    int hour;
+    int minutes;
+    String eventTitle;
+    boolean privacy;
+    String location;
+    int maxParticipants;
+    SportGame sportGame;
 
     public Event() {
-        //todo set everything to null or default value
+        dateTime = null;
+        hour = -1;
+        minutes = -1;
+        eventTitle = null;
+        privacy = false;
+        location = null;
+        maxParticipants = 2;
+        sportGame = null;
     }
 }
 
@@ -100,8 +117,117 @@ public class CreateEventActivity extends AppCompatActivity {
                 showDatePicker();
             }
         });
+
+        //picking the time
+        ivClock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePicker();
+            }
+        });
+
+        //creating the event
+        btnCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createEvent();
+            }
+        });
+
     }
 
+    private void createEvent() {
+        //validate data
+        validateData();
+        //todo get data
+        //send user to confirmation screen
+        //todo send user to confirmation screen
+    }
+
+    //make sure user fill data fields that they must fill
+    private void validateData() {
+
+        if(etEventTitle.getText().toString().isEmpty()){
+            Toast.makeText(this,"Missing an Event Title", Toast.LENGTH_SHORT).show();
+            etEventTitle.requestFocus();
+            return;
+        }
+
+        if(eventBeingCreated.dateTime == null){
+            Toast.makeText(this,"Need to Select a Date", Toast.LENGTH_SHORT).show();
+            showDatePicker();
+            return;
+        }
+
+        if(eventBeingCreated.hour == -1){
+            Toast.makeText(this,"Need to Select a Time for the Event", Toast.LENGTH_SHORT).show();
+            showTimePicker();
+            return;
+        }
+
+        if(etLocation.getText().toString().isEmpty()){
+            Toast.makeText(this,"Missing a Location for the Event", Toast.LENGTH_SHORT).show();
+            etLocation.requestFocus();
+            return;
+        }
+    }
+
+    //shows the time picker
+    private void showTimePicker() {
+
+        //creating time picker
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(0)
+                .setTitleText("Select the time of the event")
+                .build();
+
+        //show the time picker
+        picker.show(getSupportFragmentManager(),TAG);
+
+        //when user hit ok in the dialog
+        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int minute = picker.getMinute();
+                final int hour = picker.getHour();
+                saveTime(minute,hour);
+            }
+        });
+    }
+
+    //save the time and update the time edit text
+    private void saveTime(int minute, int hour) {
+
+        //save date and time in event
+        eventBeingCreated.minutes = minute;
+        eventBeingCreated.hour = hour;
+
+        //getting am or pm and making it 12 hour format
+        String AM_PM ;
+        String hourString = Integer.toString(hour);
+        if(hour < 12) {
+            AM_PM = "AM";
+        } else {
+            AM_PM = "PM";
+            hour -= 12;
+            hourString = Integer.toString(hour);
+        }
+
+        //change display textview
+        tvTimeSelected.setText("Selected Time: " + hourString + ":" + pad(minute) + " " + AM_PM);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tvTimeSelected.setTextColor(getColor(R.color.black));
+        }
+    }
+
+    //helper function to make an integer return with two places if is less than 10 Ex (2 --> 02) (10 --> 10)
+    private String pad(int minute) {
+        return (minute < 10 ) ? ("0" + minute) : Integer.toString(minute);
+    }
+
+    //shows date picker
     private void showDatePicker() {
 
         //creating date constraint
@@ -130,8 +256,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
-
-
+    //saves the date and update his edit text
     private void saveDateSelected(Date d) {
         //'at' hh:mm aaa"
         //save the date
@@ -149,7 +274,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-
+    //set the number pickers with the appropiate data
     private void setNumberPickers() {
 
         //setting amount of players min and max value
@@ -171,6 +296,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
+    //gets the sport data from the database
     private void getSportData() {
 
         //query to get Sport Data
@@ -195,6 +321,7 @@ public class CreateEventActivity extends AppCompatActivity {
         });
     }
 
+    //helper function to extract all the sport names of the SportGame objects returned from the database
     private String[] getSportString() {
 
         String[] sportNames = new String[sportGames.size()];
