@@ -9,43 +9,26 @@
     tools:context=".profile">
 
     <ImageView
-        android:id="@+id/profileId"
-        android:layout_width="wrap_content"
+        android:id="@+id/profilePic"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="89dp"
-        android:layout_marginEnd="94dp"
-        android:layout_toStartOf="@+id/addFriendId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="64dp"
         tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/locationId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/actualLocationId"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="11dp"
-        tools:text="Location" />
-
-    <TextView
-        android:id="@+id/actualLocationId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="39dp"
-        android:layout_marginBottom="245dp"
-        tools:text="Miami, FL" />
 
     <Button
         android:id="@+id/addFriendId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="385dp"
+        android:layout_marginEnd="78dp"
+        android:layout_toStartOf="@+id/settingsId"
         tools:text="Add Friends" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -54,6 +37,112 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom_navigation" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="414dp"
+        android:src="@drawable/icons8_basketball_26" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="114dp"
+        android:layout_marginBottom="416dp"
+        android:src="@drawable/icons8_soccer_ball_24" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="176dp"
+        android:layout_marginBottom="412dp"
+        android:src="@drawable/icons8_tennis_ball_50" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="249dp"
+        android:layout_marginBottom="414dp"
+        android:src="@drawable/icons8_volleyball_24" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="413dp"
+        android:src="@drawable/icons8_american_football_ball_30" />
+
+    <Button
+        android:id="@+id/settingsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="297dp"
+        tools:text="Settings" />
+
+    <EditText
+        android:id="@+id/nameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="18dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <Button
+        android:id="@+id/takePic"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="211dp"
+        android:text="Upload"
+        tools:text="Upload" />
+
+    <TextView
+        android:id="@+id/bioTextId"
+        android:layout_width="185dp"
+        android:layout_height="81dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="37dp"
+        android:text="TextView"
+        tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
+
+    <Button
+        android:id="@+id/manageEventsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="115dp"
+        android:layout_marginBottom="178dp"
+        android:text="Manage Events" />
 
     <!-- TODO: Update blank fragment layout -->
 
