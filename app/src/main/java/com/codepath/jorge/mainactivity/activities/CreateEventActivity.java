@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
@@ -28,6 +29,8 @@ import com.google.android.material.timepicker.TimeFormat;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -37,6 +40,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+//todo set up all progress bars
 
 class Event{
 
@@ -48,6 +53,7 @@ class Event{
     String location;
     int maxParticipants;
     SportGame sportGame;
+    Date fullDate;
 
     public Event() {
         dateTime = null;
@@ -58,6 +64,16 @@ class Event{
         location = null;
         maxParticipants = 2;
         sportGame = null;
+        fullDate = null;
+    }
+
+    public void getFullDate(){
+        Calendar cal = Calendar.getInstance();// creates calendar
+        cal.setTimeZone(TimeZone.getTimeZone("UTC"));
+        cal.setTime(dateTime);               // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, hour + 4);      // adds the hours selected
+        cal.add(Calendar.MINUTE, minutes);
+        fullDate = cal.getTime();
     }
 }
 
@@ -136,12 +152,75 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
+    //gather all informetion to create event
     private void createEvent() {
         //validate data
         validateData();
-        //todo get data
+
+        // get data
+        eventBeingCreated.eventTitle = etEventTitle.getText().toString();
+        eventBeingCreated.privacy = swtPrivacy.isChecked();
+        eventBeingCreated.location = etLocation.getText().toString();
+        eventBeingCreated.maxParticipants = npAmountOfParticipants.getValue();
+        eventBeingCreated.sportGame = getPickedSport();
+        eventBeingCreated.getFullDate();
+
+        //create event
+        createEventQuery();
+
         //send user to confirmation screen
         //todo send user to confirmation screen
+
+    }
+
+    private void createEventQuery() {
+
+        //create event
+        SportEvent sportEvent = new SportEvent();
+        sportEvent.setLocation(eventBeingCreated.location);
+        sportEvent.setUser(ParseUser.getCurrentUser());
+        sportEvent.setEventDate(eventBeingCreated.fullDate);
+        sportEvent.setSport(eventBeingCreated.sportGame);
+        sportEvent.setTitle(eventBeingCreated.eventTitle);
+        sportEvent.setCurrentNumberOfParticipants(1);
+        sportEvent.setMaxNumberOfParticipants(eventBeingCreated.maxParticipants);
+        sportEvent.setPrivacy(eventBeingCreated.privacy);
+
+        //save to database
+        sportEvent.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem creating the event!!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem creating the event", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //todo create chat
+                //todo join author to event
+                //todo anything else to do with the event
+
+                Toast.makeText(CreateEventActivity.this, "Event Created Successfully", Toast.LENGTH_SHORT).show();
+                finish();
+
+            }
+        });
+    }
+
+    //gets the sport from the number picker
+    private SportGame getPickedSport() {
+
+        SportGame pickedGame = null;
+
+        for(int i = 0; i < sportGames.size(); i++){
+
+            if(sportGames.get(i).getSportName().equals(getSportString()[npSportsToBePlayed.getValue()])){
+                pickedGame = sportGames.get(i);
+            }
+        }
+        return pickedGame;
     }
 
     //make sure user fill data fields that they must fill
