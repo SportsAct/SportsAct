@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Sport Connect</string>
     <string name="chat">Chat</string>
+
+    //Chat Design
+    <string name="message_hint">Type a message</string>
+    <string name="send">Send</string>
 </resources>
