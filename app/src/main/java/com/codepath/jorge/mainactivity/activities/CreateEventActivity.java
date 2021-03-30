@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +41,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
-//todo set up all progress bars
 
 class Event{
 
@@ -95,6 +94,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private NumberPicker npAmountOfParticipants;
     private NumberPicker npSportsToBePlayed;
     private Button btnCreateEvent;
+    ProgressBar progressBar;
 
     //variable
     private List<SportGame> sportGames;
@@ -116,6 +116,7 @@ public class CreateEventActivity extends AppCompatActivity {
         npAmountOfParticipants = findViewById(R.id.npAmountofPlayersCreateEvent);
         npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
+        progressBar = findViewById(R.id.progressBarCreatingEvent);
 
         //initialising variables
         sportGames = new ArrayList<>();
@@ -154,8 +155,13 @@ public class CreateEventActivity extends AppCompatActivity {
 
     //gather all informetion to create event
     private void createEvent() {
-        //validate data
-        validateData();
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        if(!validateData()){
+            progressBar.setVisibility(View.INVISIBLE);
+            return;
+        }
 
         // get data
         eventBeingCreated.eventTitle = etEventTitle.getText().toString();
@@ -203,6 +209,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 //todo anything else to do with the event
 
                 Toast.makeText(CreateEventActivity.this, "Event Created Successfully", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
                 finish();
 
             }
@@ -224,31 +231,33 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
     //make sure user fill data fields that they must fill
-    private void validateData() {
+    private boolean validateData() {
 
         if(etEventTitle.getText().toString().isEmpty()){
             Toast.makeText(this,"Missing an Event Title", Toast.LENGTH_SHORT).show();
             etEventTitle.requestFocus();
-            return;
+            return false;
         }
 
         if(eventBeingCreated.dateTime == null){
             Toast.makeText(this,"Need to Select a Date", Toast.LENGTH_SHORT).show();
             showDatePicker();
-            return;
+            return false;
         }
 
         if(eventBeingCreated.hour == -1){
             Toast.makeText(this,"Need to Select a Time for the Event", Toast.LENGTH_SHORT).show();
             showTimePicker();
-            return;
+            return false;
         }
 
         if(etLocation.getText().toString().isEmpty()){
             Toast.makeText(this,"Missing a Location for the Event", Toast.LENGTH_SHORT).show();
             etLocation.requestFocus();
-            return;
+            return false;
         }
+
+        return true;
     }
 
     //shows the time picker

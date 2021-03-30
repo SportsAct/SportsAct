@@ -8,6 +8,13 @@
     tools:context=".activities.CreateEventActivity"
     android:orientation="vertical">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBarCreatingEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:indeterminate="true" />
+
     <EditText
         android:id="@+id/etEventTitleCreateEvent"
         android:layout_width="match_parent"
