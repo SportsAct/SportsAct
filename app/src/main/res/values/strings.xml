@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MainActivity</string>
+    <string name="app_name">Sport Connect</string>
+    <string name="chat">Chat</string>
 </resources>

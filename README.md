@@ -64,7 +64,6 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Settings Screen
    * Lets people change language, and app notification settings.
 
-
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
@@ -107,7 +106,90 @@ Optional:
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+#### Users
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     |UserID              |
+|  name             | Text     |Real Name of user              |
+|  username         | Text     |in app username              |
+|  profile picture  | file     |profile picture              |
+|  sport preferences| text[]   |list of sport preferences    |
+|  bio              | text     |short bio                    | 
+|  location         | location |where user is going to play  | 
+ 
+ #### Events
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     |eventID              |
+|  location         | Text     |location of event              |
+|  time             | Date     |date of event              |
+|  createdAt        | Date     |creation of event              |
+|  title            | text     |a title              |
+|  sport            | text     |sport to be played              | 
+|  author           | user     |host of event              | 
+|  amount of users  | integer  |number of user in event              | 
+|  privacy          | bool     |public or private event              | 
+
+ #### Chats
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     |chatID              |
+|  event            | Event    |event of chat              |
+|  createdAt        | Date     |creation of chat              |
+
+#### Message
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     | messageID             |
+|  chat             | Chat     |the chat of the message              |
+|  time             | Date     |when send              |
+|  attachment       | File     |if any pic              |
+|  message          | text     |body of message              |
+|  user             | user     |sender of message              |
+
+#### EventParticipant
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     | EventParticipantID             |
+|  user             | user     |participant of event              |
+|  event            | event    |event user is enrolled              |
+
+#### ChatUserJoin
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     |ChatUserJoin             |
+|  user             | user     |participant of chat              |
+|  event            | event    |chat user is enrolled              |
+
+### Stretch Models:
+
+#### Post
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     | postID             |
+|  author           | user     |creator              |
+|  caption          | Text     |caption of post              |
+|  createdAt        | Date     | creation time             |
+|  image            | file     |image of post              |
+|  location         | location |where the post is from              |
+|  likecount        | int      |like count              | 
+|  commentcount     | int      |comments count              |
+
+ #### Likes
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     |likeID              |
+|  user             | user     | user that like             |
+|  post             | post     | post that was liked             |
+
+#### Comments
+| Property          |Type      | Description  |
+|      ---          | ---      |---           |
+|  id               | Text     | commentID              |
+|  user             | user     | user that comment             |
+|  post             | post     | post that was commented             |
+
 ### Networking
   
   Home Page
@@ -156,3 +238,6 @@ Optional:
    <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/searchByUsername.PNG" width="1200" height="500">
   
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+
+![progress1](https://user-images.githubusercontent.com/67083832/112782627-4f516200-9002-11eb-88e0-a1fe7bb6b921.gif)
