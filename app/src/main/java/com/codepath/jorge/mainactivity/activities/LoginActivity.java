@@ -1,4 +1,4 @@
-package com.codepath.jorge.mainactivity;
+package com.codepath.jorge.mainactivity.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.codepath.jorge.mainactivity.activities.MainActivity;
+import com.codepath.jorge.mainactivity.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
