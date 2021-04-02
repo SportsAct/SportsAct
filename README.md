@@ -24,16 +24,18 @@ Objective of this app is to organize people so they can go play sports/games. So
 ### 1. User Stories (Required and Optional) 
 
 **Required Must-have Stories**
-
-* User can create a profile within the app 
-    * Set username/name
-    * set sport preferences
-    * look for friends
-* Users can create events (private or public) and send invitations via email or username once signed up. If the person invited does not have an account, they will be prompted to create one.
-    * creating events will also create a groupchat for that event
- * User can send and receive message from the groups they are join
- * Users can see a list of events from their friends
-    * Also they can join the events, and write to that group chat 
+[x]   User can log into account by entering username and password
+[x]   User can create a new account
+[ ]   User can create a profile within the app 
+         * Set username/name
+         * set sport preferences
+         * look for friends
+[x]   Users can create events (private or public) and 
+[ ]    Once event is created, users can send invitations via email/username  If person invited does not have an account, they will be prompted to create        one.
+         * creating events will also create a groupchat for that event
+[ ]   User can send and receive message from the groups they are join
+[ ]   Users can see a list of events from their friends
+         * Also they can join the events, and write to that group chat 
 
 **Optional Nice-to-have Stories**
 
@@ -238,3 +240,6 @@ Optional:
    <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/searchByUsername.PNG" width="1200" height="500">
   
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+
+![progress1](https://user-images.githubusercontent.com/67083832/112782627-4f516200-9002-11eb-88e0-a1fe7bb6b921.gif)
