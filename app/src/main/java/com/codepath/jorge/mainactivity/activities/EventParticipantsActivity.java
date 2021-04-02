@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
@@ -33,6 +34,8 @@ public class EventParticipantsActivity extends AppCompatActivity {
     //widgets
     private RecyclerView rvEventParticipants;
     LoadingDialog loadingDialog;
+    private TextView tvEventTitle;
+    private TextView tvCount;
     
     //adapter
     private UserListAdapter adapter;
@@ -54,6 +57,8 @@ public class EventParticipantsActivity extends AppCompatActivity {
         
         //finding views
         rvEventParticipants = findViewById(R.id.rvRecyclerViewEventParticipants);
+        tvEventTitle = findViewById(R.id.tvEventTitleEventParticipants);
+        tvCount = findViewById(R.id.tvCountEventParticipants);
         
         //progress indicator creation
         loadingDialog = new LoadingDialog(this);
@@ -88,6 +93,9 @@ public class EventParticipantsActivity extends AppCompatActivity {
 
                 sportEvent = gettingSportEvent;
 
+                tvEventTitle.setText(sportEvent.getTitle());
+                tvCount.setText( Integer.toString(sportEvent.getCurrentNumberOfParticipants())  + " out of " + Integer.toString(sportEvent.getMaxNumberOfParticipants()) + " going");
+
                 getUsers();
 
             }
@@ -98,6 +106,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
 
         ParseQuery<EventParticipant> query = ParseQuery.getQuery(EventParticipant.class);
         query.include(EventParticipant.KEY_ID);
+        query.include(EventParticipant.KEY_USER);
         query.whereEqualTo(EventParticipant.KEY_EVENT, sportEvent);
         query.findInBackground(new FindCallback<EventParticipant>() {
             @Override
@@ -110,6 +119,8 @@ public class EventParticipantsActivity extends AppCompatActivity {
                     loadingDialog.dismissDialog();
                     return;
                 }
+
+                Log.i(TAG, eventParticipants.get(0).getUser().getUsername());
 
                 //set users
                 for(int i = 0; i < eventParticipants.size(); i++){

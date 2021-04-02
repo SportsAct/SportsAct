@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
+    //Declaration
+    //constants
+    public static final String TAG = "UserListAdapter";
+
+    //variables
     Context context;
     List<ParseUser> userList;
 
@@ -41,6 +47,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         ParseUser user = userList.get(position);
+
         holder.bind(user);
 
     }
