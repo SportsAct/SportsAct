@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -174,9 +175,6 @@ public class CreateEventActivity extends AppCompatActivity {
         //create event
         createEventQuery();
 
-        //send user to confirmation screen
-        //todo send user to confirmation screen
-
     }
 
     private void createEventQuery() {
@@ -201,16 +199,40 @@ public class CreateEventActivity extends AppCompatActivity {
                 if(e != null){
                     Log.e(TAG,"There was a problem creating the event!!", e);
                     Toast.makeText(CreateEventActivity.this, "There was a problem creating the event", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
-                //todo create chat
-                //todo join author to event
-                //todo anything else to do with the event
+                //join author to event
+                joinHostToEvent(sportEvent);
 
                 Toast.makeText(CreateEventActivity.this, "Event Created Successfully", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
+
+            }
+        });
+    }
+
+    private void joinHostToEvent(SportEvent sportEvent) {
+        EventParticipant hostParticipant = new EventParticipant();
+        hostParticipant.setUser(ParseUser.getCurrentUser());
+        hostParticipant.setEvent(sportEvent);
+        hostParticipant.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem joining user to event!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem joining user to event!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+
                 finish();
+
+                //send user to chat screen
+                //todo create chat
+                //todo send user to chat screen
 
             }
         });

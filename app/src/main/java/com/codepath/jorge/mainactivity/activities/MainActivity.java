@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        checkIfUserIsLogged();
 
         //finding views by id
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -69,5 +72,15 @@ public class MainActivity extends AppCompatActivity {
         //loading home as main fragment
         bottomNavigationView.setSelectedItemId(R.id.mnu_action_home);
         fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
+    }
+
+    private void checkIfUserIsLogged() {
+
+        if(ParseUser.getCurrentUser() == null){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 }
