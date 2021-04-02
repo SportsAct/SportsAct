@@ -44,6 +44,17 @@
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
+    <EditText
+        android:id="@+id/etLocationCreateEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:hint="Enter the Location of the Event..."
+        android:imeOptions="actionDone"
+        android:inputType="textShortMessage"
+        android:lines="1" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,16 +127,6 @@
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
-    <EditText
-        android:id="@+id/etLocationCreateEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Enter the Location of the Event..."
-        android:imeOptions="actionDone"
-        android:inputType="textShortMessage"
-        android:lines="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
