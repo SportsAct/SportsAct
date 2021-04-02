@@ -17,7 +17,8 @@
         android:theme="@style/Theme.MainActivity">
         <activity android:name=".LoginActivity"></activity>
         android:theme="@style/Theme.MaterialComponents.Light">
-        <activity android:name=".activities.CreateEventActivity"></activity>
+        <activity android:name=".activities.EventParticipantsActivity"></activity>
+        <activity android:name=".activities.CreateEventActivity" />
         <activity android:name=".activities.MainActivity">
           <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -25,6 +26,5 @@
         </intent-filter>
 
         </activity>
-  </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.codepath.jorge.mainactivity.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;

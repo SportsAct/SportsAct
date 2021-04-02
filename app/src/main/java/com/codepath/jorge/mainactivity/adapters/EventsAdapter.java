@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
+import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.parse.ParseFile;
 
@@ -129,7 +131,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             btnSeeWhoIsGoing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context,sportEvent.getObjectId(),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, EventParticipantsActivity.class);
+                    intent.putExtra("event_id",sportEvent.getId());
+                    context.startActivity(intent);
                 }
             });
 
