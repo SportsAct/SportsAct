@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.codepath.jorge.mainactivity.R;
@@ -79,6 +81,30 @@ public class MainActivity extends AppCompatActivity {
         //loading home as main fragment
         bottomNavigationView.setSelectedItemId(R.id.mnu_action_home);
         fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case    R.id.actLogout:
+                //log user out
+                ParseUser.logOut();
+                //take them to log in page
+                checkIfUserIsLogged();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkIfUserIsLogged() {

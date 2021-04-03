@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.adapters;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -19,7 +20,12 @@ import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.SportEvent;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -127,7 +133,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             }
 
             //seting buttons listeners
-            //todo See who is going
             btnSeeWhoIsGoing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -145,11 +150,99 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
 
-            //todo join an event
             btnJoinEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context,sportEvent.getObjectId(),Toast.LENGTH_SHORT).show();
+                   checkIfUserIsAParticipant(sportEvent);
+                }
+            });
+        }
+
+        //check if user is in the event already
+        private void checkIfUserIsAParticipant(SportEvent sportEvent) {
+
+            ParseQuery<EventParticipant> query = ParseQuery.getQuery(EventParticipant.class);
+            query.whereEqualTo(EventParticipant.KEY_USER, ParseUser.getCurrentUser());
+            query.whereEqualTo(EventParticipant.KEY_EVENT, sportEvent);
+            query.getFirstInBackground(new GetCallback<EventParticipant>() {
+                @Override
+                public void done(EventParticipant user, ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+
+                        if(user == null){
+                            //check if event is full
+                            if(sportEvent.getCurrentNumberOfParticipants() >= sportEvent.getMaxNumberOfParticipants()){
+                                Toast.makeText(context, "Event is full!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            enrollUserInEvent(sportEvent);
+                        }
+                        else {
+                            Toast.makeText(context, "You are already enrolled in this event!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    else {
+                        Toast.makeText(context, "You are already enrolled in this event!", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                }
+            });
+
+        }
+
+        //enroll an user into an event
+        private void enrollUserInEvent(SportEvent sportEvent) {
+
+            //todo enroll user in chat
+
+            //enroll user in event
+            EventParticipant newParticipant = new EventParticipant();
+            newParticipant.setUser(ParseUser.getCurrentUser());
+            newParticipant.setEvent(sportEvent);
+            newParticipant.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+                        Log.e(TAG,"There was a problem enrolling user", e);
+                        Toast.makeText(context, "There was a problem enrolling user", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    //update event to have one more
+                    updateEvent(sportEvent);
+
+                }
+            });
+
+        }
+
+        //update the event to have 1 more participant
+        private void updateEvent(SportEvent sportEvent) {
+
+            sportEvent.setCurrentNumberOfParticipants(sportEvent.getCurrentNumberOfParticipants() + 1);
+            sportEvent.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+                        Log.e(TAG,"There was a problem updating the event", e);
+                        Toast.makeText(context, "There was a problem updating the event", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    Toast.makeText(context, "Joining event was a success!", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                    //todo take to chat activity
+
                 }
             });
         }
