@@ -2,6 +2,7 @@ package com.codepath.jorge.mainactivity.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -24,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
     //Declaration
     //constants
     public static final String TAG = "MainActivity";
+
     //widgets
     private BottomNavigationView bottomNavigationView;
+    private Toolbar tbToolbar;
 
     //managers and adapters
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         //finding views by id
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        tbToolbar = findViewById(R.id.tbToolbar);
+
+        //setting bar
+        setSupportActionBar(tbToolbar);
 
         //listeners
         //bottom navigation view listeners
@@ -76,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkIfUserIsLogged() {
 
-        if(ParseUser.getCurrentUser() == null){
-            Intent intent = new Intent(this,LoginActivity.class);
+        if (ParseUser.getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }
