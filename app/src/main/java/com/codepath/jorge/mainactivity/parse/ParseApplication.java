@@ -2,6 +2,7 @@ package com.codepath.jorge.mainactivity.parse;
 
 import android.app.Application;
 
+import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.Parse;
@@ -16,6 +17,7 @@ public class ParseApplication extends Application {
         //register here your parse model
         ParseObject.registerSubclass(SportEvent.class);
         ParseObject.registerSubclass(SportGame.class);
+        ParseObject.registerSubclass(EventParticipant.class);
 
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
