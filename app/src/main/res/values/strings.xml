@@ -5,4 +5,7 @@
     //Chat Design
     <string name="message_hint">Type a message</string>
     <string name="send">Send</string>
+
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 </resources>

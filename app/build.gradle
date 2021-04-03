@@ -38,6 +38,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //Required for Chat layout
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
     //reqired for the bottom navigation
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:${designSupportVersion}"

@@ -13,18 +13,18 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.models.Message;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment newInstance} factory method to
- * create an instance of this fragment.
- */
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+
 public class ChatFragment extends Fragment {
 
 
@@ -34,6 +34,16 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //Register the Message Model
+        ParseObject.registerSubclass(Message.class);
+
+        // Use for monitoring Parse OkHttp traffic
+        // Can be Level.BASIC, Level.HEADERS, or Level.BODY
+        // See http://square.github.io/okhttp/3.x/logging-interceptor/ to see the options.
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+
         //User Login
         if (ParseUser.getCurrentUser() != null) {
             startWithCurrentUser();
@@ -45,6 +55,7 @@ public class ChatFragment extends Fragment {
 
     }
 
+    // TODO: Previously anonymous login method/ Verify if method will work
     void login() {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
@@ -78,13 +89,16 @@ public class ChatFragment extends Fragment {
         //When send button is clicked, create message object on Parse
         btSend.setOnClickListener(v -> {
             String data = etMessage.getText().toString();
-            ParseObject message = ParseObject.create("Messages");
-            message.put(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
-            message.put(BODY_KEY, data);
+            Message message = new Message();
+            message.setBody(data);
+            message.setUserId(ParseUser.getCurrentUser().getObjectId());
+
+
+
             message.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if (e == null ) {
+                    if (e == null) {
 
                         //TODO: Verify that get context method is valid
 
@@ -99,43 +113,4 @@ public class ChatFragment extends Fragment {
     }
 
 
-
-
-    public ChatFragment() {
-        // Required empty public constructor
-    }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment ChatFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static ChatFragment newInstance(String param1, String param2) {
-//        ChatFragment fragment = new ChatFragment();
-//        Bundle args = new Bundle();
-//        args.putString(USER_ID_KEY, param1);
-//        args.putString(BODY_KEY, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            etMessage = getArguments().getString(USER_ID_KEY);
-//            btnSend = getArguments().getString(BODY_KEY);
-//        }
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_chat, container, false);
-//    }
 }
