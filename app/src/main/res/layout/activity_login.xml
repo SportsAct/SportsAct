@@ -23,18 +23,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:padding="10dp"
+        android:hint="Enter your user name"
         android:inputType="textPersonName"
-        android:text="Username" />
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:padding="10dp"
+        android:hint="Enter your password"
         android:inputType="textPassword"
-        android:text="Password"
+        android:padding="10dp"
         android:visibility="visible" />
 
     <Button
