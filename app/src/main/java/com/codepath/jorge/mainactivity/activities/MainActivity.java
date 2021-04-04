@@ -12,15 +12,23 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.fragments.AccountFragment;
 import com.codepath.jorge.mainactivity.fragments.ChatFragment;
 import com.codepath.jorge.mainactivity.fragments.HomeFragment;
+import com.codepath.jorge.mainactivity.models.AllStates;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.mnu_action_home);
         fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

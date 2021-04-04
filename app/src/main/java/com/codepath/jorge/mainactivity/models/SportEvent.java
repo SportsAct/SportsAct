@@ -47,9 +47,9 @@ public class SportEvent extends ParseObject {
     public void setSport(SportGame sport){put(KEY_SPORT,sport);}
 
     //stretch for location to get parks from google
-    public String getLocation(){return getString(KEY_LOCATION);}
+    public Location getLocation(){return (Location) getParseObject(KEY_LOCATION);}
 
-    public void setLocation(String location){put(KEY_LOCATION,location);}
+    public void setLocation(Location location){put(KEY_LOCATION,location);}
 
     public int getMaxNumberOfParticipants(){return getNumber(KEY_MAX_PARTICIPANTS).intValue();}
 

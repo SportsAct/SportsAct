@@ -1,10 +1,5 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +13,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.adapters.LocationDialog;
+import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -34,7 +34,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +49,7 @@ class Event{
     int minutes;
     String eventTitle;
     boolean privacy;
-    String location;
+    Location location;
     int maxParticipants;
     SportGame sportGame;
     Date fullDate;
@@ -77,7 +76,7 @@ class Event{
     }
 }
 
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
 
     //declaration
 
@@ -91,7 +90,8 @@ public class CreateEventActivity extends AppCompatActivity {
     private TextView tvDateSelected;
     private ImageView ivClock;
     private TextView tvTimeSelected;
-    private EditText etLocation;
+    private TextView tvLocation;
+    private Button btnSelectLocation;
     private NumberPicker npAmountOfParticipants;
     private NumberPicker npSportsToBePlayed;
     private Button btnCreateEvent;
@@ -100,6 +100,7 @@ public class CreateEventActivity extends AppCompatActivity {
     //variable
     private List<SportGame> sportGames;
     private Event eventBeingCreated;
+    private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,8 @@ public class CreateEventActivity extends AppCompatActivity {
         tvDateSelected = findViewById(R.id.tvSelectedDateCreateEvent);
         ivClock = findViewById(R.id.ivTimePickerCreateEvent);
         tvTimeSelected = findViewById(R.id.tvTimeSelectedCreateEvent);
-        etLocation = findViewById(R.id.etLocationCreateEvent);
+        btnSelectLocation = findViewById(R.id.btnLocationCreateEvent);
+        tvLocation = findViewById(R.id.tvLocationCreateEvent);
         npAmountOfParticipants = findViewById(R.id.npAmountofPlayersCreateEvent);
         npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
@@ -122,6 +124,10 @@ public class CreateEventActivity extends AppCompatActivity {
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
+        allStates = new ArrayList<>();
+
+        //getting states
+        getStates();
 
         //setting the Number Pickers
        getSportData();
@@ -152,6 +158,20 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        //select location
+        btnSelectLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
+    }
+
+    @Override
+    public void saveLocation(Location location) {
+        eventBeingCreated.location = location;
+        tvLocation.setText(location.getCityName() + ", " + location.getState().getName());
     }
 
     //gather all informetion to create event
@@ -167,7 +187,6 @@ public class CreateEventActivity extends AppCompatActivity {
         // get data
         eventBeingCreated.eventTitle = etEventTitle.getText().toString();
         eventBeingCreated.privacy = swtPrivacy.isChecked();
-        eventBeingCreated.location = etLocation.getText().toString();
         eventBeingCreated.maxParticipants = npAmountOfParticipants.getValue();
         eventBeingCreated.sportGame = getPickedSport();
         eventBeingCreated.getFullDate();
@@ -210,6 +229,41 @@ public class CreateEventActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getStates(){
+
+        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
+        query.findInBackground(new FindCallback<AllStates>() {
+            @Override
+            public void done(List<AllStates> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the states!!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                for(int i = 0 ; i < objects.size() ; i++){
+                    allStates.add(objects.get(i));
+                }
+
+                btnSelectLocation.setEnabled(true);
+
+            }
+        });
+
+    }
+
+    private void openDialog(){
+
+        if(allStates == null || allStates.isEmpty()){
+            return;
+        }
+
+        LocationDialog locationDialog = new LocationDialog(allStates);
+        locationDialog.show(getSupportFragmentManager(),TAG);
     }
 
     private void joinHostToEvent(SportEvent sportEvent) {
@@ -274,9 +328,9 @@ public class CreateEventActivity extends AppCompatActivity {
             return false;
         }
 
-        if(etLocation.getText().toString().isEmpty()){
+       if(eventBeingCreated.location == null){
             Toast.makeText(this,"Missing a Location for the Event", Toast.LENGTH_SHORT).show();
-            etLocation.requestFocus();
+            openDialog();
             return false;
         }
 
