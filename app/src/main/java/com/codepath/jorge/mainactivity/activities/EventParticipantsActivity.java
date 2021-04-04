@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +37,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     private TextView tvEventTitle;
     private TextView tvCount;
+    private Toolbar tbToolbar;
     
     //adapter
     private UserListAdapter adapter;
@@ -59,6 +61,11 @@ public class EventParticipantsActivity extends AppCompatActivity {
         rvEventParticipants = findViewById(R.id.rvRecyclerViewEventParticipants);
         tvEventTitle = findViewById(R.id.tvEventTitleEventParticipants);
         tvCount = findViewById(R.id.tvCountEventParticipants);
+        tbToolbar = findViewById(R.id.tbToolbar);
+
+        //setting bar
+        tbToolbar.setTitle("Event Participants");
+        setSupportActionBar(tbToolbar);
         
         //progress indicator creation
         loadingDialog = new LoadingDialog(this);

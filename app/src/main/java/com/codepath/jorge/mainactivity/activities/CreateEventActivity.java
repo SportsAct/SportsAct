@@ -213,6 +213,7 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
     private void joinHostToEvent(SportEvent sportEvent) {
+
         EventParticipant hostParticipant = new EventParticipant();
         hostParticipant.setUser(ParseUser.getCurrentUser());
         hostParticipant.setEvent(sportEvent);
