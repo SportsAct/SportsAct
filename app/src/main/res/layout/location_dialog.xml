@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_margin="16dp">
+
+    <AutoCompleteTextView
+        android:id="@+id/actvStateLocationDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:completionHint="Select a State"
+        android:completionThreshold="1"
+        android:dropDownHeight="wrap_content"
+        android:hint="Select a State" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actvCityLocationDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionHint="Select a City"
+        android:completionThreshold="1"
+        android:hint="Select a City" />
+
+</LinearLayout>

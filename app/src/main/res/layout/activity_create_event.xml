@@ -44,16 +44,30 @@
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
-    <EditText
-        android:id="@+id/etLocationCreateEvent"
+    <Button
+        android:id="@+id/btnLocationCreateEvent"
+        style="@android:style/Widget.Material.Light.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:text="Select the location of the event" />
+
+    <TextView
+        android:id="@+id/tvLocationCreateEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Enter the Location of the Event..."
-        android:imeOptions="actionDone"
-        android:inputType="textShortMessage"
-        android:lines="1" />
+        android:text="Select a location for this event."
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
 
     <TextView
         android:layout_width="match_parent"

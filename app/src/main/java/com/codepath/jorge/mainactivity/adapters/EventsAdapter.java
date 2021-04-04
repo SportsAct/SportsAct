@@ -114,7 +114,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvEventTitle.setText(sportEvent.getTitle());
             tvTimeOfEvent.setText(date);
             tvUserName.setText((String) sportEvent.getUser().get("name"));
-            tvLocation.setText(sportEvent.getLocation());
+            tvLocation.setText(sportEvent.getLocation().getCityName() + ", " + sportEvent.getLocation().getStateName());
             tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();
@@ -177,20 +177,15 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                 Toast.makeText(context, "Event is full!", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-
                             enrollUserInEvent(sportEvent);
                         }
                         else {
                             Toast.makeText(context, "You are already enrolled in this event!", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                     else {
                         Toast.makeText(context, "You are already enrolled in this event!", Toast.LENGTH_SHORT).show();
                     }
-
-
-
                 }
             });
 

@@ -18,7 +18,8 @@
         <activity android:name=".activities.LoginActivity"></activity>
         android:theme="@style/Theme.MaterialComponents.Light">
         <activity android:name=".activities.EventParticipantsActivity"></activity>
-        <activity android:name=".activities.CreateEventActivity" />
+        <activity android:name=".activities.CreateEventActivity"
+            android:windowSoftInputMode="adjustUnspecified"/>
         <activity android:name=".activities.MainActivity">
           <intent-filter>
             <action android:name="android.intent.action.MAIN" />
