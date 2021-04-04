@@ -18,7 +18,7 @@
         android:textSize="36dp"
         android:text="SportConnect"
         android:layout_marginBottom="100dp"
-        android:background=""/>
+        />
 
     <EditText
         android:id="@+id/etUsername"

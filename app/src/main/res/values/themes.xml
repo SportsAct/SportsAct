@@ -3,7 +3,7 @@
     <style name="Theme.MainActivity" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFA8A7A7</item>
-        <item name="colorPrimaryVariant">#A8A7A7</item>
+        <item name="colorPrimaryVariant">#2B2B2B</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

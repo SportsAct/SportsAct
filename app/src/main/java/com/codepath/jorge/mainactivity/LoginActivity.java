@@ -14,6 +14,7 @@ import com.codepath.jorge.mainactivity.activities.MainActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button bntCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        bntCreateAccount = findViewById(R.id.btnCreateAccount);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -39,6 +43,31 @@ public class LoginActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString();
 
                 UserLogin(username, password);
+            }
+        });
+
+        bntCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create the ParseUser
+                ParseUser user1 = new ParseUser();
+                // Set core properties
+                user1.setUsername("KenSmith");
+                user1.setPassword("secret123");
+                user1.setEmail("email@example.com");
+                // Set custom properties
+                //user1.put("phone", "650-253-0000");
+                // Invoke signUpInBackground
+                user1.signUpInBackground(new SignUpCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Hooray! Let them use the app now.
+                        } else {
+                            // Sign up didn't succeed. Look at the ParseException
+                            // to figure out what went wrong
+                        }
+                    }
+                });
             }
         });
     }
@@ -61,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
