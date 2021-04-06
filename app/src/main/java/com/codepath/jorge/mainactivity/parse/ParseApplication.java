@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
+import com.codepath.jorge.mainactivity.models.Message;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
@@ -20,6 +21,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(SportEvent.class);
         ParseObject.registerSubclass(SportGame.class);
         ParseObject.registerSubclass(EventParticipant.class);
+        ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(AllStates.class);
         ParseObject.registerSubclass(Location.class);
 
