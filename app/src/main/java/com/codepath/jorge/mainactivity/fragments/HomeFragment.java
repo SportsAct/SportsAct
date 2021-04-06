@@ -19,6 +19,7 @@ import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
@@ -93,6 +94,7 @@ public class HomeFragment extends Fragment {
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
+        query.include(SportEvent.KEY_LOCATION);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
             public void done(List<SportEvent> events, ParseException e) {
