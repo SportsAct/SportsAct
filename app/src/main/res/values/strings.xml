@@ -2,4 +2,8 @@
     <string name="app_name">Sport Connect</string>
     <string name="chat">Chat</string>
     <string name="enter_event_title">Enter Event Title...</string>
+    <string name="message_hint">Type a message</string>
+    <string name="send">Send</string>
+    <string name="profile_other">profile_other</string>
+    <string name="profile_me">My profile</string>
 </resources>
