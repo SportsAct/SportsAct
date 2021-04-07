@@ -107,8 +107,6 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-                Log.d(TAG,"Success");
-
                 //set posts
                 sportEventList.addAll(events);
 

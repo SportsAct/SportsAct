@@ -1,42 +1,47 @@
 package com.codepath.jorge.mainactivity.fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.models.Message;
-import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
-import com.parse.Parse;
+import com.codepath.jorge.mainactivity.adapters.ChatAdapter;
+import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
+import com.codepath.jorge.mainactivity.models.Chat;
+import com.codepath.jorge.mainactivity.models.ChatUserJoin;
+import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ChatFragment extends Fragment {
 
+    //declaration
+    //constants
+    static final String TAG = "ChatFragment";
 
-    static final String TAG = ChatFragment.class.getSimpleName();
+    //widgets
+    private RecyclerView recyclerViewChats;
+    LoadingDialog loadingDialog;
 
+    //adapter
+    ChatAdapter adapter;
 
-    EditText etMessage;
-    ImageButton btSend;
+    //variables
+    List<Chat> chatList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,29 +55,59 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etMessage = view.findViewById(R.id.etMessage);
-        btSend = view.findViewById(R.id.btSend);
-        //When send button is clicked, create message object on Parse
-        btSend.setOnClickListener(v -> {
-            String data = etMessage.getText().toString();
-            Message message = new Message();
-            message.setBody(data);
-            message.setUserId(ParseUser.getCurrentUser());
-            Date currentDate = new Date();
-            message.setDate(currentDate);
 
+        //finding views
+        recyclerViewChats = view.findViewById(R.id.rvChat);
 
-            message.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getContext(), "Successfully created message on Parse", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e(TAG, "Failed to save message", e);
-                    }
+        //progress indicator creation
+        loadingDialog = new LoadingDialog(getActivity());
+        //starting the loading dialog
+        loadingDialog.startLoadingDialog();
+
+        //initializing event list
+        chatList = new ArrayList<>();
+
+        //recycler view performance
+        recyclerViewChats.setHasFixedSize(true);
+
+        //setting adapter
+        adapter = new ChatAdapter(getContext(),chatList);
+        recyclerViewChats.setAdapter(adapter);
+        recyclerViewChats.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //get the chats
+        getUserChats();
+
+    }
+
+    private void getUserChats() {
+
+        ParseQuery<ChatUserJoin> query = ParseQuery.getQuery(ChatUserJoin.class);
+        query.include(ChatUserJoin.KEY_CHAT);
+        query.whereEqualTo(ChatUserJoin.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<ChatUserJoin>() {
+            @Override
+            public void done(List<ChatUserJoin> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    loadingDialog.dismissDialog();
+                    Log.e(TAG,"There was a problem loading the chats!!", e);
+                    Toast.makeText(getContext(), "There was a problem loading the chats", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            });
-            etMessage.setText(null);
+
+                //adding chats
+                for(int i = 0;i < objects.size();i++){
+                    chatList.add(objects.get(i).getChat());
+                }
+
+                //notify adapter
+                adapter.notifyDataSetChanged();
+
+                //dismissing loading dialog
+                loadingDialog.dismissDialog();
+            }
         });
     }
-    }
+}
