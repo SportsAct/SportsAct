@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="385dp"
-        android:layout_marginEnd="78dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="466dp"
+        android:layout_marginEnd="77dp"
         android:layout_toStartOf="@+id/settingsId"
         tools:text="Add Friends" />
 
@@ -44,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginBottom="414dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="415dp"
         android:src="@drawable/icons8_basketball_26" />
 
     <ImageView
@@ -54,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="114dp"
-        android:layout_marginBottom="416dp"
+        android:layout_marginStart="93dp"
+        android:layout_marginBottom="417dp"
         android:src="@drawable/icons8_soccer_ball_24" />
 
     <ImageView
@@ -65,8 +65,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="176dp"
-        android:layout_marginBottom="412dp"
+        android:layout_marginStart="151dp"
+        android:layout_marginBottom="411dp"
         android:src="@drawable/icons8_tennis_ball_50" />
 
     <ImageView
@@ -75,8 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="249dp"
-        android:layout_marginBottom="414dp"
+        android:layout_marginStart="206dp"
+        android:layout_marginBottom="417dp"
         android:src="@drawable/icons8_volleyball_24" />
 
     <ImageView
@@ -85,8 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="413dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginBottom="414dp"
         android:src="@drawable/icons8_american_football_ball_30" />
 
     <Button
@@ -95,8 +95,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="297dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="212dp"
         tools:text="Settings" />
 
     <EditText
@@ -112,7 +112,7 @@
         android:text="Name" />
 
     <Button
-        android:id="@+id/takePic"
+        android:id="@+id/takePicId"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -140,9 +140,85 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="115dp"
-        android:layout_marginBottom="178dp"
+        android:layout_marginStart="126dp"
+        android:layout_marginBottom="94dp"
         android:text="Manage Events" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="37dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginBottom="343dp"
+        android:src="@drawable/badminton" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="38dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="85dp"
+        android:layout_marginBottom="342dp"
+        android:src="@drawable/baseball" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="38dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="145dp"
+        android:layout_marginBottom="344dp"
+        android:src="@drawable/cycling" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="167dp"
+        android:layout_marginBottom="341dp"
+        android:src="@drawable/golfball" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="340dp"
+        android:src="@drawable/icehockey" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="32dp"
+        android:layout_height="41dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="339dp"
+        android:src="@drawable/pingpong" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="40dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="289dp"
+        android:layout_marginEnd="47dp"
+        android:src="@drawable/handball" />
 
     <!-- TODO: Update blank fragment layout -->
 

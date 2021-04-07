@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         //finding views by id
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+
+
         //listeners
         //bottom navigation view listeners
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
