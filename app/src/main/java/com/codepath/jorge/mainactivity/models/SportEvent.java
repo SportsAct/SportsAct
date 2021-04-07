@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -22,7 +23,15 @@ public class SportEvent extends ParseObject {
 
     public String getId(){return getObjectId();}
 
-    public String getTitle(){return getString(KEY_TITLE);}
+    public String getTitle(){
+
+        try {
+            return fetchIfNeeded().getString(KEY_TITLE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "Not found";
+    }
 
     public void setTitle(String title){put(KEY_TITLE,title);}
 

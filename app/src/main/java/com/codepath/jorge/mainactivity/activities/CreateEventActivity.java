@@ -2,11 +2,14 @@ package com.codepath.jorge.mainactivity.activities;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -82,13 +85,15 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
 
     //constants
     public static final String TAG = "CreateEventActivity";
+    private final int MAX_COUNT = 25;
 
     //widgets
     private EditText etEventTitle;
+    private TextView tvMaxCount;
     private Switch swtPrivacy;
-    private ImageView ivCalendar;
+    private LinearLayout ivCalendar;
     private TextView tvDateSelected;
-    private ImageView ivClock;
+    private LinearLayout ivClock;
     private TextView tvTimeSelected;
     private TextView tvLocation;
     private Button btnSelectLocation;
@@ -109,6 +114,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
 
         //finding views by id
         etEventTitle = findViewById(R.id.etEventTitleCreateEvent);
+        tvMaxCount = findViewById(R.id.tvTitleMaxCount);
         swtPrivacy = findViewById(R.id.swtPrivacyCreateEvent);
         ivCalendar = findViewById(R.id.ivCalendarCreateEvent);
         tvDateSelected = findViewById(R.id.tvSelectedDateCreateEvent);
@@ -133,6 +139,35 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
        getSportData();
        
        //listeners
+
+        //title max count
+        etEventTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                int counter = etEventTitle.length();
+
+                if(counter <= MAX_COUNT){
+                    tvMaxCount.setText(Integer.toString(MAX_COUNT - counter));
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int counter = etEventTitle.length();
+                tvMaxCount.setVisibility(View.VISIBLE);
+                if(counter == 0){
+                    tvMaxCount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         
         //picking a date
         ivCalendar.setOnClickListener(new View.OnClickListener() {

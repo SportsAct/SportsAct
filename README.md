@@ -201,4 +201,4 @@ Optional:
 |  post             | post     | post that was commented             |
 
 
-![progress1](https://user-images.githubusercontent.com/67083832/112782627-4f516200-9002-11eb-88e0-a1fe7bb6b921.gif)
+![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
