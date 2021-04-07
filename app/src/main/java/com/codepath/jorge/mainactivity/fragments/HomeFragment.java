@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
+import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment {
     //widgets
     private RecyclerView recyclerViewHome;
     private FloatingActionButton fabCreateEvent;
+    LoadingDialog loadingDialog;
 
     //adapters
     private EventsAdapter adapter;
@@ -58,8 +61,16 @@ public class HomeFragment extends Fragment {
         recyclerViewHome = view.findViewById(R.id.rvRecyclerViewHome);
         fabCreateEvent = view.findViewById(R.id.fbAddEventButton);
 
+        //progress indicator creation
+        loadingDialog = new LoadingDialog(getActivity());
+        //starting the loading dialog
+        loadingDialog.startLoadingDialog();
+
         //initializing event list
         sportEventList = new ArrayList<>();
+
+        //recycler view performance
+        recyclerViewHome.setHasFixedSize(true);
 
         //setting adapter
         adapter = new EventsAdapter(getContext(),sportEventList);
@@ -83,24 +94,27 @@ public class HomeFragment extends Fragment {
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
+        query.include(SportEvent.KEY_LOCATION);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
             public void done(List<SportEvent> events, ParseException e) {
 
                 //something went wrong
                 if(e != null){
+                    loadingDialog.dismissDialog();
                     Log.e(TAG,"There was a problem loading the events!!", e);
                     Toast.makeText(getContext(), "There was a problem loading the events", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                Log.d(TAG,"Success");
 
                 //set posts
                 sportEventList.addAll(events);
 
                 //notify adapter
                 adapter.notifyDataSetChanged();
+
+                //dismissing loading dialog
+                loadingDialog.dismissDialog();
 
             }
         });

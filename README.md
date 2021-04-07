@@ -24,21 +24,41 @@ Objective of this app is to organize people so they can go play sports/games. So
 ### 1. User Stories (Required and Optional) 
 
 **Required Must-have Stories**
+ - [X] Chat portion connected to Parse database.
+- [ ] User's can send and receive messages from the groups they joined 
+ - [ ] User is able to pick a chat that they are a part of and enter it
+ - [ ] Upon entering a group game, user joins the group chat
+ - [x] Can load events
+- [x] Can create an event
+- [x] User can join event
+- [ ] User can chat with the group
+- [x] user can see a list of people who are going to the event
+- [ ]  Be able to include description/bio 
+- [ ] Be able to add a favorite sport from assortment of different sports 
+ - [ ] Allow user to upload a photo
+ - [x] Add button to add friends 
+ - [x] User is able to login
+- [x] User can log out
+- [ ] User can sign up through a register screen to create an account
+- [ ] User can search other users by their username
+ - [ ] when user is typing, there is an auto filler with users starting by  that
+ - [ ] User gets a suggestion of users on the same location
+ - [ ] user can also search by real names
+  - [ ] User can set up location from parse location database
+ - [x] In the events user can select location
+ - [ ] Events appear by location
+ - [ ] Have a setting screen to let people change their language preference
+- [ ] Allow user to change app notification setting in the setting screen 
+- [ ] Allows user to edit their profile 
+- [ ] Allow user to manage their event 
+ - [ ] Send invitations via email or username once signed up
+ - [ ] User can delete event
 
-* User can create a profile within the app 
-    * Set username/name
-    * set sport preferences
-    * look for friends
-* Users can create events (private or public) and send invitations via email or username once signed up. If the person invited does not have an account, they will be prompted to create one.
-    * creating events will also create a groupchat for that event
- * User can send and receive message from the groups they are join
- * Users can see a list of events from their friends
-    * Also they can join the events, and write to that group chat 
 
 **Optional Nice-to-have Stories**
 
-* Set Location (Google Maps Api)
-* User can import contacts
+- [ ] Set Location (Google Maps Api)
+- [ ] User can import contacts
 
 
 
@@ -97,16 +117,6 @@ Optional:
    * When user confirm, user is taken to the chat of the group
    * User has an option to invite people to join the event
 
-## Wireframes 
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-43.jpg" width="800" height="750">
-<img src="https://github.com/SportsAct/SportsAct/blob/main/PHOTO-2021-03-14-18-21-53.jpg" width="800" height="750">
-
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
-
-## Schema 
-[This section will be completed in Unit 9]
 ### Models
 
 #### Users
@@ -192,51 +202,5 @@ Optional:
 |  user             | user     | user that comment             |
 |  post             | post     | post that was commented             |
 
-### Networking
-  
-  Home Page
-  -[Read/GET] Gets all the feed
- 
- <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getHomeFeed.PNG" width="1200" height="500">
- 
- -[Read/GET] Gets all the friends of a user
- 
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getFriends.PNG" width="1200" height="500">
-  
-  Chat
-  
-  -[Read/get] Gets all messages
-  
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/getMessages.PNG" width="1200" height="500">
-  
-  -[Create/Post] Post a message
-  
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/sendingAMssage.PNG" width="1200" height="500">
-  
-  -[Create/Post] Join the event
-  
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/UserJoiningEvent.PNG" width="1200" height="500">
-  
-  Profile
-  
-  -[Update/put] Update the profile 
-  
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/updateProfile.PNG" width="1200" height="500">
-  
-  Confirm Create Event Screen
-  
-  -[Create/Post] create an event
-  
-   <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/CreatingEvent.PNG" width="1200" height="500">
-  
-  -[Create/Post] create a chat
-  
-  <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/createChat.PNG" width="1200" height="500">
-  
-  Add Friend
-  
-  -[Read/Get] username (stretch to search by also name)
-  
-   <img src="https://github.com/SportsAct/SportsAct/blob/main/Network%20Snippets/searchByUsername.PNG" width="1200" height="500">
-  
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
