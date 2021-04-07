@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         //setting bar
         setSupportActionBar(tbToolbar);
 
+
+
         //listeners
         //bottom navigation view listeners
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
