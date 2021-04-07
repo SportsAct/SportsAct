@@ -42,7 +42,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 

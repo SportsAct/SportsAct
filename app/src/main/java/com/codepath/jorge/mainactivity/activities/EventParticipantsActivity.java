@@ -66,6 +66,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
         //setting bar
         tbToolbar.setTitle("Event Participants");
         setSupportActionBar(tbToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         //progress indicator creation
         loadingDialog = new LoadingDialog(this);
@@ -80,6 +81,12 @@ public class EventParticipantsActivity extends AppCompatActivity {
         rvEventParticipants.setAdapter(adapter);
         rvEventParticipants.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void getEvent(String id) {
