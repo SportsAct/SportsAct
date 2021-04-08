@@ -52,7 +52,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_participants);
 
         //get event id
-        String eventId = getIntent().getStringExtra("event_id");
+         String eventId = getIntent().getStringExtra("event_id");
 
         //get event
         getEvent(eventId);
@@ -134,7 +134,6 @@ public class EventParticipantsActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.i(TAG, eventParticipants.get(0).getUser().getUsername());
 
                 //set users
                 for(int i = 0; i < eventParticipants.size(); i++){

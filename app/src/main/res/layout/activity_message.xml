@@ -4,47 +4,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Chat messages view will go here -->
+    <include
+        android:id="@+id/tbToolbar"
+        layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessages"
         android:transcriptMode="alwaysScroll"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/rlSend"
-        android:layout_width="wrap_content"
+        android:layout_below="@+id/tbToolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/otherReletive"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <RelativeLayout
-        android:layout_alignParentBottom="true"
+        android:id="@+id/otherReletive"
         android:layout_width="match_parent"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:paddingLeft="0dp"
+        android:paddingTop="5dp"
         android:paddingRight="0dp"
-        android:layout_height="wrap_content" >
+        android:paddingBottom="10dp">
 
         <EditText
             android:id="@+id/etMessage"
-            android:layout_toLeftOf="@+id/btSend"
-            android:layout_alignBottom="@+id/btSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
+            android:layout_alignBottom="@+id/btSend"
+            android:layout_toStartOf="@+id/btSend"
+           android:maxLength="10000"
             android:hint="@string/message_hint"
-            android:inputType="textShortMessage"
             android:imeOptions="actionSend"
-            />
+            android:singleLine="false" />
 
         <ImageButton
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingRight="10dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
+            android:gravity="center"
+            android:paddingEnd="10dp"
             android:src="@drawable/ic_baseline_send_24"
             android:textSize="18sp" />
 

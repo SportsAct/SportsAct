@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,91 +14,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.models.Message;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
+    //declaration
+    //constants
+    public static final String TAG = "MessageAdapter";
     public static final int MESSAGE_OUTGOING = 123;
     public static final int MESSAGE_INCOMING = 321;
 
-
+    //variables
     private List<Message> mMessages;
     private Context mContext;
-    private String mUserId;
+    private ParseUser mUser;
 
-    public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
-
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        abstract void bindMessage(Message message);
-    }
-
-    public class IncomingMessageViewHolder extends MessageViewHolder {
-        ImageView imageOther;
-        TextView body;
-        TextView name;
-
-        public IncomingMessageViewHolder(View itemView) {
-            super(itemView);
-            imageOther = (ImageView)itemView.findViewById(R.id.ivProfileOther);
-            body = (TextView)itemView.findViewById(R.id.tvBody);
-            name = (TextView)itemView.findViewById(R.id.tvName);
-        }
-
-        @Override
-        public void bindMessage(Message message) {
-            Glide.with(mContext)
-                    .load(getProfileUrl(message.getId()))
-                    .circleCrop() // create an effect of a round profile picture
-                    .into(imageOther);
-            body.setText(message.getBody());
-            name.setText(message.getId()); // in addition to message show user ID
-        }
-    }
-
-    public class OutgoingMessageViewHolder extends MessageViewHolder {
-        ImageView imageMe;
-        TextView body;
-
-        public OutgoingMessageViewHolder(View itemView) {
-            super(itemView);
-            imageMe = (ImageView)itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView)itemView.findViewById(R.id.tvBody);
-        }
-
-        @Override
-        public void bindMessage(Message message) {
-            Glide.with(mContext)
-                    .load(getProfileUrl(message.getId()))
-                    .circleCrop() // create an effect of a round profile picture
-                    .into(imageMe);
-            body.setText(message.getBody());
-        }
-    }
-
-    //Create gravatar image based on hash value obtained from userId
-    private static String getProfileUrl(final String userId) {
-        String hex = "";
-        try {
-            final MessageDigest digest = MessageDigest.getInstance("MD5");
-            final byte[] hash = digest.digest(userId.getBytes());
-            final BigInteger bigInt = new BigInteger(hash);
-            hex = bigInt.abs().toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "https://www.gravatar.com/avatar/" + hex + "?d=identicon";
-    }
-
-
-    public ChatAdapter(Context context, String userId, List<Message> messages) {
+    //constructor for adapter
+    public MessageAdapter(Context context, ParseUser user, List<Message> messages) {
         mMessages = messages;
-        this.mUserId = userId;
+        this.mUser = user;
         mContext = context;
     }
 
@@ -106,13 +46,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         return mMessages.size();
     }
 
-    private boolean isMe(int position) {
-        Message message = mMessages.get(position);
-        return message.getId() != null && message.getId().equals(mUserId);
-    }
-
+    //see which message it is
     @Override
     public int getItemViewType(int position) {
+
         if (isMe(position)) {
             return MESSAGE_OUTGOING;
         } else {
@@ -120,10 +57,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         }
     }
 
+    //checks to see if a message is yours
+    private boolean isMe(int position) {
+        Message message = mMessages.get(position);
+        return message.getUser().getObjectId().equals(mUser.getObjectId());
+    }
+
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+
+        LayoutInflater inflater = LayoutInflater.from(mContext);
 
         if (viewType == MESSAGE_INCOMING) {
             View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
@@ -141,5 +84,76 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         Message message = mMessages.get(position);
         holder.bindMessage(message);
     }
+
+    public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
+
+        public MessageViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        abstract void bindMessage(Message message);
+    }
+
+    public class IncomingMessageViewHolder extends MessageViewHolder {
+        ImageView imageOther;
+        TextView body;
+        TextView name;
+
+        public IncomingMessageViewHolder(View itemView) {
+            super(itemView);
+            imageOther = itemView.findViewById(R.id.ivProfileOther);
+            body = itemView.findViewById(R.id.tvBody);
+            name = itemView.findViewById(R.id.tvName);
+        }
+
+        @Override
+        public void bindMessage(Message message) {
+
+            //get image
+            ParseFile parseFile = (ParseFile) message.getUser().get("profilePicture");
+
+            if(parseFile != null) {
+                Glide.with(mContext)
+                        .load(parseFile.getUrl())
+                        .into(imageOther);
+            }
+            else {
+                imageOther.setImageResource(R.drawable.empty_profile);
+            }
+            name.setText(message.getUser().getUsername()); // in addition to message show user username
+            body.setText(message.getBody());
+
+        }
+    }
+
+    public class OutgoingMessageViewHolder extends MessageViewHolder {
+        ImageView imageMe;
+        TextView body;
+
+        public OutgoingMessageViewHolder(View itemView) {
+            super(itemView);
+            imageMe = itemView.findViewById(R.id.ivProfileMe);
+            body = itemView.findViewById(R.id.tvBody);
+        }
+
+        @Override
+        public void bindMessage(Message message) {
+
+            //get image
+            ParseFile parseFile = (ParseFile) message.getUser().get("profilePicture");
+
+            if(parseFile != null) {
+                Glide.with(mContext)
+                        .load(parseFile.getUrl())
+                        .into(imageMe);
+                body.setText(message.getBody());
+            }
+            else {
+                imageMe.setImageResource(R.drawable.empty_profile);
+            }
+        }
+    }
+
+
 
 }

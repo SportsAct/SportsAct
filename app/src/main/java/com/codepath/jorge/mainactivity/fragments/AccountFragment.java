@@ -29,16 +29,10 @@ import com.parse.ParseUser;
 
 import java.io.File;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment# newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment extends Fragment {
 
     public static final String TAG = "AccountFragment";
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private Button btnCaptureImage;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private ImageView profilePic;
@@ -71,23 +65,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String description  = etDescription.getText().toString();
-                if (description.isEmpty()){
-                    Toast.makeText(getContext(), "Description can't be empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
-            }
-        });
-
     }
 
     private void savePost(ParseUser currentUser, File photoFile) {
@@ -103,7 +80,7 @@ public class AccountFragment extends Fragment {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "${applicationId}.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.

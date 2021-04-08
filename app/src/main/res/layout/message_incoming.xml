@@ -2,34 +2,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="4dp"
     android:paddingLeft="15dp"
     android:paddingRight="60dp"
     android:clipToPadding="false">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/ivProfileOther"
-        android:layout_alignTop="@+id/ivProfileOther"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:text="Johny Lindsey" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:shape="ring"
+        app:cardCornerRadius="75dp">
 
-    <ImageView
-        android:id="@+id/ivProfileOther"
-        android:layout_alignParentLeft="true"
-        android:contentDescription="@string/profile_other"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@mipmap/ic_launcher" />
+        <ImageView
+            android:id="@+id/ivProfileOther"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/empty_profile" />
+    </androidx.cardview.widget.CardView>
+
     <TextView
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cardview"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/cardview"
+        android:textStyle="bold"
+        android:paddingBottom="4dp"
+        tools:text="Johny Lindsey" />
+
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvBody"
         android:layout_below="@+id/tvName"
-        android:layout_alignLeft="@+id/tvName"
+        android:layout_alignStart="@+id/tvName"
         android:background="@drawable/message_incoming"
         android:paddingVertical="12dp"
         android:paddingHorizontal="16dp"

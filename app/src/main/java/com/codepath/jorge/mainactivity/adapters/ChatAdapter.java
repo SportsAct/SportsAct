@@ -1,12 +1,14 @@
 package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.activities.MessageActivity;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -68,6 +71,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         TextView tvEventName;
         TextView tvLastMessage;
         TextView tvUpdatedAt;
+        RelativeLayout rlChatButton;
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
@@ -77,6 +81,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
            tvEventName = itemView.findViewById(R.id.tvChatNameChat);
            tvLastMessage = itemView.findViewById(R.id.tvLastMessage);
            tvUpdatedAt = itemView.findViewById(R.id.tvTimeChat);
+           rlChatButton = itemView.findViewById(R.id.rlChat);
        }
 
         public void bind(Chat chat) {
@@ -97,11 +102,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             String date = simpleDateFormat.format(chat.getUpdatedTime());
 
-                    //setting the texts
-                    tvEventName.setText(chat.getEvent().getTitle());
-                    tvLastMessage.setText(chat.getLastMessage().getBody());
-                    tvUpdatedAt.setText(date);
+            //setting the texts
+            tvEventName.setText(chat.getEvent().getTitle());
+            tvLastMessage.setText(chat.getLastMessage().getBody());
+            tvUpdatedAt.setText(date);
+
+            //listener chat being click
+            rlChatButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(context, MessageActivity.class);
+                    intent.putExtra("chat_id",chat.getObjectId());
+                    context.startActivity(intent);
 
                 }
+            });
+
+       }
+
+
         }
     }
