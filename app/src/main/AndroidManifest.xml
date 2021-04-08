@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codepath.jorge.mainactivity">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".parse.ParseApplication"
         android:allowBackup="true"
@@ -11,17 +14,7 @@
         android:supportsRtl="true"
          android:theme="@style/Theme.MainActivity">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.codepath.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileprovider" />
-        </provider>
-        
-          <activity android:name=".activities.MessageActivity"></activity>
+        <activity android:name=".activities.MessageActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.EventParticipantsActivity" />
 
@@ -29,18 +22,25 @@
             android:name=".activities.CreateEventActivity"
             android:windowSoftInputMode="adjustUnspecified" />
 
-        </activity>
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <activity android:name=".activities.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
+
 
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

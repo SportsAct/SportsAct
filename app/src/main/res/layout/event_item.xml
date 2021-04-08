@@ -136,7 +136,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    app:srcCompat="@drawable/soccer" />
+                    app:srcCompat="@drawable/group" />
 
                 <TextView
                     android:id="@+id/tvSportPlayHome"

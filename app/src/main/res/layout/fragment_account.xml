@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".profile">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/profilePic"
@@ -60,7 +59,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="41dp"
         android:layout_marginBottom="344dp"
-        android:src="@drawable/icons8_basketball_26" />
+        />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -71,7 +70,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="94dp"
         android:layout_marginBottom="344dp"
-        android:src="@drawable/icons8_soccer_ball_24" />
+        />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -82,7 +81,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="147dp"
         android:layout_marginBottom="340dp"
-        android:src="@drawable/icons8_tennis_ball_50" />
+        />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -92,7 +91,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="208dp"
         android:layout_marginBottom="340dp"
-        android:src="@drawable/icons8_volleyball_24" />
+        />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -103,7 +102,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="123dp"
         android:layout_marginBottom="342dp"
-        android:src="@drawable/icons8_american_football_ball_30" />
+         />
 
     <EditText
         android:id="@+id/nameId"
@@ -144,7 +143,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="284dp"
-        android:src="@drawable/badminton" />
+         />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -155,7 +154,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="89dp"
         android:layout_marginBottom="282dp"
-        android:src="@drawable/baseball" />
+        />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -166,7 +165,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="143dp"
         android:layout_marginBottom="287dp"
-        android:src="@drawable/cycling" />
+         />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -177,7 +176,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="169dp"
         android:layout_marginBottom="287dp"
-        android:src="@drawable/golfball" />
+        />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -188,7 +187,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="288dp"
-        android:src="@drawable/icehockey" />
+        />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -199,7 +198,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="286dp"
-        android:src="@drawable/pingpong" />
+        />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -210,9 +209,8 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="360dp"
         android:layout_marginEnd="52dp"
-        android:src="@drawable/handball" />
+         />
 
-    <!-- TODO: Update blank fragment layout -->
 
 </RelativeLayout>
 
