@@ -19,6 +19,7 @@ import com.parse.ParseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
@@ -98,12 +99,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         ImageView imageOther;
         TextView body;
         TextView name;
+        TextView tvTime;
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
             imageOther = itemView.findViewById(R.id.ivProfileOther);
             body = itemView.findViewById(R.id.tvBody);
             name = itemView.findViewById(R.id.tvName);
+            tvTime = itemView.findViewById(R.id.tvTimeMI);
         }
 
         @Override
@@ -120,8 +123,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             else {
                 imageOther.setImageResource(R.drawable.empty_profile);
             }
+
             name.setText(message.getUser().getUsername()); // in addition to message show user username
             body.setText(message.getBody());
+
+            //getting date
+            String pattern = "h:mm aaa";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(message.getCreatedAt());
+            tvTime.setText(date);
 
         }
     }
@@ -129,11 +139,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public class OutgoingMessageViewHolder extends MessageViewHolder {
         ImageView imageMe;
         TextView body;
+        TextView tvTime;
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);
             imageMe = itemView.findViewById(R.id.ivProfileMe);
             body = itemView.findViewById(R.id.tvBody);
+            tvTime = itemView.findViewById(R.id.tvTimeMO);
         }
 
         @Override
@@ -146,11 +158,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 Glide.with(mContext)
                         .load(parseFile.getUrl())
                         .into(imageMe);
-                body.setText(message.getBody());
             }
             else {
                 imageMe.setImageResource(R.drawable.empty_profile);
             }
+
+            body.setText(message.getBody());
+
+            //getting date
+            String pattern = "h:mm aaa";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(message.getCreatedAt());
+            tvTime.setText(date);
         }
     }
 

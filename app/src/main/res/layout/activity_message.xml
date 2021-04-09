@@ -46,6 +46,7 @@
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
             android:gravity="center"
+            android:backgroundTint="@color/white"
             android:paddingEnd="10dp"
             android:src="@drawable/ic_baseline_send_24"
             android:textSize="18sp" />
