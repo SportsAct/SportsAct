@@ -166,6 +166,10 @@ public class MessageActivity extends AppCompatActivity {
 
     private void sendAMessage() {
 
+        if( etMessage.getText().toString().isEmpty()){
+            return;
+        }
+
         String data = etMessage.getText().toString();
         Message message = new Message();
         message.setBody(data);
@@ -183,16 +187,37 @@ public class MessageActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(MessageActivity.this, "Successfully created message on Parse", Toast.LENGTH_SHORT).show();
-
                 messageList.add(0,message);
+
+                //updating last message in chat
+                updateLastMessage(message);
 
                 adapter.notifyDataSetChanged();
 
             }
         });
         etMessage.setText(null);
-    };
+    }
+
+    private void updateLastMessage(Message message) {
+
+        currentChat.setLastMessage(message);
+
+        currentChat.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem saving the  last message!", e);
+                    Toast.makeText(MessageActivity.this, "There was a problem saving the last message!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+            }
+        });
+
+    }
     }
 
 
