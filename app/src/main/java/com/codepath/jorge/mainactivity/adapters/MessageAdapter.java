@@ -118,6 +118,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if(parseFile != null) {
                 Glide.with(mContext)
                         .load(parseFile.getUrl())
+                        .placeholder(R.drawable.empty_profile)
                         .into(imageOther);
             }
             else {
@@ -157,6 +158,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if(parseFile != null) {
                 Glide.with(mContext)
                         .load(parseFile.getUrl())
+                        .placeholder(R.drawable.empty_profile)
                         .into(imageMe);
             }
             else {

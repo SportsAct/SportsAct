@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.models.AllStates;
+import com.codepath.jorge.mainactivity.models.Chat;
+import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
@@ -318,11 +321,62 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
                     return;
                 }
 
+                //create chat and send user to chat screen
+                //create chat
+                createChat(sportEvent);
+
+            }
+        });
+    }
+
+    private void createChat(SportEvent sportEvent) {
+
+        Chat chat = new Chat();
+        chat.setEvent(sportEvent);
+
+        chat.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem creating the chat!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem creating the chat!!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+
+                //joining user to chat
+                joinUserToCHat(chat);
+
+                //send user to message screen
+                Intent intent = new Intent(CreateEventActivity.this, MessageActivity.class);
+                intent.putExtra("chat_id",chat.getObjectId());
+                CreateEventActivity.this.startActivity(intent);
+
                 finish();
 
-                //send user to chat screen
-                //todo create chat
-                //todo send user to chat screen
+            }
+        });
+    }
+
+    private void joinUserToCHat(Chat chat) {
+
+        ChatUserJoin chatUserJoin = new ChatUserJoin();
+        chatUserJoin.setChat(chat);
+        chatUserJoin.setUser(ParseUser.getCurrentUser());
+
+        chatUserJoin.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem joining user to the chat!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem joining user to the chat!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
 
             }
         });

@@ -86,11 +86,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //todo home requestts are stop
         //getting events
-        //getHomeFeed();
-        //dismissing loading dialog
-        loadingDialog.dismissDialog();
+        getHomeFeed();
+
     }
 
     private void getHomeFeed(){
