@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
                 if(e != null){
                     loadingDialog.dismissDialog();
                     Log.e(TAG,"There was a problem loading the events!!", e);
-                    Toast.makeText(getContext(), "There was a problem loading the events", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "There was a problem loading the events", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
