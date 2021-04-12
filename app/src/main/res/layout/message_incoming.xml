@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="4dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="60dp"
+    android:clipToPadding="false">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:shape="ring"
+        app:cardCornerRadius="75dp">
+
+        <ImageView
+            android:id="@+id/ivProfileOther"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/empty_profile" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cardview"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/cardview"
+        android:textStyle="bold"
+        android:paddingBottom="4dp"
+        tools:text="Johny Lindsey" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:background="@drawable/message_incoming"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:elevation="2dp"
+        android:layout_alignStart="@+id/tvName">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBody"
+            android:textSize="18dp"
+            android:text="Someone else's me " />
+
+        <TextView
+            android:id="@+id/tvTimeMI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBody"
+            android:textSize="12dp"
+            android:layout_alignParentEnd="true"
+            tools:text="3:47 pm" />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

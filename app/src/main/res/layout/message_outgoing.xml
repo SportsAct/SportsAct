@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clipToPadding="false"
+    android:paddingVertical="4dp"
+    android:paddingStart="60dp"
+    android:paddingEnd="15dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/cardview"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/message_outgoing">
+
+        <TextView
+            android:id="@+id/tvBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            tools:text="Your outgoing message here lalalal" />
+
+        <TextView
+            android:id="@+id/tvTimeMO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/tvBody"
+            android:textSize="12dp"
+            android:layout_alignParentEnd="true"
+            tools:text="3:47 pm" />
+
+
+    </RelativeLayout>
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:shape="ring"
+        app:cardCornerRadius="75dp">
+
+        <ImageView
+            android:id="@+id/ivProfileMe"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/empty_profile" />
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
