@@ -7,16 +7,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
+
     <ImageView
         android:id="@+id/profilePic"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="18dp"
         android:layout_marginTop="63dp"
         tools:src="@tools:sample/avatars" />
+
 
     <Button
         android:id="@+id/addFriendId"
@@ -50,60 +55,6 @@
         android:text="Upload"
         tools:text="Upload" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="41dp"
-        android:layout_marginBottom="344dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="94dp"
-        android:layout_marginBottom="344dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="147dp"
-        android:layout_marginBottom="340dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="208dp"
-        android:layout_marginBottom="340dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="342dp"
-         />
-
     <EditText
         android:id="@+id/nameId"
         android:layout_width="wrap_content"
@@ -118,8 +69,6 @@
         android:inputType="textPersonName"
         android:text="Name" />
 
-
-
     <TextView
         android:id="@+id/bioTextId"
         android:layout_width="185dp"
@@ -127,74 +76,69 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="147dp"
         android:layout_marginEnd="37dp"
         android:layout_toEndOf="@+id/profilePic"
         android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
 
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="37dp"
-        android:layout_height="34dp"
+    <Button
+        android:id="@+id/takePicId"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profilePic"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
         android:layout_marginStart="28dp"
+        android:layout_marginTop="19dp"
+        android:text="Upload"
+        tools:text="Upload" />
         android:layout_marginBottom="284dp"
          />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="38dp"
-        android:layout_height="37dp"
+    <Button
+        android:id="@+id/addFriendId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="89dp"
-        android:layout_marginBottom="282dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginBottom="87dp"
+        android:text="Add Friends" />
         android:layout_centerVertical="true"
         android:layout_marginStart="143dp"
         android:layout_marginBottom="287dp"
          />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
+  
+    <Button
+        android:id="@+id/manageEventsId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="169dp"
-        android:layout_marginBottom="287dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="87dp"
+        android:layout_toEndOf="@+id/addFriendId"
+        android:text="Manage Events" />
         android:layout_centerVertical="true"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="288dp"
         />
 
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="32dp"
-        android:layout_height="41dp"
-        android:layout_alignParentEnd="true"
+    <HorizontalScrollView
+        android:layout_width="300dp"
+        android:layout_height="192dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="157dp">
+
+        <LinearLayout
+            android:id="@+id/gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </HorizontalScrollView>
         android:layout_centerVertical="true"
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="286dp"
@@ -210,7 +154,6 @@
         android:layout_marginTop="360dp"
         android:layout_marginEnd="52dp"
          />
-
 
 </RelativeLayout>
 

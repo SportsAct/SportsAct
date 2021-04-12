@@ -1,12 +1,19 @@
 package com.codepath.jorge.mainactivity.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import com.bumptech.glide.Glide;
+import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import androidx.annotation.NonNull;
@@ -26,6 +33,7 @@ import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 
@@ -60,14 +68,11 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(currentUser, photoFile);
+
             }
         });
 
-    }
 
-    private void savePost(ParseUser currentUser, File photoFile) {
     }
 
 
@@ -91,6 +96,7 @@ public class AccountFragment extends Fragment {
         }
     }
 
+    //On activity result
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -101,12 +107,15 @@ public class AccountFragment extends Fragment {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 profilePic.setImageBitmap(takenImage);
+                savePost(photoFile);
+                profilePic.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getActivity(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName) {
         // Get safe storage directory for photos
         // Use `getExternalFilesDir` on Context to access package-specific directories.
@@ -120,6 +129,21 @@ public class AccountFragment extends Fragment {
 
         // Return the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+        // To save post from submitting picture
+        private void savePost(File photoFile) {
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        parseUser.put("profilePicture", new ParseFile(photoFile));
+        parseUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if( e != null){
+                    Log.e(TAG, "Error while saving", e);
+                   Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+               }
+               Log.i(TAG, "post save was successful!");
+           }
+        });
     }
 
     @Override
