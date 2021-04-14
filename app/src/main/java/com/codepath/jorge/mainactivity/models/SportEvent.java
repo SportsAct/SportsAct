@@ -1,7 +1,9 @@
 package com.codepath.jorge.mainactivity.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
@@ -21,7 +23,15 @@ public class SportEvent extends ParseObject {
 
     public String getId(){return getObjectId();}
 
-    public String getTitle(){return getString(KEY_TITLE);}
+    public String getTitle(){
+
+        try {
+            return fetchIfNeeded().getString(KEY_TITLE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "Not found";
+    }
 
     public void setTitle(String title){put(KEY_TITLE,title);}
 
@@ -46,9 +56,9 @@ public class SportEvent extends ParseObject {
     public void setSport(SportGame sport){put(KEY_SPORT,sport);}
 
     //stretch for location to get parks from google
-    public String getLocation(){return getString(KEY_LOCATION);}
+    public Location getLocation(){return (Location) getParseObject(KEY_LOCATION);}
 
-    public void setLocation(String location){put(KEY_LOCATION,location);}
+    public void setLocation(Location location){put(KEY_LOCATION,location);}
 
     public int getMaxNumberOfParticipants(){return getNumber(KEY_MAX_PARTICIPANTS).intValue();}
 

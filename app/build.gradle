@@ -37,17 +37,14 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    // implementation "com.github.parse-community.Parse-SDK-Android:parse:1.18.5"
 
-    //required for the bottom navigation
+    //reqired for the bottom navigation
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:${designSupportVersion}"
 
     //for parse
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.25.0'
-
-    // for logging API calls to LogCat
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0' // for logging API calls to LogCat
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0' // for logging API calls to LogCat
     //implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1' // use this one if above implementation gives problems
 
     //needed for glide

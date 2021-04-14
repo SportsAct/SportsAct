@@ -15,15 +15,34 @@
         android:visibility="invisible"
         android:indeterminate="true" />
 
-    <EditText
-        android:id="@+id/etEventTitleCreateEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/enter_event_title"
-        android:inputType="textShortMessage"
-        android:lines="1" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etEventTitleCreateEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/enter_event_title"
+            android:inputType="textShortMessage"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/tvTitleMaxCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_alignEnd="@+id/etEventTitleCreateEvent"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            tools:text="25" />
+    </RelativeLayout>
+
+
 
     <Switch
         android:id="@+id/swtPrivacyCreateEvent"
@@ -44,6 +63,31 @@
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
+    <Button
+        android:id="@+id/btnLocationCreateEvent"
+        style="@android:style/Widget.Material.Light.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:text="Select the location of the event" />
+
+    <TextView
+        android:id="@+id/tvLocationCreateEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:text="Select a location for this event."
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,6 +97,9 @@
         android:text="Select the date and time for the event:" />
 
     <LinearLayout
+        android:id="@+id/ivCalendarCreateEvent"
+        android:clickable="true"
+        android:background="@drawable/custom_ripple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
@@ -66,7 +113,6 @@
             android:text="Pick a date:" />
 
         <ImageView
-            android:id="@+id/ivCalendarCreateEvent"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginHorizontal="8dp"
@@ -82,8 +128,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ivTimePickerCreateEvent"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
@@ -95,7 +144,6 @@
             android:text="Pick a time:" />
 
         <ImageView
-            android:id="@+id/ivTimePickerCreateEvent"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginHorizontal="8dp"
@@ -116,16 +164,6 @@
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
-    <EditText
-        android:id="@+id/etLocationCreateEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Enter the Location of the Event..."
-        android:imeOptions="actionDone"
-        android:inputType="textShortMessage"
-        android:lines="1" />
 
     <LinearLayout
         android:layout_width="match_parent"

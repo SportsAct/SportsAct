@@ -7,7 +7,6 @@ import com.parse.ParseObject;
 @ParseClassName("Sport")
 public class SportGame extends ParseObject {
 
-    public static final String KEY_ID = "objectId";
     public static final String KEY_SPORT_NAME = "sportName";
     public static final String KEY_SPORT_IMAGE = "sportImage";
 

@@ -1,24 +1,31 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.adapters.LocationDialog;
+import com.codepath.jorge.mainactivity.models.AllStates;
+import com.codepath.jorge.mainactivity.models.Chat;
+import com.codepath.jorge.mainactivity.models.ChatUserJoin;
+import com.codepath.jorge.mainactivity.models.EventParticipant;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -33,7 +40,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +55,7 @@ class Event{
     int minutes;
     String eventTitle;
     boolean privacy;
-    String location;
+    Location location;
     int maxParticipants;
     SportGame sportGame;
     Date fullDate;
@@ -76,21 +82,24 @@ class Event{
     }
 }
 
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
 
     //declaration
 
     //constants
     public static final String TAG = "CreateEventActivity";
+    private final int MAX_COUNT = 25;
 
     //widgets
     private EditText etEventTitle;
+    private TextView tvMaxCount;
     private Switch swtPrivacy;
-    private ImageView ivCalendar;
+    private LinearLayout ivCalendar;
     private TextView tvDateSelected;
-    private ImageView ivClock;
+    private LinearLayout ivClock;
     private TextView tvTimeSelected;
-    private EditText etLocation;
+    private TextView tvLocation;
+    private Button btnSelectLocation;
     private NumberPicker npAmountOfParticipants;
     private NumberPicker npSportsToBePlayed;
     private Button btnCreateEvent;
@@ -99,6 +108,7 @@ public class CreateEventActivity extends AppCompatActivity {
     //variable
     private List<SportGame> sportGames;
     private Event eventBeingCreated;
+    private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,12 +117,14 @@ public class CreateEventActivity extends AppCompatActivity {
 
         //finding views by id
         etEventTitle = findViewById(R.id.etEventTitleCreateEvent);
+        tvMaxCount = findViewById(R.id.tvTitleMaxCount);
         swtPrivacy = findViewById(R.id.swtPrivacyCreateEvent);
         ivCalendar = findViewById(R.id.ivCalendarCreateEvent);
         tvDateSelected = findViewById(R.id.tvSelectedDateCreateEvent);
         ivClock = findViewById(R.id.ivTimePickerCreateEvent);
         tvTimeSelected = findViewById(R.id.tvTimeSelectedCreateEvent);
-        etLocation = findViewById(R.id.etLocationCreateEvent);
+        btnSelectLocation = findViewById(R.id.btnLocationCreateEvent);
+        tvLocation = findViewById(R.id.tvLocationCreateEvent);
         npAmountOfParticipants = findViewById(R.id.npAmountofPlayersCreateEvent);
         npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
@@ -121,11 +133,44 @@ public class CreateEventActivity extends AppCompatActivity {
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
+        allStates = new ArrayList<>();
+
+        //getting states
+        getStates();
 
         //setting the Number Pickers
        getSportData();
        
        //listeners
+
+        //title max count
+        etEventTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                int counter = etEventTitle.length();
+
+                if(counter <= MAX_COUNT){
+                    tvMaxCount.setText(Integer.toString(MAX_COUNT - counter));
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int counter = etEventTitle.length();
+                tvMaxCount.setVisibility(View.VISIBLE);
+                if(counter == 0){
+                    tvMaxCount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         
         //picking a date
         ivCalendar.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +196,20 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        //select location
+        btnSelectLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
+    }
+
+    @Override
+    public void saveLocation(Location location) {
+        eventBeingCreated.location = location;
+        tvLocation.setText(location.getCityName() + ", " + location.getState().getName());
     }
 
     //gather all informetion to create event
@@ -166,16 +225,12 @@ public class CreateEventActivity extends AppCompatActivity {
         // get data
         eventBeingCreated.eventTitle = etEventTitle.getText().toString();
         eventBeingCreated.privacy = swtPrivacy.isChecked();
-        eventBeingCreated.location = etLocation.getText().toString();
         eventBeingCreated.maxParticipants = npAmountOfParticipants.getValue();
         eventBeingCreated.sportGame = getPickedSport();
         eventBeingCreated.getFullDate();
 
         //create event
         createEventQuery();
-
-        //send user to confirmation screen
-        //todo send user to confirmation screen
 
     }
 
@@ -201,16 +256,127 @@ public class CreateEventActivity extends AppCompatActivity {
                 if(e != null){
                     Log.e(TAG,"There was a problem creating the event!!", e);
                     Toast.makeText(CreateEventActivity.this, "There was a problem creating the event", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
-                //todo create chat
-                //todo join author to event
-                //todo anything else to do with the event
+                //join author to event
+                joinHostToEvent(sportEvent);
 
                 Toast.makeText(CreateEventActivity.this, "Event Created Successfully", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
+
+            }
+        });
+    }
+
+    private void getStates(){
+
+        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
+        query.findInBackground(new FindCallback<AllStates>() {
+            @Override
+            public void done(List<AllStates> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the states!!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                for(int i = 0 ; i < objects.size() ; i++){
+                    allStates.add(objects.get(i));
+                }
+
+                btnSelectLocation.setEnabled(true);
+
+            }
+        });
+
+    }
+
+    private void openDialog(){
+
+        if(allStates == null || allStates.isEmpty()){
+            return;
+        }
+
+        LocationDialog locationDialog = new LocationDialog(allStates);
+        locationDialog.show(getSupportFragmentManager(),TAG);
+    }
+
+    private void joinHostToEvent(SportEvent sportEvent) {
+
+        EventParticipant hostParticipant = new EventParticipant();
+        hostParticipant.setUser(ParseUser.getCurrentUser());
+        hostParticipant.setEvent(sportEvent);
+        hostParticipant.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem joining user to event!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem joining user to event!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+
+                //create chat and send user to chat screen
+                //create chat
+                createChat(sportEvent);
+
+            }
+        });
+    }
+
+    private void createChat(SportEvent sportEvent) {
+
+        Chat chat = new Chat();
+        chat.setEvent(sportEvent);
+
+        chat.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem creating the chat!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem creating the chat!!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+
+                //joining user to chat
+                joinUserToCHat(chat);
+
+                //send user to message screen
+                Intent intent = new Intent(CreateEventActivity.this, MessageActivity.class);
+                intent.putExtra("chat_id",chat.getObjectId());
+                CreateEventActivity.this.startActivity(intent);
+
                 finish();
+
+            }
+        });
+    }
+
+    private void joinUserToCHat(Chat chat) {
+
+        ChatUserJoin chatUserJoin = new ChatUserJoin();
+        chatUserJoin.setChat(chat);
+        chatUserJoin.setUser(ParseUser.getCurrentUser());
+
+        chatUserJoin.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem joining user to the chat!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem joining user to the chat!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
 
             }
         });
@@ -251,9 +417,9 @@ public class CreateEventActivity extends AppCompatActivity {
             return false;
         }
 
-        if(etLocation.getText().toString().isEmpty()){
+       if(eventBeingCreated.location == null){
             Toast.makeText(this,"Missing a Location for the Event", Toast.LENGTH_SHORT).show();
-            etLocation.requestFocus();
+            openDialog();
             return false;
         }
 
