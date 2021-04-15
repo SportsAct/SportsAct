@@ -1,26 +1,16 @@
 package com.codepath.jorge.mainactivity.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.bumptech.glide.Glide;
-import com.codepath.jorge.mainactivity.models.ChatUserJoin;
-import com.parse.Parse;
-import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -30,11 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.io.File;
 
 public class AccountFragment extends Fragment {

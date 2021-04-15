@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
 import com.codepath.jorge.mainactivity.adapters.MessageAdapter;
@@ -23,13 +22,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.livequery.ParseLiveQueryClient;
-import com.parse.livequery.SubscriptionHandling;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
@@ -110,7 +103,6 @@ public class MessageActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            Log.d(TAG, "Called on main thread");
             getNewMessages();
             handler.postDelayed(this, 2000);
         }

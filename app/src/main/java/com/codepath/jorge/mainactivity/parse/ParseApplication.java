@@ -1,7 +1,6 @@
 package com.codepath.jorge.mainactivity.parse;
 
 import android.app.Application;
-
 import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
@@ -12,10 +11,7 @@ import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.Parse;
 import com.parse.ParseObject;
-import com.parse.livequery.ParseLiveQueryClient;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class ParseApplication extends Application {
 

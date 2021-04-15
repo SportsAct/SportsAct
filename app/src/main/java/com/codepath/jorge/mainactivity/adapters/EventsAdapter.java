@@ -1,6 +1,5 @@
 package com.codepath.jorge.mainactivity.adapters;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,10 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
@@ -29,10 +26,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Queue;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
