@@ -49,22 +49,45 @@ public class LoginActivity extends AppCompatActivity {
         bntCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = bntCreateAccount.getText().toString();
+                String password = bntCreateAccount.getText().toString();
                 // Create the ParseUser
                 ParseUser user1 = new ParseUser();
-                // Set core properties
+                // Set core propertiesg
                 user1.setUsername("KenSmith");
                 user1.setPassword("secret123");
                 user1.setEmail("email@example.com");
                 // Set custom properties
                 //user1.put("phone", "650-253-0000");
+                user1.getParseUser(user1.getUsername());
+
+
+               // String username = bntCreateAccount.getText().toString();
+                //String password = bntCreateAccount.getText().toString();
+
+                UserLogin(username, password);
+
                 // Invoke signUpInBackground
                 user1.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
                             // Hooray! Let them use the app now.
+                            goMainActivity();
+                            user1.logInInBackground("KenSmith", "secret123", new LogInCallback() {
+                                public void done(ParseUser user, ParseException e) {
+                                    if (user != null) {
+                                        // Hooray! The user is logged in
+                                        goMainActivity();
+                                    } else {
+                                        // Signup failed. Look at the ParseException to see what happened.
+                                    }
+                                }
+
+                            });
                         } else {
                             // Sign up didn't succeed. Look at the ParseException
                             // to figure out what went wrong
+
                         }
                     }
                 });

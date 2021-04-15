@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="16dp"
+    android:background="#EBFBFA"
     tools:context=".activities.LoginActivity" >
 
     <TextView
@@ -16,6 +17,7 @@
         android:textAlignment="center"
         android:textSize="36dp"
         android:text="SportConnect"
+        android:layout_marginBottom="100dp"
         />
 
     <EditText
@@ -35,6 +37,7 @@
         android:hint="Enter your password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:drawableLeft="@drawable/ic_action_usernamelock"
         android:visibility="visible" />
 
     <Button
