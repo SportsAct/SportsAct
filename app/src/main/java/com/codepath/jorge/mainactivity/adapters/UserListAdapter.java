@@ -83,6 +83,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             if(profileImage != null){
                 Glide.with(context).load(profileImage.getUrl()).into(ivUserProfilePic);
             }
+            else {
+                ivUserProfilePic.setImageResource(R.drawable.empty_profile);
+            }
 
             //setting texts
             tvUsername.setText(parseUser.getUsername());

@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.fragments.AccountFragment;
 import com.codepath.jorge.mainactivity.fragments.ChatFragment;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.e(TAG, "We got here");
+
         checkIfUserIsLogged();
 
         //finding views by id
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         //setting bar
         setSupportActionBar(tbToolbar);
+
+
 
         //listeners
         //bottom navigation view listeners
