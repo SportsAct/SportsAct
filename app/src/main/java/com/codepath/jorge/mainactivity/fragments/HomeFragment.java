@@ -87,8 +87,8 @@ public class HomeFragment extends Fragment {
         });
 
         //getting events
-        getHomeFeed();
-
+       // getHomeFeed();
+        loadingDialog.dismissDialog();
     }
 
     private void getHomeFeed(){

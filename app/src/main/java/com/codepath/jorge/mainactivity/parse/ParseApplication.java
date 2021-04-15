@@ -6,12 +6,16 @@ import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
-import com.codepath.jorge.mainactivity.models.Message;
 import com.codepath.jorge.mainactivity.models.Location;
+import com.codepath.jorge.mainactivity.models.Message;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.livequery.ParseLiveQueryClient;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class ParseApplication extends Application {
 
@@ -34,7 +38,8 @@ public class ParseApplication extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("VR96MYDQPZyF7dgNGvwSV4d9XuAFPNGlTtsnrfjb") // should correspond to Application Id env variable
                 .clientKey("AMFYSy1jTGDkj12fjtFW4moolfu22QsMJsZHVtSd")  // should correspond to Client key env variable
-                        .server("https://parseapi.back4app.com").build());
+                .server("https://parseapi.back4app.com").build());
     }
+
 }
 
