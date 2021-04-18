@@ -84,22 +84,22 @@ public class AccountFragment extends Fragment {
 //            }
 //        });
 
-        basketballPic.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        v.setImageBitmap(res.getDrawable(R.drawable.img_down));
-                        break;
-                    }
-                    case MotionEvent.ACTION_CANCEL:{
-                        v.setImageBitmap(res.getDrawable(R.drawable.img_up));
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+//        basketballPic.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN: {
+//                        v.setImageBitmap(res.getDrawable(R.drawable.img_down));
+//                        break;
+//                    }
+//                    case MotionEvent.ACTION_CANCEL:{
+//                        v.setImageBitmap(res.getDrawable(R.drawable.img_up));
+//                        break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
     }
 
