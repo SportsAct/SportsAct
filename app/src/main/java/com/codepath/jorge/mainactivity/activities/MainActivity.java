@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu,menu);
+        inflater.inflate(R.menu.toolbar_search,menu);
 
         return true;
     }
@@ -116,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 //take them to log in page
                 checkIfUserIsLogged();
                 return true;
+            case   R.id.search:
+                //User searches for friends
+               Intent intent = new Intent(this, SearchActivity.class);
+               this.startActivity(intent);
+               break;
         }
 
         return super.onOptionsItemSelected(item);
