@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
+import com.codepath.jorge.mainactivity.activities.MessageActivity;
+import com.codepath.jorge.mainactivity.models.Chat;
+import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.parse.GetCallback;
@@ -29,6 +32,7 @@ import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Queue;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
@@ -95,6 +99,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             btnSeeWhoIsGoing = itemView.findViewById(R.id.btnSeeParticipantsHome);
             btnChatWithGroup = itemView.findViewById(R.id.btnChatWithGroupHome);
             btnJoinEvent = itemView.findViewById(R.id.btnJoinEventHome);
+
         }
 
         public void bind(SportEvent sportEvent) {
@@ -142,11 +147,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
 
-            //todo chat with group
+            //chat with group
             btnChatWithGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context,sportEvent.getObjectId(),Toast.LENGTH_SHORT).show();
+                   //join user to chat
+                    getChat(sportEvent);
                 }
             });
 
@@ -154,6 +160,79 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                    checkIfUserIsAParticipant(sportEvent);
+                }
+            });
+        }
+
+        //gets the chat and call to check if the user is in the chat
+        private void getChat(SportEvent sportEvent) {
+
+            ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
+            query.whereEqualTo(Chat.KEY_EVENT,sportEvent);
+            query.getFirstInBackground(new GetCallback<Chat>() {
+                @Override
+                public void done(Chat object, ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+                        Log.e(TAG,"There was a problem getting the chat", e);
+                        Toast.makeText(context, "There was a problem getting the chat", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    //check if user is in chat
+                    checkIfUserIsInChat(object);
+
+                }
+            });
+        }
+
+        private void checkIfUserIsInChat(Chat chat) {
+
+            ParseQuery<ChatUserJoin> query = ParseQuery.getQuery(ChatUserJoin.class);
+            query.whereEqualTo(ChatUserJoin.KEY_USER, ParseUser.getCurrentUser());
+            query.whereEqualTo(ChatUserJoin.KEY_CHAT,chat);
+            query.getFirstInBackground(new GetCallback<ChatUserJoin>() {
+                @Override
+                public void done(ChatUserJoin object, ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+
+                        if(object == null){
+                            enrollUserInChat(chat);
+                        }
+
+                        Log.e(TAG,"User not in chat", e);
+
+                        return;
+                    }
+
+                    takeToMessageActivity(chat);
+
+                }
+            });
+        }
+
+        private void enrollUserInChat(Chat chat) {
+
+            ChatUserJoin chatUserJoin = new ChatUserJoin();
+            chatUserJoin.setUser(ParseUser.getCurrentUser());
+            chatUserJoin.setChat(chat);
+
+            chatUserJoin.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    //something went wrong
+                    if(e != null){
+                        Log.e(TAG,"There was a problem enrolling user in chat", e);
+                        Toast.makeText(context, "There was a problem enrolling user in chat", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    takeToMessageActivity(chat);
+
                 }
             });
         }
@@ -194,8 +273,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         //enroll an user into an event
         private void enrollUserInEvent(SportEvent sportEvent) {
 
-            //todo enroll user in chat
-
             //enroll user in event
             EventParticipant newParticipant = new EventParticipant();
             newParticipant.setUser(ParseUser.getCurrentUser());
@@ -211,6 +288,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         return;
                     }
 
+                    //enroll user in chat
+                    getChat(sportEvent);
+
                     //update event to have one more
                     updateEvent(sportEvent);
 
@@ -218,7 +298,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             });
 
         }
-
+        
         //update the event to have 1 more participant
         private void updateEvent(SportEvent sportEvent) {
 
@@ -236,10 +316,19 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
                     Toast.makeText(context, "Joining event was a success!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
-                    //todo take to chat activity
+
 
                 }
             });
+        }
+
+        //takes user to message activity
+        private void takeToMessageActivity(Chat chat) {
+
+            Intent intent = new Intent(context, MessageActivity.class);
+            intent.putExtra("chat_id", chat.getObjectId());
+            context.startActivity(intent);
+
         }
     }
 }
