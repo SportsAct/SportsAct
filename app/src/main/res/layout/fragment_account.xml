@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+               <ImageView
                     android:id="@+id/basketballId"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
@@ -155,7 +155,7 @@
                     android:id="@+id/soccerBallId"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:src="@drawable/icons8_soccer_ball_24" />
+                    android:src="@drawable/soccerball" />
 
                 <ImageView
                     android:id="@+id/tennisballId"

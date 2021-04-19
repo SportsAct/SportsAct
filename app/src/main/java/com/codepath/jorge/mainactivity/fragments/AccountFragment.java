@@ -70,7 +70,7 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
                 launchCamera();
                 if (photoFile == null || profilePic.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Ready to Upload?", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -113,7 +113,7 @@ public class AccountFragment extends Fragment {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "${applicationId}.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
@@ -170,6 +170,7 @@ public class AccountFragment extends Fragment {
                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                }
                Log.i(TAG, "post save was successful!");
+                Toast.makeText(getContext(), "Successful!", Toast.LENGTH_SHORT).show();
            }
         });
     }
