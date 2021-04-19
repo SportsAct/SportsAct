@@ -35,7 +35,7 @@ Objective of this app is to organize people so they can go play sports/games. So
 - [x] user can see a list of people who are going to the event
 - [ ]  Be able to include description/bio 
 - [ ] Be able to add a favorite sport from assortment of different sports 
- - [ ] Allow user to upload a photo
+ - [X] Allow user to upload a photo
  - [x] Add button to add friends 
  - [x] User is able to login
 - [x] User can log out
