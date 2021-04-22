@@ -3,7 +3,6 @@ package com.codepath.jorge.mainactivity.adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
-
 import com.codepath.jorge.mainactivity.R;
 
 //shows a circular progress bar in an alert dialog
