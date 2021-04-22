@@ -16,8 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.ParseFile;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontalAdapter.ViewHolder> {
@@ -29,12 +32,24 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     //variables
     Context context;
     List<SportGame> sportGameList;
-    String selectedSport;
+    List<SportGame> selectedSportsList;
+    SportGame selectedSport;
+    boolean multipleSelections;
 
-    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList) {
+    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList,boolean multipleSelections) {
         this.context = context;
         this.sportGameList = sportGameList;
-        selectedSport = "";
+        selectedSport = new SportGame();
+        selectedSportsList = new ArrayList<>();
+        this.multipleSelections = multipleSelections;
+    }
+
+    public List<SportGame> getSelectedSportsList(){
+        return selectedSportsList;
+    }
+
+    public SportGame getSelectedSport(){
+        return selectedSport;
     }
 
     @NonNull
@@ -85,23 +100,64 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
             //setting text
             tvSportName.setText(sportGame.getSportName());
 
-            //check if item is the selected one
-            if(selectedSport.equals(sportGame.getObjectId())){
-                container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+            //check selection type
+            if(multipleSelections){
+
+                if(isSportSelected(sportGame)){
+                    container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+                }
+                else {
+                    container.setBackgroundColor(context.getResources().getColor(R.color.white));
+                }
+
             }
-            else
-            {
-                container.setBackgroundColor(context.getResources().getColor(R.color.white));
+            else {
+                //check if item is the selected one
+                if (selectedSport.equals(sportGame)) {
+                    container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+                } else {
+                    container.setBackgroundColor(context.getResources().getColor(R.color.white));
+                }
             }
 
             //listener
             container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    selectedSport = sportGame.getObjectId();
+
+                    if(multipleSelections){
+                        if(isSportSelected(sportGame)){
+                            selectedSportsList.remove(sportGame);
+                        }
+                        else{
+                            selectedSportsList.add(sportGame);
+                        }
+                    }
+                    else {
+                        selectedSport = sportGame;
+                    }
+
                     notifyDataSetChanged();
                 }
             });
+        }
+
+        private boolean isSportSelected(SportGame sportGame) {
+
+            if(selectedSportsList.isEmpty()){
+                return false;
+            }
+
+            //goes throgh selected list
+            for(int i = 0; i< selectedSportsList.size();i++){
+                //if already check, uncheck
+                if(sportGame.equals(selectedSportsList.get(i))){
+                    return true;
+                }
+            }
+
+            //if not on the list added to selected list
+            return false;
         }
     }
 }

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ManageEventActivity"
-    android:orientation="vertical">
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressBarManageEventEvent"
@@ -163,9 +169,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
             android:layout_gravity="center"
-            tools:text="Current Maximun Amount of Players:"/>
+            android:layout_marginHorizontal="8dp"
+            android:text="Current Maximun Amount of Players:" />
 
         <ImageButton
             android:id="@+id/btnMinus"
@@ -207,7 +213,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        tools:text="Number of players currently going to the event:"/>
+        android:text="Number of players currently going to the event:"/>
 
         <TextView
             android:id="@+id/tvCurrentEnroll"
@@ -229,28 +235,32 @@
         android:autoSizeTextType="none"
         android:text="SEE WHO IS GOING" />
 
-    <View
+         <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="8dp"
         android:background="@color/black"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSports"
-        android:layout_marginVertical="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="4dp"
+        android:text="Select which sport is the game going to be about:"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp" />
+
+
 
         <Button
             android:id="@+id/btnSaveEventManage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_above="@+id/btnDeleteEventmanage"
             android:text="Update Event" />
 
         <Button
@@ -259,12 +269,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:backgroundTint="@color/design_default_color_error"
-            android:layout_alignParentBottom="true"
             android:text="Delete Event"/>
-    </RelativeLayout>
 
 
+    </LinearLayout>
 
-
-
-</LinearLayout>
+</ScrollView>
