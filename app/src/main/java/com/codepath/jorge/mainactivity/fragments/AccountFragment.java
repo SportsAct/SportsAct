@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -48,8 +49,7 @@ public class AccountFragment extends Fragment {
     private ImageView profilePic;
     private File photoFile;
     public String photoFileName = "photo.jpg";
-    public ScrollView scrollerSlid;
-    public ImageView basketballPic;
+    private Button editText;
 
 
     @Override
@@ -63,7 +63,8 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profilePic = view.findViewById(R.id.profilePic);
         btnCaptureImage = view.findViewById(R.id.takePicId);
-        scrollerSlid = view.findViewById(R.id.scroller);
+        editText = view.findViewById(R.id.editText);
+
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,31 +77,6 @@ public class AccountFragment extends Fragment {
 
             }
         });
-
-//        scrollerSlid.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-//        basketballPic.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN: {
-//                        v.setImageBitmap(res.getDrawable(R.drawable.img_down));
-//                        break;
-//                    }
-//                    case MotionEvent.ACTION_CANCEL:{
-//                        v.setImageBitmap(res.getDrawable(R.drawable.img_up));
-//                        break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
     }
 
 
@@ -174,6 +150,10 @@ public class AccountFragment extends Fragment {
            }
         });
     }
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
