@@ -203,4 +203,6 @@ Optional:
 |  post             | post     | post that was commented             |
 
 
-![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
+![progress1](https://github.com/SportsAct/SportsAct/blob/Luis-Test/walkthroughgif1.gif)
+
+
