@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
+import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.activities.MessageActivity;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
@@ -77,6 +79,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         Button btnSeeWhoIsGoing;
         Button btnChatWithGroup;
         Button btnJoinEvent;
+        ImageButton btnManage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +97,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             btnSeeWhoIsGoing = itemView.findViewById(R.id.btnSeeParticipantsHome);
             btnChatWithGroup = itemView.findViewById(R.id.btnChatWithGroupHome);
             btnJoinEvent = itemView.findViewById(R.id.btnJoinEventHome);
+            btnManage = itemView.findViewById(R.id.btnManageEventItem);
 
         }
 
@@ -132,7 +136,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 Glide.with(context).load(sportImage.getUrl()).into(ivSportImage);
             }
 
+            //show manage icon if the event was created by the current user
+            if(sportEvent.getUser().getObjectId().equals( ParseUser.getCurrentUser().getObjectId())){
+                btnManage.setVisibility(View.VISIBLE);
+            }
+            else {
+                btnManage.setVisibility(View.GONE);
+            }
+
             //seting buttons listeners
+
+            //to see who is going to the event
             btnSeeWhoIsGoing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -151,12 +165,28 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
 
+            //joins an event
             btnJoinEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                    checkIfUserIsAParticipant(sportEvent);
                 }
             });
+
+            //takes to screen manage event
+            btnManage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendToManageScreen(sportEvent.getObjectId());
+                }
+            });
+        }
+
+        //sends to manage screen for an specific event
+        private void sendToManageScreen(String objectId) {
+            Intent i = new Intent(context, ManageEventActivity.class);
+            i.putExtra("event_id",objectId);
+            context.startActivity(i);
         }
 
         //gets the chat and call to check if the user is in the chat
