@@ -25,17 +25,17 @@ Objective of this app is to organize people so they can go play sports/games. So
 
 **Required Must-have Stories**
  - [X] Chat portion connected to Parse database.
-- [ ] User's can send and receive messages from the groups they joined 
- - [ ] User is able to pick a chat that they are a part of and enter it
- - [ ] Upon entering a group game, user joins the group chat
+- [x] User's can send and receive messages from the groups they joined 
+ - [x] User is able to pick a chat that they are a part of and enter it
+ - [x] Upon entering a group game, user joins the group chat
  - [x] Can load events
 - [x] Can create an event
 - [x] User can join event
-- [ ] User can chat with the group
+- [x] User can chat with the group
 - [x] user can see a list of people who are going to the event
 - [ ]  Be able to include description/bio 
 - [ ] Be able to add a favorite sport from assortment of different sports 
- - [ ] Allow user to upload a photo
+ - [X] Allow user to upload a photo
  - [x] Add button to add friends 
  - [x] User is able to login
 - [x] User can log out
@@ -53,6 +53,9 @@ Objective of this app is to organize people so they can go play sports/games. So
 - [ ] Allow user to manage their event 
  - [ ] Send invitations via email or username once signed up
  - [ ] User can delete event
+ - [ ] User can set up location from parse location database
+ - [x] In the events user can select location
+ - [ ] Events appear by location
 
 
 **Optional Nice-to-have Stories**
@@ -204,3 +207,6 @@ Optional:
 
 
 ![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
+![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough2.gif)
+![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthroughgif1.gif)
+
