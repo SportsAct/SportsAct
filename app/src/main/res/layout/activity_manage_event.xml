@@ -13,6 +13,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/tbToolbar"
+            layout="@layout/toolbar" />
+
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressBarManageEventEvent"
         android:layout_width="match_parent"
@@ -24,23 +28,50 @@
         android:id="@+id/btnEditTitleManage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_ripple"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp">
 
     <TextView
-        android:id="@+id/tvEventTitle"
+        android:id="@+id/tvEventTitleManage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="28sp"
         tools:text="Name of Event" />
 
-        <ImageView
+        <EditText
+            android:id="@+id/etEventTitleManage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/tvTitleMaxCountManage"
+            android:inputType="textShortMessage"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="26sp"/>
+
+        <TextView
+            android:id="@+id/tvTitleMaxCountManage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/edit"
+            android:visibility="invisible"
+            android:layout_toStartOf="@+id/ibIconInTitle"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_marginEnd="8dp"
+            tools:text="25" />
+
+        <ImageView
+            android:id="@+id/ibIconInTitle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            app:srcCompat="@drawable/edit" />
 
     </RelativeLayout>
 
@@ -63,7 +94,7 @@
         android:background="@color/black"/>
 
     <Button
-        android:id="@+id/btnLocationCreateEvent"
+        android:id="@+id/btnLocationManageEvent"
         style="@android:style/Widget.Material.Light.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/custom_ripple"
             android:layout_weight="1">
 
             <ImageView
@@ -133,6 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/custom_ripple"
             android:layout_weight="1">
 
             <ImageView
@@ -252,8 +285,7 @@
             android:id="@+id/rvSports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp" />
-
+            android:layout_margin="8dp" />
 
 
         <Button

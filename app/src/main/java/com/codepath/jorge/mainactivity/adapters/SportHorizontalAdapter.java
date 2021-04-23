@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,18 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     SportGame selectedSport;
     boolean multipleSelections;
 
-    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList,boolean multipleSelections) {
+    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, SportGame selectedSport) {
         this.context = context;
         this.sportGameList = sportGameList;
-        selectedSport = new SportGame();
-        selectedSportsList = new ArrayList<>();
-        this.multipleSelections = multipleSelections;
+        this.selectedSport = selectedSport;
+        multipleSelections = false;
+    }
+
+    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, List<SportGame> selectedSportsList) {
+        this.context = context;
+        this.sportGameList = sportGameList;
+        this.selectedSportsList = selectedSportsList;
+        multipleSelections = true;
     }
 
     public List<SportGame> getSelectedSportsList(){
@@ -51,6 +58,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     public SportGame getSelectedSport(){
         return selectedSport;
     }
+
 
     @NonNull
     @Override
@@ -109,14 +117,15 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
                 else {
                     container.setBackgroundColor(context.getResources().getColor(R.color.white));
                 }
-
             }
             else {
                 //check if item is the selected one
-                if (selectedSport.equals(sportGame)) {
+                if (selectedSport.getObjectId() != null && selectedSport.getObjectId().equals(sportGame.getObjectId())) {
                     container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+                    Log.i(TAG, selectedSport.getSportName() + " is ");
                 } else {
                     container.setBackgroundColor(context.getResources().getColor(R.color.white));
+                    Log.i(TAG, selectedSport.getSportName() + " is not");
                 }
             }
 
@@ -151,7 +160,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
             //goes through selected list
             for(int i = 0; i< selectedSportsList.size();i++){
                 //if already check, uncheck
-                if(sportGame.equals(selectedSportsList.get(i))){
+                if(sportGame.getObjectId().equals(selectedSportsList.get(i).getObjectId())){
                     return true;
                 }
             }

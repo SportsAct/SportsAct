@@ -85,11 +85,20 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getHomeFeed();
+    }
+
     private void getHomeFeed(){
+
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
         query.include(SportEvent.KEY_LOCATION);
+        query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
             public void done(List<SportEvent> events, ParseException e) {
@@ -100,6 +109,9 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG,"There was a problem loading the events!!", e);
                     return;
                 }
+
+                //clearing list first
+                sportEventList.clear();
 
                 //set posts
                 sportEventList.addAll(events);
