@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -79,6 +81,8 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
     private EditText etEditTitle;
     private TextView tvMaxCharactersTitle;
     private ImageView ivIconTitle;
+    private Toolbar tbToolbar;
+    ProgressBar progressBar;
 
     //adapter
     SportHorizontalAdapter adapter;
@@ -127,6 +131,10 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         etEditTitle = findViewById(R.id.etEventTitleManage);
         tvMaxCharactersTitle = findViewById(R.id.tvTitleMaxCountManage);
         ivIconTitle = findViewById(R.id.ibIconInTitle);
+        tbToolbar = findViewById(R.id.tbToolbar);
+        progressBar = findViewById(R.id.progressBarManageEventEvent);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         //initializing sport list
         sportGamesList = new ArrayList<>();
@@ -135,12 +143,18 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         selectedSport = new SportGame();
         allStates = new ArrayList<>();
 
+        //setting bar
+        tbToolbar.setTitle("Manage Your Event");
+        setSupportActionBar(tbToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //listeners
 
         //update event listener
         btnUpdateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 updateEvent();
             }
         });
@@ -280,8 +294,8 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
             @Override
             public void onClick(View view) {
                 new MaterialAlertDialogBuilder(ManageEventActivity.this)
-                .setTitle("Attention!")
-                .setMessage("Are you sure you want to delete the event?")
+                .setTitle("Attention:")
+                .setMessage("Event will be deleted!")
                         .setCancelable(false)
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -290,6 +304,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                 }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        progressBar.setVisibility(View.VISIBLE);
                         deleteEvent();
                     }
                 }).show();
@@ -299,10 +314,11 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
     }
 
     private void deleteEvent() {
-        currentSportEvent.deleteInBackground(new DeleteCallback() {
+        currentSportEvent.setActive(false);
+
+        currentSportEvent.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-
                 //something went wrong
                 if(e != null){
                     Log.e(TAG,"There was a problem deleting the event!!", e);
@@ -310,10 +326,9 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                     return;
                 }
 
-                Toast.makeText(ManageEventActivity.this, "Event was deleted successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageEventActivity.this, "There was a problem deleting the event", Toast.LENGTH_SHORT).show();
 
                 finish();
-
             }
         });
     }
@@ -585,7 +600,15 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                 //notifying adapter
                adapter.notifyDataSetChanged();
 
+                progressBar.setVisibility(View.INVISIBLE);
+
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

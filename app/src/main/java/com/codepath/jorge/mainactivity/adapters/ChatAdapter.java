@@ -2,6 +2,7 @@ package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             //setting the texts
             tvEventName.setText(chat.getEvent().getTitle());
-            tvLastMessage.setText(chat.getLastMessage().getBody());
+
+            if(chat.getLastMessage() == null){
+                tvLastMessage.setText("No messages yet...");
+            }else {
+                tvLastMessage.setText(chat.getLastMessage().getBody());
+            }
             tvUpdatedAt.setText(date);
 
             //listener chat being click

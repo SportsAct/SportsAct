@@ -20,6 +20,7 @@ public class SportEvent extends ParseObject {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_MAX_PARTICIPANTS = "eventMaxParticipants";
     public static final String KEY_CURRENT_PARTICIPANTS = "eventCurrentParticipants";
+    public static final String KEY_ACTIVE = "Active";
 
     public String getId(){return getObjectId();}
 
@@ -67,4 +68,8 @@ public class SportEvent extends ParseObject {
     public int getCurrentNumberOfParticipants(){return getNumber(KEY_CURRENT_PARTICIPANTS).intValue();}
 
     public void setCurrentNumberOfParticipants(int number){put(KEY_CURRENT_PARTICIPANTS,number);}
+
+    public boolean isActive(){return getBoolean(KEY_ACTIVE);}
+
+    public void setActive(boolean active){put(KEY_ACTIVE, active);}
 }
