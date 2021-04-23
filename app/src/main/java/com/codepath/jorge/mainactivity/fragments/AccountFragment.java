@@ -63,8 +63,7 @@ public class AccountFragment extends Fragment {
     private SportHorizontalAdapter adapter;
 
     List<SportGame> sportList;
-
-
+    List<SportGame> selectedSportList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,13 +106,16 @@ public class AccountFragment extends Fragment {
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
         sportList = new ArrayList<>();
+        selectedSportList = new ArrayList<>();
 
-        /*//setting adapter
-        adapter = new SportHorizontalAdapter(this,sportGamesList,false);
-        rvSportsGames.setAdapter(adapter);
+        //setting adapter
+        adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
+        imagesSports.setAdapter(adapter);
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rvSportsGames.setLayoutManager(layoutManager);*/
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        imagesSports.setLayoutManager(layoutManager);
+
+        getSports();
 
         //Gets the username, real name, and bio from database
         userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
