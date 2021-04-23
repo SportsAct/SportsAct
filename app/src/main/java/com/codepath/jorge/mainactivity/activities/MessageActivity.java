@@ -1,25 +1,19 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
 import com.codepath.jorge.mainactivity.adapters.MessageAdapter;
-import com.codepath.jorge.mainactivity.fragments.ChatFragment;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.Message;
 import com.parse.FindCallback;
@@ -28,7 +22,6 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +42,7 @@ public class MessageActivity extends AppCompatActivity {
     MessageAdapter adapter;
     List<Message> messageList;
     Chat currentChat;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +89,24 @@ public class MessageActivity extends AppCompatActivity {
                sendAMessage();
             }
         });
+
+        //setting handler to get messages periodically
+        // Create the Handler object (on the main thread by default)
+         handler = new Handler();
+
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode);
     }
+
+    // Define the code block to be executed
+   private Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+
+            getNewMessages();
+            handler.postDelayed(this, 2000);
+        }
+    };
 
     private void getChat(String chatId) {
 
@@ -158,6 +169,42 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    private void getNewMessages() {
+
+        if(currentChat == null || messageList == null){
+            return;
+        }
+
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.include(Message.KEY_USER);
+        query.whereEqualTo(Message.KEY_CHAT,currentChat);
+        query.whereGreaterThan(Message.KEY_CREATED_AT, messageList.get(0).getCreatedAt());
+        query.findInBackground(new FindCallback<Message>() {
+            @Override
+            public void done(List<Message> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the messages!!", e);
+                    Toast.makeText(MessageActivity.this, "There was a problem loading the messages!!", Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismissDialog();
+                    return;
+                }
+
+                //set messages
+                for(int i = 0; i < objects.size(); i++){
+                    messageList.add(0, objects.get(i));
+                }
+
+                //notify adapter
+                adapter.notifyDataSetChanged();
+
+                //hide bar
+                loadingDialog.dismissDialog();
+
+            }
+        });
+    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -218,7 +265,23 @@ public class MessageActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Removes pending code execution
+        handler.removeCallbacks(runnableCode);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //set again
+        handler.post(runnableCode);
+    }
+}
 
 
 

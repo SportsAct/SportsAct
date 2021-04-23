@@ -1,7 +1,6 @@
 package com.codepath.jorge.mainactivity.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;

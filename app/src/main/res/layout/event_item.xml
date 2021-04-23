@@ -13,16 +13,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp">
+
         <TextView
             android:id="@+id/tvEventTitleHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
             android:textColor="@color/black"
             android:textSize="24dp"
             android:textStyle="bold"
             tools:text="This is an event" />
+
+            <ImageButton
+                android:id="@+id/btnManageEventItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/settings" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
