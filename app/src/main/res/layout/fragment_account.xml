@@ -24,7 +24,7 @@
         tools:src="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/nameId"
+        android:id="@+id/userNameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -32,10 +32,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="17dp"
+        android:textColorHighlight="#7cff88"
         android:layout_toEndOf="@+id/profilePic"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="" />
+        android:text="Name" />
 
     <EditText
         android:id="@+id/bioTextId"
@@ -46,6 +47,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="147dp"
         android:layout_marginEnd="37dp"
+        android:textColorHighlight="#7cff88"
         android:layout_toEndOf="@+id/profilePic"
         android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
@@ -83,6 +85,14 @@
         android:layout_toEndOf="@+id/addFriendId"
         android:text="Manage Events" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="159dp" />
+
     <Button
         android:id="@+id/editText"
         android:layout_width="wrap_content"
@@ -92,6 +102,16 @@
         android:layout_marginTop="237dp"
         android:layout_marginEnd="90dp"
         android:text="Edit" />
+
+    <TextView
+        android:id="@+id/realNameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="29dp"
+        android:text="Name" />
 
 
     <!--    <ScrollView-->

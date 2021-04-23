@@ -1,55 +1,69 @@
 package com.codepath.jorge.mainactivity.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
-import com.codepath.jorge.mainactivity.models.ChatUserJoin;
-import com.parse.Parse;
-import com.parse.ParseACL;
+import com.codepath.jorge.mainactivity.activities.EditProfile;
+import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
+import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
+import com.codepath.jorge.mainactivity.models.SportGame;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.jorge.mainactivity.R;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountFragment extends Fragment {
 
     public static final String TAG = "AccountFragment";
 
+    private RecyclerView imagesSports;
     private Button btnCaptureImage;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private ImageView profilePic;
     private File photoFile;
     public String photoFileName = "photo.jpg";
     private Button editText;
+    private EditText userNameId;
+    private EditText bioTextId;
+    private TextView realNameId;
+
+    private SportHorizontalAdapter adapter;
+
+    List<SportGame> sportList;
+
 
 
     @Override
@@ -58,12 +72,57 @@ public class AccountFragment extends Fragment {
 
     }
 
+    private void getSports() {
+
+        //query to get Sport Data
+        ParseQuery<SportGame> query = ParseQuery.getQuery(SportGame.class);
+        query.findInBackground(new FindCallback<SportGame>() {
+            @Override
+            public void done(List<SportGame> sportGameList, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the Sports!!", e);
+                    Toast.makeText(getActivity(), "There was a problem loading the Sports", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                sportList.addAll(sportGameList);
+
+                //notifying adapter
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profilePic = view.findViewById(R.id.profilePic);
         btnCaptureImage = view.findViewById(R.id.takePicId);
         editText = view.findViewById(R.id.editText);
+        userNameId = view.findViewById(R.id.userNameId);
+        bioTextId = view.findViewById(R.id.bioTextId);
+        realNameId = view.findViewById(R.id.realNameId);
+        imagesSports = view.findViewById(R.id.rvSports);
+        sportList = new ArrayList<>();
+
+        /*//setting adapter
+        adapter = new SportHorizontalAdapter(this,sportGamesList,false);
+        rvSportsGames.setAdapter(adapter);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvSportsGames.setLayoutManager(layoutManager);*/
+
+        //Gets the username, real name, and bio from database
+        userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
+        bioTextId.setText((String) ParseUser.getCurrentUser().get("bio"));
+        realNameId.setText((String) ParseUser.getCurrentUser().get("name"));
+
+        //Gets image from DataBase
+        ParseFile profileImage = (ParseFile) ParseUser.getCurrentUser().get("profilePicture");
+        Glide.with(getActivity()).load(profileImage.getUrl()).into(profilePic);
 
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +134,14 @@ public class AccountFragment extends Fragment {
                     return;
                 }
 
+            }
+        });
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), EditProfile.class);
+                getActivity().startActivity(i);
             }
         });
     }

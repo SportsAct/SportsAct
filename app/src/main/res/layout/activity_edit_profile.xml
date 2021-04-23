@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activities.EditProfile">
+
+    <EditText
+        android:id="@+id/userNameId2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="179dp"
+        android:textColorHighlight="#7cff88"
+        android:layout_toEndOf="@+id/profilePic"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/bioTextId2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:textColorHighlight="#7cff88"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="127dp"
+        android:layout_marginEnd="42dp"
+        android:layout_toEndOf="@+id/profilePic"
+        android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
+        tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
+
+    <Button
+        android:id="@+id/saveButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="37dp"
+        android:text="Save" />
+
+</RelativeLayout>
