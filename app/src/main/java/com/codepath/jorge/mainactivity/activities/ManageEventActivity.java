@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,8 +34,10 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -229,29 +232,6 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
             }
         });
 
-        ivIconTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(etEditTitle.getText().toString().isEmpty()){
-                    Toast.makeText(ManageEventActivity.this,"Title can not be empty",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                currentSportEvent.setTitle(etEditTitle.getText().toString());
-
-                //change views to normal
-                tvNameOfEvent.setVisibility(View.VISIBLE);
-                tvNameOfEvent.setText(currentSportEvent.getTitle());
-
-                etEditTitle.setVisibility(View.GONE);
-
-                tvMaxCharactersTitle.setVisibility(View.GONE);
-
-                ivIconTitle.setClickable(false);
-                ivIconTitle.setImageResource(R.drawable.edit);
-            }
-        });
-
         //change event title
         btnChangeTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,10 +248,74 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                 ivIconTitle.setImageResource(R.drawable.checkmark);
                 ivIconTitle.setClickable(true);
 
+                ivIconTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(etEditTitle.getText().toString().isEmpty()){
+                            Toast.makeText(ManageEventActivity.this,"Title can not be empty",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        currentSportEvent.setTitle(etEditTitle.getText().toString());
+
+                        //change views to normal
+                        tvNameOfEvent.setVisibility(View.VISIBLE);
+                        tvNameOfEvent.setText(currentSportEvent.getTitle());
+
+                        etEditTitle.setVisibility(View.GONE);
+
+                        tvMaxCharactersTitle.setVisibility(View.GONE);
+
+                        ivIconTitle.setClickable(false);
+                        ivIconTitle.setImageResource(R.drawable.edit);
+                    }
+                });
+
 
             }
         });
 
+        //delete button
+        btnDeleteEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialAlertDialogBuilder(ManageEventActivity.this)
+                .setTitle("Attention!")
+                .setMessage("Are you sure you want to delete the event?")
+                        .setCancelable(false)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteEvent();
+                    }
+                }).show();
+            }
+        });
+
+    }
+
+    private void deleteEvent() {
+        currentSportEvent.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem deleting the event!!", e);
+                    Toast.makeText(ManageEventActivity.this, "There was a problem deleting the event", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(ManageEventActivity.this, "Event was deleted successfully!", Toast.LENGTH_SHORT).show();
+
+                finish();
+
+            }
+        });
     }
 
     private void updateEvent() {
@@ -354,6 +398,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
     }
 
+    //open states selection dialog
     private void openDialog(){
 
         if(allStates == null || allStates.isEmpty()){
@@ -519,6 +564,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
     }
 
+    //get the sports from db to populate horizontal rv
     private void getSports() {
 
         //query to get Sport Data

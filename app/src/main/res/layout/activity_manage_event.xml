@@ -64,10 +64,10 @@
             android:id="@+id/ibIconInTitle"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:srcCompat="@drawable/edit"
-            android:clickable="false"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+            android:clickable="false"
+            app:srcCompat="@drawable/edit" />
 
     </RelativeLayout>
 
