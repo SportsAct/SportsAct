@@ -171,7 +171,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private void getNewMessages() {
 
-        if(currentChat == null || messageList == null){
+        if(currentChat == null || messageList.isEmpty()){
             return;
         }
 

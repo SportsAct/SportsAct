@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment {
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
         query.include(SportEvent.KEY_LOCATION);
+        query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
             public void done(List<SportEvent> events, ParseException e) {

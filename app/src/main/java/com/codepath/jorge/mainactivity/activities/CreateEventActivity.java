@@ -16,6 +16,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.models.AllStates;
@@ -100,6 +102,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
     private NumberPicker npSportsToBePlayed;
     private Button btnCreateEvent;
     ProgressBar progressBar;
+    private Toolbar tbToolbar;
 
     //variable
     private List<SportGame> sportGames;
@@ -125,11 +128,17 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
         progressBar = findViewById(R.id.progressBarCreatingEvent);
+        tbToolbar = findViewById(R.id.tbToolbar);
 
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
         allStates = new ArrayList<>();
+
+        //setting bar
+        tbToolbar.setTitle("Create Your Event");
+        setSupportActionBar(tbToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getting states
         getStates();
@@ -200,6 +209,12 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
             }
         });
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
