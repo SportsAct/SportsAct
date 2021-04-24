@@ -9,6 +9,7 @@ import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.Message;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
+import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -28,6 +29,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Location.class);
         ParseObject.registerSubclass(Chat.class);
         ParseObject.registerSubclass(ChatUserJoin.class);
+        ParseObject.registerSubclass(SportPreference.class);
 
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
