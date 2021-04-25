@@ -161,7 +161,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
                 return false;
             }
 
-            //goes throgh selected list
+            //goes through selected list
             for(int i = 0; i< selectedSportsList.size();i++){
                 //if already check, uncheck
                 if(sportGame.getObjectId().equals(selectedSportsList.get(i).getObjectId())){
