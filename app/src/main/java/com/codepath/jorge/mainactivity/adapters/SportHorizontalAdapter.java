@@ -36,6 +36,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     List<SportGame> selectedSportsList;
     SportGame selectedSport;
     boolean multipleSelections;
+    boolean firstSetUp = true;
 
     public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, SportGame selectedSport) {
         this.context = context;
@@ -47,8 +48,11 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, List<SportGame> selectedSportsList) {
         this.context = context;
         this.sportGameList = sportGameList;
+        if(firstSetUp)
         this.selectedSportsList = selectedSportsList;
+
         multipleSelections = true;
+        firstSetUp = false;
     }
 
     public List<SportGame> getSelectedSportsList(){
