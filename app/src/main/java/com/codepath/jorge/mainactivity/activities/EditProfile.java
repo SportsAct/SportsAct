@@ -45,13 +45,12 @@ public class EditProfile extends AppCompatActivity  {
         userNameId2.setText((String) ParseUser.getCurrentUser().get("username"));
 
 
-        // click listener for Save
+        // click listener for Save and to go back to AccountFragment
         saveButtonId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 saveEdits();
-
+                finish();
             }
         });
     }

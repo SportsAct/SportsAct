@@ -60,8 +60,8 @@ public class AccountFragment extends Fragment {
     private File photoFile;
     public String photoFileName = "photo.jpg";
     private Button editText;
-    private EditText userNameId;
-    private EditText bioTextId;
+    private TextView userNameId;
+    private TextView bioTextId;
     private TextView realNameId;
     private String strtext;
 
