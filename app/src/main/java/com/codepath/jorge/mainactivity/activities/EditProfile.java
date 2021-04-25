@@ -1,7 +1,9 @@
 package com.codepath.jorge.mainactivity.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,20 +22,20 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity  {
 
     public static final String TAG = "AccountFragment";
 
     EditText userNameId2;
     EditText bioTextId2;
     Button saveButtonId;
+    private AccountFragment accountFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
 
         userNameId2 = findViewById(R.id.userNameId2);
         bioTextId2 = findViewById(R.id.bioTextId2);
@@ -47,15 +49,16 @@ public class EditProfile extends AppCompatActivity {
         saveButtonId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savePost();
-                return;
+
+                saveEdits();
+
             }
         });
-
-
     }
+
+
     // To save edits for user name and bio
-    private void savePost() {
+    private void saveEdits() {
         ParseUser parseUser = ParseUser.getCurrentUser();
         parseUser.setUsername(userNameId2.getText().toString());
         parseUser.put("bio", bioTextId2.getText().toString());
@@ -68,9 +71,6 @@ public class EditProfile extends AppCompatActivity {
                 Log.i(TAG, "post save was successful!");
             }
         });
-
-        Intent i = new Intent();
-
     }
 
 }

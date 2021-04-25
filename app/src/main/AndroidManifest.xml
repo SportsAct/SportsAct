@@ -21,6 +21,7 @@
         <activity android:name=".activities.MessageActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.EventParticipantsActivity" />
+        <activity android:name=".activities.ManageEventActivity" />
         <activity
             android:name=".activities.CreateEventActivity"
             android:windowSoftInputMode="adjustUnspecified" />

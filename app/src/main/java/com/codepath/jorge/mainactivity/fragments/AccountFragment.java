@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.activities.EditProfile;
 import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.SportGame;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -59,15 +61,23 @@ public class AccountFragment extends Fragment {
     private EditText userNameId;
     private EditText bioTextId;
     private TextView realNameId;
+    private String strtext;
+
 
     private SportHorizontalAdapter adapter;
 
     List<SportGame> sportList;
     List<SportGame> selectedSportList;
 
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            String userNameId = getArguments().getString("params");
+        }
 
     }
 
@@ -108,6 +118,9 @@ public class AccountFragment extends Fragment {
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
 
+
+
+
         //setting adapter
         adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
         imagesSports.setAdapter(adapter);
@@ -125,6 +138,8 @@ public class AccountFragment extends Fragment {
         //Gets image from DataBase
         ParseFile profileImage = (ParseFile) ParseUser.getCurrentUser().get("profilePicture");
         Glide.with(getActivity()).load(profileImage.getUrl()).into(profilePic);
+
+
 
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
@@ -220,16 +235,13 @@ public class AccountFragment extends Fragment {
         });
     }
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account, container, false);
     }
+
 
 }
 
