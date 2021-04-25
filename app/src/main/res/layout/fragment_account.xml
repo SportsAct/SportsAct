@@ -16,19 +16,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="38dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/userNameId"
         android:layout_width="190dp"
         android:layout_height="33dp"
-        android:layout_below="@+id/profilePic"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="-137dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="166dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="12dp"
         android:layout_toEndOf="@+id/profilePic"
         android:ems="10"
         android:inputType="textPersonName"
@@ -37,27 +37,28 @@
 
     <TextView
         android:id="@+id/bioTextId"
-        android:layout_width="185dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/userNameId"
+        android:layout_width="wrap_content"
+        android:layout_height="84dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="158dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="290dp"
+        android:layout_marginEnd="189dp"
         android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
         android:textColorHighlight="#7cff88"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
 
     <Button
         android:id="@+id/takePicId"
-        android:layout_width="112dp"
-        android:layout_height="wrap_content"
+        android:layout_width="183dp"
+        android:layout_height="66dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginBottom="110dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="206dp"
+        android:layout_marginEnd="206dp"
         android:text="Upload"
         tools:text="Upload" />
 
@@ -65,20 +66,22 @@
         android:id="@+id/rvSports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bioTextId"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginVertical="8dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginBottom="159dp" />
+        android:layout_marginStart="-1dp"
+        android:layout_marginBottom="57dp" />
 
     <Button
         android:id="@+id/editText"
         android:layout_width="194dp"
         android:layout_height="46dp"
-        android:layout_below="@+id/bioTextId"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-239dp"
-        android:layout_marginEnd="13dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="497dp"
+        android:layout_toEndOf="@+id/profilePic"
         android:text="Edit" />
 
     <TextView
@@ -87,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="13dp"
         android:text="Name" />
 
 

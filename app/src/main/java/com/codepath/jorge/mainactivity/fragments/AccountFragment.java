@@ -108,7 +108,6 @@ public class AccountFragment extends Fragment {
 
                 //notifying adapter
                 adapter.notifyDataSetChanged();
-
             }
         });
     }
