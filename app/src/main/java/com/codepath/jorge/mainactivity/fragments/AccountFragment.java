@@ -80,6 +80,14 @@ public class AccountFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
+        bioTextId.setText((String) ParseUser.getCurrentUser().get("bio"));
+        realNameId.setText((String) ParseUser.getCurrentUser().get("name"));
+    }
+
     private void getSports() {
 
         //query to get Sport Data
