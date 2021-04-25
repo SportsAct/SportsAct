@@ -48,8 +48,10 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, List<SportGame> selectedSportsList) {
         this.context = context;
         this.sportGameList = sportGameList;
-        if(firstSetUp)
-        this.selectedSportsList = selectedSportsList;
+
+        if(firstSetUp) {
+            this.selectedSportsList = selectedSportsList;
+        }
 
         multipleSelections = true;
         firstSetUp = false;
@@ -114,7 +116,6 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
 
             //check selection type
             if(multipleSelections){
-
                 if(isSportSelected(sportGame)){
                     container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
                 }
@@ -126,10 +127,8 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
                 //check if item is the selected one
                 if (selectedSport.getObjectId() != null && selectedSport.getObjectId().equals(sportGame.getObjectId())) {
                     container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
-                    Log.i(TAG, selectedSport.getSportName() + " is ");
                 } else {
                     container.setBackgroundColor(context.getResources().getColor(R.color.white));
-                    Log.i(TAG, selectedSport.getSportName() + " is not");
                 }
             }
 
@@ -140,7 +139,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
 
                     if(multipleSelections){
                         if(isSportSelected(sportGame)){
-                            selectedSportsList.remove(sportGame);
+                            removeSport(sportGame);
                         }
                         else{
                             selectedSportsList.add(sportGame);
@@ -153,6 +152,21 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
                     notifyDataSetChanged();
                 }
             });
+        }
+
+        private void removeSport(SportGame sportGame) {
+
+            if(selectedSportsList.isEmpty()){
+                return;
+            }
+
+            for(int i = 0; i< selectedSportsList.size();i++){
+                //if already check, uncheck
+                if(sportGame.getObjectId().equals(selectedSportsList.get(i).getObjectId())){
+                    selectedSportsList.remove(i);
+                }
+            }
+
         }
 
         private boolean isSportSelected(SportGame sportGame) {
