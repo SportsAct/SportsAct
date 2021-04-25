@@ -73,6 +73,11 @@ public class HomeFragment extends Fragment {
         ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
         locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
 
+        //add events that the user created
+        ParseQuery<SportEvent> ownEvents = ParseQuery.getQuery(SportEvent.class);
+        ownEvents.whereEqualTo(SportEvent.KEY_USER, ParseUser.getCurrentUser());
+
+
         sportPreferencesQueries.add(locationQuery);
 
         //recycler view performance
