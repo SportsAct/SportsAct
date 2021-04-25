@@ -1,17 +1,13 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.UserItem;
 import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,10 +19,8 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    //UserItem List (Shows profile picture next to name)
-    private List<UserItem> userItem;
 
-    List<String> userList;
+    List<ParseUser> userList;
 
     public static final String TAG = "SearchActivity";
     AutoCompleteTextView autoCompleteTextView;
@@ -45,14 +39,14 @@ public class SearchActivity extends AppCompatActivity {
                 }
 
                 for(int i = 0; i < objects.size(); i++){
-                    userList.add(objects.get(i).getUsername());
+                    userList.add(objects.get(i));
                     Log.e(TAG, "Test");
                 }
                 autoCompleteTextView.setEnabled(true);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(SearchActivity.this,
-                        android.R.layout.simple_list_item_1, userList);
-                autoCompleteTextView.setAdapter(adapter);
+                AutoCompleteTextView editText = findViewById(R.id.friendSearch);
+                AutoCompleteUserAdapter adapter = new AutoCompleteUserAdapter(SearchActivity.this, userList);
+                editText.setAdapter(adapter);
             }
         });
     }
@@ -65,17 +59,7 @@ public class SearchActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         getUsers();
 
-        //Shows profile picture
-        fillUserList();
 
-        AutoCompleteTextView editText = findViewById(R.id.friendSearch);
-        AutoCompleteUserAdapter adapter = new AutoCompleteUserAdapter(this, userItem);
-        editText.setAdapter(adapter);
-    }
-
-    private void fillUserList() {
-        userItem = new ArrayList<>();
-        userItem.add(new UserItem(userList, R.drawable.account_selector));
     }
 }
 

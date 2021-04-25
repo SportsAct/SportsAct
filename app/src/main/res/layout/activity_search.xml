@@ -14,16 +14,7 @@
         android:layout_height="wrap_content"
         android:completionHint="Select a friend"
         android:completionThreshold="1"
-        android:dropDownAnchor="@id/text_view_friends"
         android:hint="Find friends"
         android:popupBackground="@color/design_default_color_background" />
-
-    <TextView
-        android:id="@+id/text_view_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Friends"
-        android:textSize="20sp"
-        android:padding="16dp" />
 
 </LinearLayout>

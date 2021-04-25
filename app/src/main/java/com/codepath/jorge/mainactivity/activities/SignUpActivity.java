@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +17,10 @@ import com.parse.SignUpCallback;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    public static final String TAG = "Signup Activity";
+    public static final String TAG = "SignUpActivity";
     private EditText etUsername;
     private EditText etPassword;
+    private EditText etRealName;
     private Button btnCreateAccount;
 
     @Override
@@ -29,38 +31,44 @@ public class SignUpActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnCreateAccount = findViewById(R.id.btnLogin);
+        etRealName = findViewById(R.id.etRealName);
+        btnCreateAccount = findViewById(R.id.btnSignUp);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                String name = etRealName.getText().toString();
 
-                UserSignUp(username, password);
+                UserSignUp(username, password, name);
             }
         });
     }
 
-    private void UserSignUp(String username, String password) {
+    private void UserSignUp(String username, String password, String name) {
 
         ParseUser user = new ParseUser();
 
         user.setUsername(username);
         user.setPassword(password);
-
-        Log.v("username: ", username);
-        Log.v("password: ", password);
+        user.put("name", name);
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if (e == null) {
-                    Log.e(TAG, "Successful Sign Up! Welcome to SportsAct " + username + "!");
-                } else {
-                    ParseUser.logOut();
-                    Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                if(e != null){
+                    Log.e(TAG,"There was a problem creating the account", e);
+                    Toast.makeText(SignUpActivity.this, "There was a problem creating the account", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                Toast.makeText(SignUpActivity.this, "Successful Sign Up! Welcome to Sport Connect " + username + "!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+
             }
         });
 

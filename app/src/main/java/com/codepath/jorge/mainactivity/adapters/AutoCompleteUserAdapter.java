@@ -12,17 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.UserItem;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AutoCompleteUserAdapter extends ArrayAdapter<UserItem> {
-    private  List<UserItem> userListFull;
+public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
+    private  List<ParseUser> userListFull;
 
-    public AutoCompleteUserAdapter(@NonNull Context context, @NonNull List<UserItem> userList) {
+    public AutoCompleteUserAdapter(@NonNull Context context, @NonNull List<ParseUser> userList) {
         super(context, 0, userList);
         userListFull = new ArrayList<>(userList);
     }
@@ -44,11 +46,13 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<UserItem> {
         TextView textViewName = convertView.findViewById(R.id.text_view_name);
         ImageView imageViewProfilePic = convertView.findViewById(R.id.profilePic);
 
-        UserItem userItem = getItem(position);
+        ParseUser userItem = getItem(position);
 
-        if (userItem == null) {
+        if (userItem != null) {
             textViewName.setText((CharSequence) userItem.getUsername());
-            imageViewProfilePic.setImageResource(userItem.getProfileImage());
+            ParseFile profileImage = (ParseFile) userItem.get("profilePicture");
+
+            Glide.with(getContext()).load(profileImage.getUrl()).into(imageViewProfilePic);
         }
 
         return convertView;
@@ -58,16 +62,15 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<UserItem> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
-            List<UserItem> suggestions = new ArrayList<>();
+            List<ParseUser> suggestions = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 suggestions.addAll(userListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (UserItem item : userListFull) {
-                    //TODO: .toLowerCase does not work
-                    if (item.getUsername().contains(filterPattern));
+                for (ParseUser item : userListFull) {
+                    if (item.getUsername().toLowerCase().contains(filterPattern));
                     suggestions.add(item);
                 }
             }
@@ -88,7 +91,7 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<UserItem> {
 
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            return (CharSequence) ((UserItem) resultValue).getUsername();
+            return (CharSequence) ((ParseUser) resultValue).getUsername();
         }
     };
 }
