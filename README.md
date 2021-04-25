@@ -33,15 +33,15 @@ Objective of this app is to organize people so they can go play sports/games. So
 - [x] User can join event
 - [x] User can chat with the group
 - [x] user can see a list of people who are going to the event
-- [ ]  Be able to include description/bio 
-- [ ] Be able to add a favorite sport from assortment of different sports 
+- [X]  Be able to include description/bio 
+- [X] Be able to add a favorite sport from assortment of different sports 
  - [X] Allow user to upload a photo
  - [x] Add button to add friends 
  - [x] User is able to login
 - [x] User can log out
-- [ ] User can sign up through a register screen to create an account
-- [ ] User can search other users by their username
- - [ ] when user is typing, there is an auto filler with users starting by  that
+- [X] User can sign up through a register screen to create an account
+- [X] User can search other users by their username
+ - [X] when user is typing, there is an auto filler with users starting by  that
  - [ ] User gets a suggestion of users on the same location
  - [ ] user can also search by real names
   - [ ] User can set up location from parse location database
@@ -49,10 +49,10 @@ Objective of this app is to organize people so they can go play sports/games. So
  - [ ] Events appear by location
  - [ ] Have a setting screen to let people change their language preference
 - [ ] Allow user to change app notification setting in the setting screen 
-- [ ] Allows user to edit their profile 
-- [ ] Allow user to manage their event 
+- [X] Allows user to edit their profile 
+- [X] Allow user to manage their event 
  - [ ] Send invitations via email or username once signed up
- - [ ] User can delete event
+ - [X] User can delete event
  - [ ] User can set up location from parse location database
  - [x] In the events user can select location
  - [ ] Events appear by location
