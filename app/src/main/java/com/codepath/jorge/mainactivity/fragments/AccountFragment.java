@@ -60,8 +60,8 @@ public class AccountFragment extends Fragment {
     private File photoFile;
     public String photoFileName = "photo.jpg";
     private Button editText;
-    private EditText userNameId;
-    private EditText bioTextId;
+    private TextView userNameId;
+    private TextView bioTextId;
     private TextView realNameId;
     private String strtext;
 
@@ -78,6 +78,14 @@ public class AccountFragment extends Fragment {
             String userNameId = getArguments().getString("params");
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
+        bioTextId.setText((String) ParseUser.getCurrentUser().get("bio"));
+        realNameId.setText((String) ParseUser.getCurrentUser().get("name"));
     }
 
     private void getSports() {
@@ -100,7 +108,6 @@ public class AccountFragment extends Fragment {
 
                 //notifying adapter
                 adapter.notifyDataSetChanged();
-
             }
         });
     }
