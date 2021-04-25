@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.e(TAG, "We got here");
-
         checkIfUserIsLogged();
 
         //finding views by id
