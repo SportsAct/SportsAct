@@ -16,8 +16,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="36dp"
         tools:src="@tools:sample/avatars" />
 
     <EditText
@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="-152dp"
+        android:layout_marginTop="185dp"
+        android:layout_marginEnd="189dp"
         android:layout_toEndOf="@+id/profilePic"
         android:ems="10"
         android:inputType="textPersonName"
@@ -38,13 +38,13 @@
     <EditText
         android:id="@+id/bioTextId"
         android:layout_width="185dp"
-        android:layout_height="81dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="105dp"
-        android:layout_marginEnd="41dp"
-        android:layout_toEndOf="@+id/profilePic"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="235dp"
+        android:layout_marginEnd="177dp"
         android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
         android:textColorHighlight="#7cff88"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
@@ -55,33 +55,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profilePic"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="19dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="371dp"
         android:text="Upload"
         tools:text="Upload" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSports"
+        android:layout_below="@+id/bioTextId"
         android:layout_width="411dp"
         android:layout_height="219dp"
-        android:layout_below="@id/favoriteSport"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
         android:layout_marginVertical="8dp"
-        android:layout_marginStart="-3dp"
-        android:layout_marginTop="26dp"
         android:layout_marginBottom="159dp" />
 
     <Button
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/addFriendId"
-        android:layout_alignParentTop="true"
+        android:layout_width="194dp"
+        android:layout_height="46dp"
+        android:layout_below="@+id/bioTextId"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="205dp"
-        android:layout_marginEnd="83dp"
+        android:layout_marginTop="-239dp"
+        android:layout_marginEnd="13dp"
         android:text="Edit" />
 
     <TextView
@@ -90,8 +86,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="9dp"
         android:text="Name" />
 
     <TextView
@@ -101,8 +97,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="119dp"
-        android:layout_marginTop="281dp"
+        android:layout_marginStart="243dp"
+        android:layout_marginTop="231dp"
         android:text="Pick Your Favorite Sport!" />
 
 

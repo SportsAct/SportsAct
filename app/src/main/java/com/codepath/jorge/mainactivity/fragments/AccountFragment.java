@@ -11,7 +11,9 @@ import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.activities.EditProfile;
 import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
+import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
+import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -64,13 +66,10 @@ public class AccountFragment extends Fragment {
     private String strtext;
 
 
-    private SportHorizontalAdapter adapter;
 
+    private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
     List<SportGame> selectedSportList;
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +94,7 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getActivity(), "There was a problem loading the Sports", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                getSportPreferenceOfUser();
 
                 sportList.addAll(sportGameList);
 
@@ -121,13 +121,12 @@ public class AccountFragment extends Fragment {
 
 
 
-        //setting adapter
+        // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
         imagesSports.setAdapter(adapter);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         imagesSports.setLayoutManager(layoutManager);
-
         getSports();
 
         //Gets the username, real name, and bio from database
@@ -139,9 +138,7 @@ public class AccountFragment extends Fragment {
         ParseFile profileImage = (ParseFile) ParseUser.getCurrentUser().get("profilePicture");
         Glide.with(getActivity()).load(profileImage.getUrl()).into(profilePic);
 
-
-
-
+        // CLICK LISTENER TO LAUNCH CAMERA
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,11 +151,35 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        // CLICK LISTENER TO
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), EditProfile.class);
                 getActivity().startActivity(i);
+            }
+        });
+    }
+
+    private void getSportPreferenceOfUser() {
+
+        ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
+        query.include(SportPreference.KEY_SPORT);
+        query.include(SportPreference.KEY_USER);
+        query.whereEqualTo(SportPreference.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<SportPreference>() {
+            @Override
+            public void done(List<SportPreference> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the sport preference!!", e);
+                    return;
+                }
+                for( int i = 0 ; i < objects.size() ; i++){
+                    selectedSportList.add(objects.get(i).getSport());
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
