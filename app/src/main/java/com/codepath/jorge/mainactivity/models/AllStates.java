@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 @ParseClassName("Usabystate_States")
@@ -13,6 +14,15 @@ public class AllStates extends ParseObject {
 
     public String getAbreviation(){return getString(KEY_ABREVIATION);}
 
-    public String getName(){return getString(KEY_NAME);}
+    public String getName() {
+
+        try {
+            return fetchIfNeeded().getString(KEY_NAME);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "Not found";
+    }
 
 }
+

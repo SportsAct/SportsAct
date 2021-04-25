@@ -5,10 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-
+    android:layout_height="match_parent"
+    tools:context=".profile">
 
 
     <ImageView
@@ -18,68 +16,37 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="36dp"
         tools:src="@tools:sample/avatars" />
 
-
-    <Button
-        android:id="@+id/addFriendId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="109dp"
-        android:text="Add Friends" />
-
-    <Button
-        android:id="@+id/manageEventsId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="109dp"
-        android:layout_toEndOf="@+id/addFriendId"
-        android:text="Manage Events" />
-
-
-    <Button
-        android:id="@+id/takePicId"
-        android:layout_width="112dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profilePic"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="19dp"
-        android:text="Upload"
-        tools:text="Upload" />
-
     <EditText
-        android:id="@+id/nameId"
+        android:id="@+id/userNameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="17dp"
+        android:layout_marginStart="-152dp"
+        android:layout_marginTop="185dp"
+        android:layout_marginEnd="189dp"
         android:layout_toEndOf="@+id/profilePic"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="Name"
+        android:textColorHighlight="#7cff88" />
 
-    <TextView
+    <EditText
         android:id="@+id/bioTextId"
         android:layout_width="185dp"
-        android:layout_height="81dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="147dp"
-        android:layout_marginEnd="37dp"
-        android:layout_toEndOf="@+id/profilePic"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="235dp"
+        android:layout_marginEnd="177dp"
         android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
+        android:textColorHighlight="#7cff88"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
 
     <Button
@@ -88,72 +55,283 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profilePic"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="19dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="371dp"
         android:text="Upload"
         tools:text="Upload" />
-        android:layout_marginBottom="284dp"
-         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSports"
+        android:layout_below="@+id/bioTextId"
+        android:layout_width="411dp"
+        android:layout_height="219dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="159dp" />
 
     <Button
-        android:id="@+id/addFriendId"
+        android:id="@+id/editText"
+        android:layout_width="194dp"
+        android:layout_height="46dp"
+        android:layout_below="@+id/bioTextId"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-239dp"
+        android:layout_marginEnd="13dp"
+        android:text="Edit" />
+
+    <TextView
+        android:id="@+id/realNameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginBottom="87dp"
-        android:text="Add Friends" />
-        android:layout_centerVertical="true"
-        android:layout_marginStart="143dp"
-        android:layout_marginBottom="287dp"
-         />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="9dp"
+        android:text="Name" />
 
-  
-    <Button
-        android:id="@+id/manageEventsId"
+    <TextView
+        android:id="@+id/favoriteSport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="41dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="87dp"
-        android:layout_toEndOf="@+id/addFriendId"
-        android:text="Manage Events" />
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="288dp"
-        />
-
-    <HorizontalScrollView
-        android:layout_width="300dp"
-        android:layout_height="192dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="157dp">
-
-        <LinearLayout
-            android:id="@+id/gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="286dp"
-        />
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="40dp"
-        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="360dp"
-        android:layout_marginEnd="52dp"
-         />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="243dp"
+        android:layout_marginTop="231dp"
+        android:text="Pick Your Favorite Sport!" />
+
+
+    <!--    <ScrollView-->
+<!--        android:id="@+id/scroller"-->
+<!--        android:layout_width="346dp"-->
+<!--        android:layout_height="183dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="31dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="128dp">-->
+
+<!--        <HorizontalScrollView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/scrollLin"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/basketballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/basketball" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/baseballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/baseball" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/cyclingId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/cycling" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/footballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/football" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iceHockeyId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/icehockey" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/pingPongId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/pingpong" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/badmintonId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/badminton" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/golfballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/golfball" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/soccerBallId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/soccerball" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/tennisballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/tennisball" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/vollyballId"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/volleyball" />-->
+
+
+<!--            </LinearLayout>-->
+<!--        </HorizontalScrollView>-->
+
+
+<!--    </ScrollView>-->
+
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="27dp"-->
+<!--        android:layout_marginBottom="331dp"-->
+<!--        android:src="@drawable/icons8_basketball_26" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="90dp"-->
+<!--        android:layout_marginBottom="328dp"-->
+<!--        android:src="@drawable/icons8_soccer_ball_24" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView3"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="151dp"-->
+<!--        android:layout_marginBottom="329dp"-->
+<!--        android:src="@drawable/icons8_tennis_ball_50" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_marginStart="200dp"-->
+<!--        android:layout_marginBottom="320dp"-->
+<!--        android:src="@drawable/icons8_volleyball_24" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView5"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginEnd="123dp"-->
+<!--        android:layout_marginBottom="342dp"-->
+<!--        android:src="@drawable/icons8_american_football_ball_30" />-->
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView6"-->
+<!--        android:layout_width="37dp"-->
+<!--        android:layout_height="34dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="28dp"-->
+<!--        android:layout_marginBottom="268dp"-->
+<!--        android:src="@drawable/badminton" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView7"-->
+<!--        android:layout_width="38dp"-->
+<!--        android:layout_height="37dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="89dp"-->
+<!--        android:layout_marginBottom="267dp"-->
+<!--        android:src="@drawable/baseball" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView8"-->
+<!--        android:layout_width="38dp"-->
+<!--        android:layout_height="34dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="146dp"-->
+<!--        android:layout_marginBottom="269dp"-->
+<!--        android:src="@drawable/cycling" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView9"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_marginEnd="178dp"-->
+<!--        android:layout_marginBottom="262dp"-->
+<!--        android:src="@drawable/golfball" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView10"-->
+<!--        android:layout_width="34dp"-->
+<!--        android:layout_height="34dp"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginEnd="120dp"-->
+<!--        android:layout_marginBottom="288dp"-->
+<!--        android:src="@drawable/icehockey" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView11"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="41dp"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginEnd="62dp"-->
+<!--        android:layout_marginBottom="332dp"-->
+<!--        android:src="@drawable/pingpong" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView12"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="34dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginTop="335dp"-->
+<!--        android:layout_marginEnd="59dp"-->
+<!--        android:src="@drawable/handball" />-->
+
+    <!-- TODO: Update blank fragment layout -->
 
 </RelativeLayout>
 

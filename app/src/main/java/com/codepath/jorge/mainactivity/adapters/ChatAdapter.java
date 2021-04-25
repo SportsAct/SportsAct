@@ -6,25 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.MessageActivity;
 import com.codepath.jorge.mainactivity.models.Chat;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -104,7 +95,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             //setting the texts
             tvEventName.setText(chat.getEvent().getTitle());
-            tvLastMessage.setText(chat.getLastMessage().getBody());
+
+            if(chat.getLastMessage() == null){
+                tvLastMessage.setText("No messages yet...");
+            }else {
+                tvLastMessage.setText(chat.getLastMessage().getBody());
+            }
             tvUpdatedAt.setText(date);
 
             //listener chat being click

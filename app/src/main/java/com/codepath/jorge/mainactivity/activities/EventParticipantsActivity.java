@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
 import com.codepath.jorge.mainactivity.adapters.UserListAdapter;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
@@ -19,10 +16,8 @@ import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
