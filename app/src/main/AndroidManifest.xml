@@ -21,11 +21,25 @@
         <activity android:name=".activities.MessageActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.EventParticipantsActivity" />
+
+        <activity android:name=".activities.SignUpActivity" />
+
+
         <activity android:name=".activities.ManageEventActivity" />
+
         <activity
             android:name=".activities.CreateEventActivity"
             android:windowSoftInputMode="adjustUnspecified" />
         <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--  Search Activity  -->
+        <activity android:name=".activities.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,4 +58,8 @@
         </provider>
     </application>
 
+
 </manifest>
+
+</manifest>
+
