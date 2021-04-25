@@ -39,7 +39,6 @@ public class LocationDialog extends AppCompatDialogFragment {
     //variables
     private ArrayList<AllStates> stateList;
     private ArrayList<String> cityList;
-    private String currentCityId;
 
     //listener
     private LocationDialogListener listener;
@@ -105,7 +104,7 @@ public class LocationDialog extends AppCompatDialogFragment {
 
         //alert Dialog click listener for the buttons
         builder.setView(view)
-                .setTitle("Select your Location")
+                .setTitle("Enter your Location")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

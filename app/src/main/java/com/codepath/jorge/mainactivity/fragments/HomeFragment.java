@@ -16,11 +16,15 @@ import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
 import com.codepath.jorge.mainactivity.models.SportEvent;
+import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -39,6 +43,7 @@ public class HomeFragment extends Fragment {
 
     //variables
     private List<SportEvent> sportEventList;
+    private List<ParseQuery<SportEvent>> sportPreferencesQueries;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +67,18 @@ public class HomeFragment extends Fragment {
 
         //initializing event list
         sportEventList = new ArrayList<>();
+        sportPreferencesQueries = new ArrayList<>();
+
+        //adding sports that are in user location
+        ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
+        locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
+
+        //add events that the user created
+        ParseQuery<SportEvent> ownEvents = ParseQuery.getQuery(SportEvent.class);
+        ownEvents.whereEqualTo(SportEvent.KEY_USER, ParseUser.getCurrentUser());
+
+
+        sportPreferencesQueries.add(locationQuery);
 
         //recycler view performance
         recyclerViewHome.setHasFixedSize(true);
@@ -81,24 +98,60 @@ public class HomeFragment extends Fragment {
         });
 
         //getting events
-      getHomeFeed();
+        getSportPreferenceOfUser();
+      //getHomeFeed();
 
+    }
+
+    private void getSportPreferenceOfUser() {
+
+        ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
+        query.include(SportPreference.KEY_SPORT);
+        query.include(SportPreference.KEY_USER);
+        query.whereEqualTo(SportPreference.KEY_USER, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<SportPreference>() {
+            @Override
+            public void done(List<SportPreference> objects, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    loadingDialog.dismissDialog();
+                    Log.e(TAG,"There was a problem loading the sport preference!!", e);
+                    return;
+                }
+
+                //set sport queries
+                for( int i = 0 ; i < objects.size() ; i++){
+
+                    ParseQuery<SportEvent> sportQuery = ParseQuery.getQuery(SportEvent.class);
+                    sportQuery.whereEqualTo(SportEvent.KEY_SPORT,objects.get(i).getSport());
+
+                    sportPreferencesQueries.add(sportQuery);
+                }
+
+                getHomeFeed();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        getHomeFeed();
+       getSportPreferenceOfUser();
     }
 
     private void getHomeFeed(){
 
-        ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
+        Date today = new Date();
+
+        ParseQuery<SportEvent> query = ParseQuery.or(sportPreferencesQueries);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
         query.include(SportEvent.KEY_LOCATION);
+        query.whereGreaterThan(SportEvent.KEY_DATE,today);
         query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
+        query.orderByAscending(SportEvent.KEY_DATE);
         query.findInBackground(new FindCallback<SportEvent>() {
             @Override
             public void done(List<SportEvent> events, ParseException e) {
@@ -109,6 +162,7 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG,"There was a problem loading the events!!", e);
                     return;
                 }
+
 
                 //clearing list first
                 sportEventList.clear();
@@ -124,7 +178,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
 
         }
 }
