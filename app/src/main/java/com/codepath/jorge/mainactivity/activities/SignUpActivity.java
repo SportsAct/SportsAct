@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -22,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etPassword;
     private EditText etRealName;
     private Button btnCreateAccount;
+    private ImageView imageBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etRealName = findViewById(R.id.etRealName);
+        imageBackground = findViewById(R.id.imageBackgroundSignUp);
         btnCreateAccount = findViewById(R.id.btnSignUp);
+
+        Glide.with(this).load(R.drawable.giphy).into(imageBackground);
+
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
 
             @Override

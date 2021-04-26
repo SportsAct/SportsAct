@@ -1,5 +1,7 @@
 package com.codepath.jorge.mainactivity.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -19,7 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private ImageView imageBackground;
     private Button btnCreate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        imageBackground = findViewById(R.id.imageBackgroundLogin);
         btnCreate = findViewById(R.id.btnCreateAccount);
+
+        Glide.with(this).load(R.drawable.giphy).into(imageBackground);
+
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -61,9 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
-
-                //TODO: navigate to main activity if the user has signed in properly
-
                 goMainActivity();
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
             }

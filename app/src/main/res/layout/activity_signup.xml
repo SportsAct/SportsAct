@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="16dp"
     tools:context=".activities.SignUpActivity" >
 
-    <TextView
-        android:id="@+id/editTextTextPersonName2"
+    <ImageView
+        android:id="@+id/imageBackgroundSignUp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textSize="36dp"
-        android:text="SportConnect"
-        android:layout_marginBottom="100dp" />
+        android:layout_height="match_parent"
+        android:alpha="0.85"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Sport Connect"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="42dp"
+            android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etRealName"
@@ -25,6 +38,8 @@
         android:ems="10"
         android:hint="Enter your full name"
         android:inputType="textPersonName"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
         android:padding="10dp" />
 
     <EditText
@@ -34,6 +49,8 @@
         android:ems="10"
         android:hint="Enter your username"
         android:inputType="textPersonName"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
         android:padding="10dp" />
 
     <EditText
@@ -43,12 +60,16 @@
         android:ems="10"
         android:hint="Enter your password"
         android:inputType="textPassword"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
         android:padding="10dp"
-        android:visibility="visible" />
+        />
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Account" />
-</LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

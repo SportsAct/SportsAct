@@ -117,7 +117,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
             //check selection type
             if(multipleSelections){
                 if(isSportSelected(sportGame)){
-                    container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+                    container.setBackgroundColor(context.getResources().getColor(R.color.teal_light));
                 }
                 else {
                     container.setBackgroundColor(context.getResources().getColor(R.color.white));
@@ -126,7 +126,7 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
             else {
                 //check if item is the selected one
                 if (selectedSport.getObjectId() != null && selectedSport.getObjectId().equals(sportGame.getObjectId())) {
-                    container.setBackgroundColor(context.getResources().getColor(R.color.selected_item));
+                    container.setBackgroundColor(context.getResources().getColor(R.color.teal_light));
                 } else {
                     container.setBackgroundColor(context.getResources().getColor(R.color.white));
                 }

@@ -98,7 +98,7 @@
         style="@android:style/Widget.Material.Light.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/orange_dark"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:enabled="false"
@@ -281,12 +281,12 @@
         android:layout_marginVertical="4dp"
         android:text="Select which sport is the game going to be about:"/>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp" />
-
 
         <Button
             android:id="@+id/btnSaveEventManage"
@@ -300,7 +300,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:backgroundTint="@color/design_default_color_error"
+            android:backgroundTint="@color/delete_red"
             android:text="Delete Event"/>
 
 
