@@ -2,6 +2,8 @@ package com.codepath.jorge.mainactivity.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "SearchActivity";
     AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteUserAdapter adapter;
 
 
     private void getUsers(){
@@ -40,13 +43,13 @@ public class SearchActivity extends AppCompatActivity {
 
                 for(int i = 0; i < objects.size(); i++){
                     userList.add(objects.get(i));
-                    Log.e(TAG, "Test");
                 }
                 autoCompleteTextView.setEnabled(true);
 
                 AutoCompleteTextView editText = findViewById(R.id.friendSearch);
-                AutoCompleteUserAdapter adapter = new AutoCompleteUserAdapter(SearchActivity.this, userList);
+                 adapter = new AutoCompleteUserAdapter(SearchActivity.this, userList);
                 editText.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -59,8 +62,17 @@ public class SearchActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         getUsers();
 
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ParseUser current = adapter.getSelectedUser();
+
+                Log.i(TAG, "Selected user: " + current.getUsername());
+            }
+        });
 
     }
+
 }
 
 

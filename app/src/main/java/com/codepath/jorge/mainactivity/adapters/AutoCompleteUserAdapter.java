@@ -1,12 +1,14 @@
 package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,9 @@ import java.util.List;
 
 
 public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
+    public static final String TAG = "AutoCompleteUserAdapter";
     private  List<ParseUser> userListFull;
+    private ParseUser selectedUser;
 
     public AutoCompleteUserAdapter(@NonNull Context context, @NonNull List<ParseUser> userList) {
         super(context, 0, userList);
@@ -52,7 +56,7 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
             textViewName.setText((CharSequence) userItem.getUsername());
             ParseFile profileImage = (ParseFile) userItem.get("profilePicture");
 
-            Glide.with(getContext()).load(profileImage.getUrl()).into(imageViewProfilePic);
+            Glide.with(getContext()).load(profileImage.getUrl()).circleCrop().into(imageViewProfilePic);
         }
 
         return convertView;
@@ -70,8 +74,9 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ParseUser item : userListFull) {
-                    if (item.getUsername().toLowerCase().contains(filterPattern));
-                    suggestions.add(item);
+                    if (item.getUsername().toLowerCase().contains(filterPattern)) {
+                        suggestions.add(item);
+                    }
                 }
             }
 
@@ -91,7 +96,12 @@ public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
 
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            return (CharSequence) ((ParseUser) resultValue).getUsername();
+            selectedUser = (ParseUser) resultValue;
+            return ((ParseUser) resultValue).getUsername();
         }
     };
+
+    public ParseUser getSelectedUser(){
+        return selectedUser;
+    }
 }
