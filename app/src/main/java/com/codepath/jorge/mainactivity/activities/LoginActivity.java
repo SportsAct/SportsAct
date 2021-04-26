@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnLogin;
     private ImageView imageBackground;
+    private Button btnCreate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         imageBackground = findViewById(R.id.imageBackgroundLogin);
+        btnCreate = findViewById(R.id.btnCreateAccount);
 
         Glide.with(this).load(R.drawable.giphy).into(imageBackground);
+
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -51,6 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString();
 
                 UserLogin(username, password);
+            }
+        });
+
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -65,9 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
-
-                //TODO: navigate to main activity if the user has signed in properly
-
                 goMainActivity();
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
             }

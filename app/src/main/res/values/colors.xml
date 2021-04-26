@@ -6,6 +6,7 @@
     <color name="middle_ground_transparent">#95E0E4CC</color>
     <color name="teal_light">#A7DBD8</color>
     <color name="teal_dark">#69D2E7</color>
+    <color name="delete_red">#d11a2a</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="selected_item">#AFDCFF</color>
