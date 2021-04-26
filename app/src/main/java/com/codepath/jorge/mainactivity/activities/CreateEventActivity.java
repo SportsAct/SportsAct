@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -103,6 +104,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
     private Button btnCreateEvent;
     ProgressBar progressBar;
     private Toolbar tbToolbar;
+    private TextView switchText;
 
     //variable
     private List<SportGame> sportGames;
@@ -129,6 +131,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
         progressBar = findViewById(R.id.progressBarCreatingEvent);
         tbToolbar = findViewById(R.id.tbToolbar);
+        switchText = findViewById(R.id.switchTextCreateEvent);
 
         //initialising variables
         sportGames = new ArrayList<>();
@@ -147,6 +150,20 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
        getSportData();
        
        //listeners
+
+        //switch changing title
+        swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b){
+                    switchText.setText("Public");
+                }
+                else {
+                    switchText.setText("Private");
+                }
+            }
+        });
 
         //title max count
         etEventTitle.addTextChangedListener(new TextWatcher() {

@@ -15,6 +15,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,6 +84,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
     private ImageView ivIconTitle;
     private Toolbar tbToolbar;
     ProgressBar progressBar;
+    private TextView switchLabel;
 
     //adapter
     SportHorizontalAdapter adapter;
@@ -133,6 +135,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         ivIconTitle = findViewById(R.id.ibIconInTitle);
         tbToolbar = findViewById(R.id.tbToolbar);
         progressBar = findViewById(R.id.progressBarManageEventEvent);
+        switchLabel = findViewById(R.id.switchTextManageEvent);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -149,6 +152,19 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //listeners
+
+        //switch change label
+        swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    switchLabel.setText("Public");
+                }
+                else {
+                    switchLabel.setText("Private");
+                }
+            }
+        });
 
         //update event listener
         btnUpdateEvent.setOnClickListener(new View.OnClickListener() {
@@ -566,6 +582,13 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         tvMaxAmountOfPlayers.setText(Integer.toString( currentSportEvent.getMaxNumberOfParticipants()));
         tvCurrentAmountGoing.setText(Integer.toString( currentSportEvent.getCurrentNumberOfParticipants()));
         selectedSport = currentSportEvent.getSport();
+
+        if(currentSportEvent.getPrivacy()){
+            switchLabel.setText("Public");
+        }
+        else {
+            switchLabel.setText("Private");
+        }
 
         //setting adapter
         adapter = new SportHorizontalAdapter(this,sportGamesList, selectedSport);
