@@ -24,6 +24,8 @@ import com.parse.ParseUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -99,8 +101,11 @@ public class ChatFragment extends Fragment {
 
                 //adding chats
                 for(int i = 0;i < objects.size();i++){
+
                     chatList.add(objects.get(i).getChat());
                 }
+
+                Collections.sort(chatList);
 
                 //notify adapter
                 adapter.notifyDataSetChanged();

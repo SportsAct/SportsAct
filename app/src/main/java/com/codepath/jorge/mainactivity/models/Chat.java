@@ -7,7 +7,7 @@ import com.parse.ParseObject;
 import java.util.Date;
 
 @ParseClassName("Chat")
-public class Chat extends ParseObject {
+public class Chat extends ParseObject implements Comparable<Chat>{
 
     public static final String KEY_EVENT = "event";
     public static final String KEY_LAST_MESSAGE = "lastMessage";
@@ -32,4 +32,9 @@ public class Chat extends ParseObject {
     public ParseFile getGroupImage(){return getParseFile(KEY_GROUP_IMAGE);}
 
     public void setGroupImage(ParseFile parseFile){put(KEY_GROUP_IMAGE,parseFile);}
+
+    @Override
+    public int compareTo(Chat chat) {
+        return (int) (chat.getUpdatedTime().getTime() - getUpdatedTime().getTime());
+    }
 }
