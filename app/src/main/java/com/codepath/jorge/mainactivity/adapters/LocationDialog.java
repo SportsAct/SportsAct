@@ -20,6 +20,7 @@ import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -88,9 +89,6 @@ public class LocationDialog extends AppCompatDialogFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                //initializing abreviation, needed to look for the cities
-                String abreviation = "";
-
                 //if something is on the city text box, clear it
                 actvCitySelection.setText("");
 
@@ -141,6 +139,7 @@ public class LocationDialog extends AppCompatDialogFragment {
 
         return builder.create();
         }
+
 
     private AllStates getState() {
 
@@ -196,13 +195,14 @@ public class LocationDialog extends AppCompatDialogFragment {
                 cityList.clear();
 
                 for(int i = 0 ; i < objects.size() ; i++){
-                    Log.d(TAG,objects.get(i).getString("name") + " " + i);
                     cityList.add(objects.get(i).getString("name"));
                 }
 
                 //setting text view adapters
                 ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, cityList);
                 actvCitySelection.setAdapter(cityAdapter);
+
+                actvCitySelection.setEnabled(true);
 
             }
         });

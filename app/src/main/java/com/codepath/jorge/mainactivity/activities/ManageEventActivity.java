@@ -400,8 +400,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
     @Override
     public void saveLocation(Location location) {
-       currentSportEvent.setLocation(location);
-        tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
+        checkIfLocationIsDuplicate(location);
     }
 
     private void getStates(){
@@ -600,6 +599,33 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         //gettingsports
         getSports();
 
+    }
+
+    private void checkIfLocationIsDuplicate(Location location) {
+
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
+        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
+        query.getFirstInBackground(new GetCallback<Location>() {
+            @Override
+            public void done(Location object, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Location is new!", e);
+
+                    //location not found
+                    currentSportEvent.setLocation(location);
+                    tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
+
+                    return;
+                }
+
+                //location found
+                currentSportEvent.setLocation(object);
+                tvSelectedLocation.setText(object.getCityName() + ", " + object.getState().getName());
+
+            }
+        });
     }
 
     //get the sports from db to populate horizontal rv
