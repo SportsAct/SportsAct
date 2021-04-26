@@ -75,17 +75,33 @@
 
     </RelativeLayout>
 
-    <Switch
-        android:id="@+id/swtPrivacyManageEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:showText="true"
-        android:text="Change Privacy of  your Event:"
-        android:textOff="Private"
-        android:textOn="Public"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp">
+
+            <Switch
+                android:id="@+id/swtPrivacyManageEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:checked="false"
+                android:layout_toStartOf="@+id/switchTextManageEvent"
+                android:text="Select your game privacy:"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/switchTextManageEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="4dp"
+                android:text="Private" />
+
+        </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
