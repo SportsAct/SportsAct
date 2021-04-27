@@ -35,6 +35,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -234,10 +235,39 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         return true;
     }
 
+    private void checkIfLocationIsDuplicate(Location location) {
+
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
+        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
+        query.getFirstInBackground(new GetCallback<Location>() {
+            @Override
+            public void done(Location object, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Location is new!", e);
+
+                    //location not found
+                    eventBeingCreated.location = location;
+                    tvLocation.setText(location.getCityName() + ", " + location.getStateName());
+
+                    return;
+                }
+
+                //location found
+                eventBeingCreated.location = object;
+
+                tvLocation.setText(object.getCityName() + ", " + object.getStateName());
+
+            }
+        });
+    }
+
     @Override
     public void saveLocation(Location location) {
-        eventBeingCreated.location = location;
-        tvLocation.setText(location.getCityName() + ", " + location.getState().getName());
+
+        checkIfLocationIsDuplicate(location);
+
     }
 
     //gather all informetion to create event
