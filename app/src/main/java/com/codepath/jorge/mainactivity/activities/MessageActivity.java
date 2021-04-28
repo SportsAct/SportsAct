@@ -126,7 +126,7 @@ public class MessageActivity extends AppCompatActivity {
                 
                 currentChat = object;
 
-                tbToolbar.setTitle(currentChat.getEvent().getTitle()); 
+                tbToolbar.setTitle(currentChat.getEvent().getTitle() + " Chat");
                 
                 //get messages
                 getMessages();
