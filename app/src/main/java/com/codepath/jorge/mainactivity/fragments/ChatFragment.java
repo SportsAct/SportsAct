@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -82,6 +83,14 @@ public class ChatFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //so when it leaves a chat is updated immediately
+        getUserChats();
+    }
+
     private void getUserChats() {
 
         ParseQuery<ChatUserJoin> query = ParseQuery.getQuery(ChatUserJoin.class);
@@ -99,6 +108,9 @@ public class ChatFragment extends Fragment {
                     return;
                 }
 
+                //clearing the list for not duplicates
+                chatList.clear();
+
                 //adding chats
                 for(int i = 0;i < objects.size();i++){
 
@@ -106,6 +118,18 @@ public class ChatFragment extends Fragment {
                 }
 
                 Collections.sort(chatList);
+
+                //if data is empty
+                if(chatList.isEmpty()) {
+
+                    Fragment fragment = new EmptyFragment();
+
+                    final FragmentManager fragmentManager = getFragmentManager();
+
+                    if (fragmentManager != null) {
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                    }
+                }
 
                 //notify adapter
                 adapter.notifyDataSetChanged();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -177,6 +178,18 @@ public class HomeFragment extends Fragment {
 
                 //dismissing loading dialog
                 loadingDialog.dismissDialog();
+
+                //if data is empty
+                if(sportEventList.isEmpty()) {
+
+                    Fragment fragment = new EmptyFragment();
+
+                    final FragmentManager fragmentManager = getFragmentManager();
+
+                    if (fragmentManager != null) {
+                        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                    }
+                }
 
             }
         });
