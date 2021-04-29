@@ -275,7 +275,7 @@ public class AccountFragment extends Fragment {
                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                }
                Log.i(TAG, "post save was successful!");
-                Toast.makeText(getContext(), "Successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
            }
         });
     }

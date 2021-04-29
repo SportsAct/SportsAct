@@ -83,7 +83,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             //loading user picture
             if(groupImage != null){
-                Glide.with(context).load(groupImage.getUrl()).into(ivGroupImage);
+                Glide.with(context).load(groupImage.getUrl()).placeholder(R.drawable.group).into(ivGroupImage);
             }
             else{
                 ivGroupImage.setImageResource(R.drawable.group);
