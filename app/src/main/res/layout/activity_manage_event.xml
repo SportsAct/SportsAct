@@ -32,13 +32,13 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp">
 
-    <TextView
-        android:id="@+id/tvEventTitleManage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        tools:text="Name of Event" />
+        <TextView
+            android:id="@+id/tvEventTitleManage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            tools:text="Name of Event" />
 
         <EditText
             android:id="@+id/etEventTitleManage"
@@ -89,6 +89,7 @@
                 android:checked="false"
                 android:layout_toStartOf="@+id/switchTextManageEvent"
                 android:text="Select your game privacy:"
+                android:padding="8dp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <TextView
@@ -126,6 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:text="Select a location for this event."
+        android:padding="8dp"
         android:textColor="@color/black" />
 
     <View
@@ -141,6 +143,8 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
         android:textAlignment="center"
+        android:textSize="16dp"
+        android:padding="8dp"
         android:text="Current date and time for this event:" />
 
     <LinearLayout
@@ -156,6 +160,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/custom_ripple"
+            android:padding="8dp"
             android:layout_weight="1">
 
             <ImageView
@@ -181,6 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="8dp"
             android:background="@drawable/custom_ripple"
             android:layout_weight="1">
 
@@ -213,6 +219,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
+        android:padding="8dp"
         android:orientation="horizontal">
 
         <TextView
@@ -220,6 +227,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="8dp"
+            android:textColor="@color/black"
             android:text="Current Maximun Amount of Players:" />
 
         <ImageButton
@@ -256,12 +264,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
         android:text="Number of players currently going to the event:"/>
 
         <TextView
@@ -295,6 +305,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
+            android:textColor="@color/black"
+        android:textSize="16dp"
+        android:padding="8dp"
         android:text="Select which sport is the game going to be about:"/>
 
 
