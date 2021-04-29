@@ -71,7 +71,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:clickable="false"
-            app:srcCompat="@drawable/edit" />
+            app:srcCompat="@drawable/editpencil" />
 
     </RelativeLayout>
 

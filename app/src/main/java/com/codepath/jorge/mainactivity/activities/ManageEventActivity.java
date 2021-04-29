@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +38,6 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -297,7 +294,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                         tvMaxCharactersTitle.setVisibility(View.GONE);
 
                         ivIconTitle.setClickable(false);
-                        ivIconTitle.setImageResource(R.drawable.edit);
+                        ivIconTitle.setImageResource(R.drawable.editpencil);
                     }
                 });
 
