@@ -197,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:text="5 more spots open." />
+                android:text="15 more spots open." />
 
             <Button
                 android:id="@+id/btnSeeParticipantsHome"
@@ -205,8 +205,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-                android:autoSizeTextType="none"
+                android:autoSizeTextType="uniform"
                 android:text="SEE WHO IS GOING"
+                android:maxLines="1"
                 android:textAlignment="textEnd" />
 
         </LinearLayout>

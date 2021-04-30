@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
+            android:padding="8dp"
             android:hint="@string/enter_event_title"
             android:inputType="textShortMessage"
             android:maxLength="25"
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:checked="false"
+        android:padding="8dp"
         android:layout_toStartOf="@+id/switchTextCreateEvent"
         android:text="Select your game privacy:"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -101,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
         android:text="Select a location for this event."
         android:textColor="@color/black" />
 
@@ -116,6 +119,8 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
+        android:textSize="16dp"
+        android:padding="8dp"
         android:text="Select the date and time for the event:" />
 
     <LinearLayout
@@ -126,14 +131,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
-        android:padding="4dp"
+        android:padding="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Pick a date:" />
+            android:text="Select a date:" />
 
         <ImageView
             android:layout_width="24dp"
@@ -158,14 +163,14 @@
         android:background="@drawable/custom_ripple"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
-        android:padding="4dp"
+        android:padding="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Pick a time:" />
+            android:text="Select a time:" />
 
         <ImageView
             android:layout_width="24dp"
@@ -209,12 +214,14 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:padding="8dp"
                 android:text="How many participants would this event have:" />
 
             <NumberPicker
                 android:id="@+id/npAmountofPlayersCreateEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_gravity="center"
                 android:animateLayoutChanges="false" />
         </LinearLayout>
@@ -231,12 +238,14 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:padding="8dp"
                 android:text="What is the sport that will be played in this event:" />
 
             <NumberPicker
                 android:id="@+id/npSportPickerCreateEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_gravity="center" />
         </LinearLayout>
 

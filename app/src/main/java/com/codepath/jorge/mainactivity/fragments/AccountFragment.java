@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.fragments;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,9 @@ import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 
@@ -65,6 +68,7 @@ public class AccountFragment extends Fragment {
     private TextView userNameId;
     private TextView bioTextId;
     private TextView realNameId;
+    private Button btnSaveSportPreferences;
     private String strtext;
 
 
@@ -72,6 +76,7 @@ public class AccountFragment extends Fragment {
     private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
     List<SportGame> selectedSportList;
+    List<SportGame> oldOnes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,11 +129,9 @@ public class AccountFragment extends Fragment {
         bioTextId = view.findViewById(R.id.bioTextId);
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
+        btnSaveSportPreferences = view.findViewById(R.id.btnSaveSportPreferencesAccountFragment);
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
-
-
-
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
@@ -168,6 +171,14 @@ public class AccountFragment extends Fragment {
                 getActivity().startActivity(i);
             }
         });
+
+        //listener to save sport preferences
+        btnSaveSportPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveSportPreferences();
+            }
+        });
     }
 
     private void getSportPreferenceOfUser() {
@@ -188,6 +199,11 @@ public class AccountFragment extends Fragment {
                 for( int i = 0 ; i < objects.size() ; i++){
                     selectedSportList.add(objects.get(i).getSport());
                 }
+
+                oldOnes = new ArrayList<>();
+
+                oldOnes.addAll(selectedSportList);
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -248,6 +264,7 @@ public class AccountFragment extends Fragment {
         // Return the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
+
         // To save post from submitting picture
         private void savePost(File photoFile) {
         ParseUser parseUser = ParseUser.getCurrentUser();
@@ -260,7 +277,7 @@ public class AccountFragment extends Fragment {
                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                }
                Log.i(TAG, "post save was successful!");
-                Toast.makeText(getContext(), "Successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
            }
         });
     }
@@ -270,6 +287,110 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account, container, false);
+    }
+
+    private void saveSportPreferences(){
+
+        final List<SportGame> toDeleteSports = new ArrayList<>();
+        final List<SportGame> toCreateSports = new ArrayList<>();
+
+        boolean found;
+
+        //finding new selected sports
+        for(int i = 0; i < selectedSportList.size(); i++){
+            found = false;
+            for(int j = 0; j < oldOnes.size();j++){
+                if(oldOnes.get(j).getObjectId().equals(selectedSportList.get(i).getObjectId())){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+
+                toCreateSports.add(selectedSportList.get(i));
+            }
+        }
+
+        //finding sports that where unselected
+        for(int i = 0; i < oldOnes.size();i++){
+            found = false;
+            for(int j = 0; j < selectedSportList.size(); j++){
+
+                if(oldOnes.get(i).getObjectId().equals(selectedSportList.get(j).getObjectId())){
+                    Log.i(TAG, "Found " + oldOnes.get(i).getSportName());
+                    found = true;
+                }
+            }
+
+            if(!found){
+                Log.i(TAG, "deleting:  " + oldOnes.get(i).getSportName());
+                toDeleteSports.add(oldOnes.get(i));
+            }
+        }
+
+        saveSportPreferenceQuery(toCreateSports);
+        
+        deleteUnselectedSports(toDeleteSports);
+    }
+
+    private void deleteUnselectedSports(List<SportGame> toDeleteSports) {
+
+        for(SportGame sportGame : toDeleteSports){
+
+            ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
+            query.whereEqualTo(SportPreference.KEY_USER,ParseUser.getCurrentUser());
+            query.whereEqualTo(SportPreference.KEY_SPORT,sportGame);
+            query.getFirstInBackground(new GetCallback<SportPreference>() {
+                @Override
+                public void done(SportPreference deletedObject, ParseException e) {
+
+                    if( e != null){
+                        Log.e(TAG, "There was a problem saving the preferences!", e);
+                        Toast.makeText(getContext(), "There was a problem deleting the unselected!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    deletedObject.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if( e != null){
+                                Log.e(TAG, "There was a problem saving the preferences!", e);
+                                Toast.makeText(getContext(), "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            Toast.makeText(getContext(), "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
+        }
+
+    }
+
+    private void saveSportPreferenceQuery(List<SportGame> toCreateSports) {
+
+        oldOnes.clear();
+        oldOnes.addAll(selectedSportList);
+
+        for(SportGame sportGame : toCreateSports){
+            Log.i(TAG, "Just Checking");
+            SportPreference newSportPreference = new SportPreference();
+            newSportPreference.setSport(sportGame);
+            newSportPreference.setUser(ParseUser.getCurrentUser());
+            newSportPreference.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if( e != null){
+                        Log.e(TAG, "There was a problem saving the preferences!", e);
+                        Toast.makeText(getContext(), "There was a problem saving the preferences!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    Toast.makeText(getContext(), "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
     }
 
 
