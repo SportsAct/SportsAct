@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 @ParseClassName("Location")
@@ -16,11 +17,27 @@ public class Location extends ParseObject {
 
     public void setState(AllStates state){put(KEY_STATE,state);}
 
-    public String getCityName(){return getString(KEY_CITY_NAME);}
+    public String getCityName(){
+        try {
+            return fetchIfNeeded().getString(KEY_CITY_NAME);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "Not Found";
+    }
 
     public void setCityName(String name){put(KEY_CITY_NAME,name);}
 
-    public String getStateName(){return getString(KEY_STATE_NAME);}
+    public String getStateName(){
+        try {
+            return fetchIfNeeded().getString(KEY_STATE_NAME);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "Not Found";
+    }
 
     public void setStateName(String name){put(KEY_STATE_NAME,name);}
 }
