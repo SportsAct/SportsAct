@@ -122,7 +122,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();
-            tvRemainingSpots.setText(remainingSpots + " more spots open.");
+            tvRemainingSpots.setText(remainingSpots + " spots open.");
 
             //loading user picture
             if(profileImage != null){
