@@ -8,6 +8,6 @@
     <color name="teal_dark">#69D2E7</color>
     <color name="delete_red">#d11a2a</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="selected_item">#AFDCFF</color>
 </resources>
