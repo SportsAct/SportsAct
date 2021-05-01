@@ -76,14 +76,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-<<<<<<< HEAD
+
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginVertical="8dp"
         android:layout_marginStart="7dp"
         android:layout_marginEnd="-6dp"
         android:layout_marginBottom="44dp" />
-=======
+
         android:layout_above="@+id/btnSaveSportPreferencesAccountFragment"
         android:layout_marginVertical="8dp" />
 
@@ -95,7 +95,7 @@
         android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
         android:text="Update Sport Preferences"/>
->>>>>>> 33ac1f606d6d23c252e9d80ad98734b3d3f6c8f4
+
 
     <Button
         android:id="@+id/editText"
@@ -121,12 +121,11 @@
         android:text="Name" />
 
 
-<<<<<<< HEAD
+
 
 
     <!-- TODO: Update blank fragment layout -->
 
-=======
->>>>>>> 33ac1f606d6d23c252e9d80ad98734b3d3f6c8f4
+
 </RelativeLayout>
 
