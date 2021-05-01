@@ -453,7 +453,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
                                 Toast.makeText(EditProfile.this, "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
                             }
 
-                            Toast.makeText(EditProfile.this, "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
+                            saveEdits();
                         }
                     });
 
