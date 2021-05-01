@@ -26,9 +26,7 @@
             <ImageView
                 android:layout_width="350dp"
                 android:layout_height="200dp"
-                android:scaleType="fitXY"
-                android:scaleY="2"
-                android:scaleX="1.5"
+                android:scaleType="fitCenter"
                 android:background="@color/middle_ground_transparent"
                 app:srcCompat="@drawable/sport_connect_logo" />
 

@@ -19,17 +19,16 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
-        <ImageView
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:background="@color/middle_ground_transparent"
-            app:srcCompat="@drawable/sport_connect_logo" />
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:scaleType="fitCenter"
+                android:background="@color/middle_ground_transparent"
+                app:srcCompat="@drawable/sport_connect_logo" />
 
         </RelativeLayout>
 
