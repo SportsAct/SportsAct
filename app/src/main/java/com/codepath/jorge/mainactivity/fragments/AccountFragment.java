@@ -13,6 +13,7 @@ import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.activities.EditProfile;
 import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
@@ -59,40 +60,24 @@ public class AccountFragment extends Fragment {
     public static final String TAG = "AccountFragment";
 
     private RecyclerView imagesSports;
-    private Button btnCaptureImage;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private ImageView profilePic;
-    private File photoFile;
-    public String photoFileName = "photo.jpg";
     private Button editText;
     private TextView userNameId;
     private TextView bioTextId;
     private TextView realNameId;
-    private Button btnSaveSportPreferences;
-    private String strtext;
-
-
+    private TextView tvLocation;
 
     private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
     List<SportGame> selectedSportList;
     List<SportGame> oldOnes;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            String userNameId = getArguments().getString("params");
-        }
-
-    }
+    ParseUser currentUser;
 
     @Override
     public void onResume() {
         super.onResume();
-        userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
-        bioTextId.setText((String) ParseUser.getCurrentUser().get("bio"));
-        realNameId.setText((String) ParseUser.getCurrentUser().get("name"));
+       loadUserData();
     }
 
     private void getSports() {
@@ -123,15 +108,17 @@ public class AccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profilePic = view.findViewById(R.id.profilePic);
-        btnCaptureImage = view.findViewById(R.id.takePicId);
         editText = view.findViewById(R.id.editText);
         userNameId = view.findViewById(R.id.userNameId);
         bioTextId = view.findViewById(R.id.bioTextId);
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
-        btnSaveSportPreferences = view.findViewById(R.id.btnSaveSportPreferencesAccountFragment);
+        tvLocation = view.findViewById(R.id.tvLocationAccountFragment);
+
+        //initializing arrays
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
+        currentUser = ParseUser.getCurrentUser();
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
@@ -141,17 +128,12 @@ public class AccountFragment extends Fragment {
         imagesSports.setLayoutManager(layoutManager);
         getSports();
 
-        //Gets the username, real name, and bio from database
-        userNameId.setText((String) ParseUser.getCurrentUser().get("username"));
-        bioTextId.setText((String) ParseUser.getCurrentUser().get("bio"));
-        realNameId.setText((String) ParseUser.getCurrentUser().get("name"));
 
-        //Gets image from DataBase
-        ParseFile profileImage = (ParseFile) ParseUser.getCurrentUser().get("profilePicture");
-        Glide.with(getActivity()).load(profileImage.getUrl()).into(profilePic);
+        loadUserData();
+
 
         // CLICK LISTENER TO LAUNCH CAMERA
-        btnCaptureImage.setOnClickListener(new View.OnClickListener() {
+       /* btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchCamera();
@@ -162,7 +144,7 @@ public class AccountFragment extends Fragment {
 
             }
         });
-
+*/
         // CLICK LISTENER TO
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +154,7 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        /*
         //listener to save sport preferences
         btnSaveSportPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +162,22 @@ public class AccountFragment extends Fragment {
                 saveSportPreferences();
             }
         });
+
+         */
+    }
+
+    private void loadUserData() {
+
+        //Gets the username, real name, and bio from database
+        userNameId.setText((String) currentUser.get("username"));
+        bioTextId.setText((String) currentUser.get("bio"));
+        realNameId.setText((String) currentUser.get("name"));
+
+        ParseFile profilePicture = (ParseFile) currentUser.get("profilePicture");
+        Glide.with(getActivity()).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);
+
+        Location userLocation = (Location) currentUser.get("location");
+        tvLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
     }
 
     private void getSportPreferenceOfUser() {
@@ -210,61 +209,6 @@ public class AccountFragment extends Fragment {
     }
 
 
-    private void launchCamera() {
-        // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
-        photoFile = getPhotoFileUri(photoFileName);
-
-        // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(getActivity(), "fileprovider", photoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-        }
-    }
-
-    //On activity result
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == getActivity().RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                profilePic.setImageBitmap(takenImage);
-                savePost(photoFile);
-                profilePic.setImageBitmap(takenImage);
-            } else { // Result was a failure
-                Toast.makeText(getActivity(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // Returns the File for a photo stored on disk given the fileName
-    public File getPhotoFileUri(String fileName) {
-        // Get safe storage directory for photos
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
-        }
-
-        // Return the file target for the photo based on filename
-        return new File(mediaStorageDir.getPath() + File.separator + fileName);
-    }
-
         // To save post from submitting picture
         private void savePost(File photoFile) {
         ParseUser parseUser = ParseUser.getCurrentUser();
@@ -289,109 +233,6 @@ public class AccountFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
-    private void saveSportPreferences(){
-
-        final List<SportGame> toDeleteSports = new ArrayList<>();
-        final List<SportGame> toCreateSports = new ArrayList<>();
-
-        boolean found;
-
-        //finding new selected sports
-        for(int i = 0; i < selectedSportList.size(); i++){
-            found = false;
-            for(int j = 0; j < oldOnes.size();j++){
-                if(oldOnes.get(j).getObjectId().equals(selectedSportList.get(i).getObjectId())){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-
-                toCreateSports.add(selectedSportList.get(i));
-            }
-        }
-
-        //finding sports that where unselected
-        for(int i = 0; i < oldOnes.size();i++){
-            found = false;
-            for(int j = 0; j < selectedSportList.size(); j++){
-
-                if(oldOnes.get(i).getObjectId().equals(selectedSportList.get(j).getObjectId())){
-                    Log.i(TAG, "Found " + oldOnes.get(i).getSportName());
-                    found = true;
-                }
-            }
-
-            if(!found){
-                Log.i(TAG, "deleting:  " + oldOnes.get(i).getSportName());
-                toDeleteSports.add(oldOnes.get(i));
-            }
-        }
-
-        saveSportPreferenceQuery(toCreateSports);
-        
-        deleteUnselectedSports(toDeleteSports);
-    }
-
-    private void deleteUnselectedSports(List<SportGame> toDeleteSports) {
-
-        for(SportGame sportGame : toDeleteSports){
-
-            ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
-            query.whereEqualTo(SportPreference.KEY_USER,ParseUser.getCurrentUser());
-            query.whereEqualTo(SportPreference.KEY_SPORT,sportGame);
-            query.getFirstInBackground(new GetCallback<SportPreference>() {
-                @Override
-                public void done(SportPreference deletedObject, ParseException e) {
-
-                    if( e != null){
-                        Log.e(TAG, "There was a problem saving the preferences!", e);
-                        Toast.makeText(getContext(), "There was a problem deleting the unselected!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    deletedObject.deleteInBackground(new DeleteCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if( e != null){
-                                Log.e(TAG, "There was a problem saving the preferences!", e);
-                                Toast.makeText(getContext(), "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            Toast.makeText(getContext(), "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-            });
-        }
-
-    }
-
-    private void saveSportPreferenceQuery(List<SportGame> toCreateSports) {
-
-        oldOnes.clear();
-        oldOnes.addAll(selectedSportList);
-
-        for(SportGame sportGame : toCreateSports){
-            Log.i(TAG, "Just Checking");
-            SportPreference newSportPreference = new SportPreference();
-            newSportPreference.setSport(sportGame);
-            newSportPreference.setUser(ParseUser.getCurrentUser());
-            newSportPreference.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-
-                    if( e != null){
-                        Log.e(TAG, "There was a problem saving the preferences!", e);
-                        Toast.makeText(getContext(), "There was a problem saving the preferences!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    Toast.makeText(getContext(), "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        }
-    }
 
 
 }

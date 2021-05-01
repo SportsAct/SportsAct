@@ -1,131 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:shape="ring"
+        app:cardCornerRadius="75dp">
 
     <ImageView
         android:id="@+id/profilePic"
-        android:layout_width="143dp"
-        android:layout_height="143dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="63dp"
-        android:elevation="70dp"
-        android:foreground="@drawable/rounded_fg"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+    <TextView
+        android:id="@+id/realNameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="26dp"
+        tools:text="Erik Fors" />
 
     <TextView
         android:id="@+id/userNameId"
-        android:layout_width="121dp"
-        android:layout_height="44dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="259dp"
-        android:layout_toEndOf="@+id/profilePic"
-        android:drawableLeft="@drawable/user"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:textColorHighlight="#7cff88"
-        android:textSize="15sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        tools:text="erikfors" />
+
+    <Button
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Bio:" />
 
     <TextView
         android:id="@+id/bioTextId"
-        android:layout_width="wrap_content"
-        android:layout_height="84dp"
-        android:layout_below="@+id/userNameId"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="188dp"
-        android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
-        android:textColorHighlight="#7cff88"
-        android:textSize="15sp"
-        tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
-
-    <Button
-        android:id="@+id/takePicId"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="101dp"
-        android:layout_marginEnd="32dp"
-        android:layout_toEndOf="@+id/profilePic"
-        android:drawableLeft="@drawable/camerareal"
+        android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
+        tools:text="I love playing basketball and football on the weekends in Bayfront Park.
+        Let me know if you're free on the weekends!" />
 
-        android:text="Upload"
-        android:textSize="15dp"
-        tools:text="Upload" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Location:" />
+
+    <TextView
+        android:id="@+id/tvLocationAccountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
+        tools:text="Miami, Florida" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Sport Preferences:" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginVertical="8dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="-6dp"
-        android:layout_marginBottom="44dp" />
-
         android:layout_above="@+id/btnSaveSportPreferencesAccountFragment"
         android:layout_marginVertical="8dp" />
 
-    <Button
-        android:id="@+id/btnSaveSportPreferencesAccountFragment"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:text="Update Sport Preferences"/>
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
 
-
-    <Button
-        android:id="@+id/editText"
-        android:layout_width="139dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/takePicId"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="23dp"
-        android:drawableLeft="@drawable/editpencilreal"
-        android:text="Edit" />
-
-    <TextView
-        android:id="@+id/realNameId"
-        android:layout_width="118dp"
-        android:layout_height="31dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Name" />
-
-
-
-
-
-    <!-- TODO: Update blank fragment layout -->
-
-
-</RelativeLayout>
+</LinearLayout>
 
