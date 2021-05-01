@@ -29,6 +29,7 @@
             android:id="@+id/profilePic"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:scaleType="fitCenter"
             tools:src="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
 
@@ -54,7 +55,8 @@
         android:id="@+id/etActualNameEditProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
@@ -64,7 +66,8 @@
         android:id="@+id/userNameId2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="text"
@@ -74,7 +77,8 @@
         android:id="@+id/bioTextId2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Bio"
        />
@@ -102,6 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
+        android:clickable="false"
         android:text="Miami, Florida"
         android:maxLines="1"
         />
@@ -128,21 +133,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSaveSportPreferencesAccountFragment"
         android:layout_marginVertical="8dp" />
-
-        <Button
-            android:id="@+id/btnSaveSportPreferences"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="16dp"
-            android:text="Save Sport Preferences" />
-
-    <Button
-        android:id="@+id/saveButtonId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Update Changes" />
 
     </LinearLayout>
 
