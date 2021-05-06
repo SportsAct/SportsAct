@@ -1,6 +1,5 @@
 package com.codepath.jorge.mainactivity.adapters;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -8,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.EventParticipantsActivity;
+import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.activities.MessageActivity;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
@@ -29,10 +28,8 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Queue;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
@@ -82,6 +79,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         Button btnSeeWhoIsGoing;
         Button btnChatWithGroup;
         Button btnJoinEvent;
+        ImageButton btnManage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +97,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             btnSeeWhoIsGoing = itemView.findViewById(R.id.btnSeeParticipantsHome);
             btnChatWithGroup = itemView.findViewById(R.id.btnChatWithGroupHome);
             btnJoinEvent = itemView.findViewById(R.id.btnJoinEventHome);
+            btnManage = itemView.findViewById(R.id.btnManageEventItem);
 
         }
 
@@ -123,7 +122,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();
-            tvRemainingSpots.setText(remainingSpots + " more spots open.");
+            tvRemainingSpots.setText(remainingSpots + " spots open.");
 
             //loading user picture
             if(profileImage != null){
@@ -137,7 +136,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 Glide.with(context).load(sportImage.getUrl()).into(ivSportImage);
             }
 
+            //show manage icon if the event was created by the current user
+            if(sportEvent.getUser().getObjectId().equals( ParseUser.getCurrentUser().getObjectId())){
+                btnManage.setVisibility(View.VISIBLE);
+            }
+            else {
+                btnManage.setVisibility(View.GONE);
+            }
+
             //seting buttons listeners
+
+            //to see who is going to the event
             btnSeeWhoIsGoing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -156,12 +165,28 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
 
+            //joins an event
             btnJoinEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                    checkIfUserIsAParticipant(sportEvent);
                 }
             });
+
+            //takes to screen manage event
+            btnManage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendToManageScreen(sportEvent.getObjectId());
+                }
+            });
+        }
+
+        //sends to manage screen for an specific event
+        private void sendToManageScreen(String objectId) {
+            Intent i = new Intent(context, ManageEventActivity.class);
+            i.putExtra("event_id",objectId);
+            context.startActivity(i);
         }
 
         //gets the chat and call to check if the user is in the chat

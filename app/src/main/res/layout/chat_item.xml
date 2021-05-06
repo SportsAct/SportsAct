@@ -50,7 +50,7 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
         android:shape="ring"
@@ -61,7 +61,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             tools:srcCompat="@drawable/group" />
     </androidx.cardview.widget.CardView>
 

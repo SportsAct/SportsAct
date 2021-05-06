@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SignUpActivity" >
+
+    <ImageView
+        android:id="@+id/imageBackgroundSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.85"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:scaleType="fitCenter"
+                android:background="@color/middle_ground_transparent"
+                app:srcCompat="@drawable/sport_connect_logo" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Create an Account"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="42dp"
+            android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etRealName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your full name"
+        android:inputType="textPersonName"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your username"
+        android:inputType="textPersonName"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:background="@color/middle_ground_transparent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Account" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -6,7 +6,8 @@
 
     <include
         android:id="@+id/tbToolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessages"
@@ -26,6 +27,7 @@
         android:paddingLeft="0dp"
         android:paddingTop="5dp"
         android:paddingRight="0dp"
+        android:background="@color/middle_ground_transparent"
         android:paddingBottom="10dp">
 
         <EditText
@@ -34,10 +36,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/btSend"
             android:layout_toStartOf="@+id/btSend"
-           android:maxLength="10000"
+            android:ems="10"
             android:hint="@string/message_hint"
-            android:imeOptions="actionSend"
-            android:singleLine="false" />
+            android:imeOptions="actionDone"
+            android:inputType="textImeMultiLine|textMultiLine"
+            android:lines="4"
+            android:maxLines="4"/>
 
         <ImageButton
             android:id="@+id/btSend"
@@ -46,10 +50,12 @@
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/send"
             android:gravity="center"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/middle_ground_transparent"
             android:paddingEnd="10dp"
             android:src="@drawable/ic_baseline_send_24"
             android:textSize="18sp" />
+
+
 
     </RelativeLayout>
 

@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:completionHint="Select a City"
+        android:enabled="false"
         android:completionThreshold="1"
         android:hint="Select a City" />
 

@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.CreateEventActivity"
-    android:orientation="vertical">
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        android:id="@+id/tbToolbar"
+        layout="@layout/toolbar" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressBarCreatingEvent"
@@ -25,13 +34,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
+            android:padding="8dp"
             android:hint="@string/enter_event_title"
             android:inputType="textShortMessage"
             android:maxLength="25"
             android:maxLines="1"
             android:singleLine="true" />
 
-        <EditText
+        <TextView
             android:id="@+id/tvTitleMaxCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,20 +52,34 @@
             tools:text="25" />
     </RelativeLayout>
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="16dp">
 
     <Switch
         android:id="@+id/swtPrivacyCreateEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"
         android:checked="false"
-        android:showText="true"
+        android:padding="8dp"
+        android:layout_toStartOf="@+id/switchTextCreateEvent"
         android:text="Select your game privacy:"
-        android:textOff="Private"
-        android:textOn="Public"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/switchTextCreateEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:text="Private" />
+
+</RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -68,7 +92,7 @@
         style="@android:style/Widget.Material.Light.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/orange_dark"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:enabled="false"
@@ -79,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
         android:text="Select a location for this event."
         android:textColor="@color/black" />
 
@@ -94,6 +119,8 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
+        android:textSize="16dp"
+        android:padding="8dp"
         android:text="Select the date and time for the event:" />
 
     <LinearLayout
@@ -104,13 +131,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
+        android:padding="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Pick a date:" />
+            android:text="Select a date:" />
 
         <ImageView
             android:layout_width="24dp"
@@ -123,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Not Date selected yet!"
-            android:textColor="@color/design_default_color_error" />
+            android:textColor="@color/delete_red" />
 
     </LinearLayout>
 
@@ -135,13 +163,14 @@
         android:background="@drawable/custom_ripple"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
+        android:padding="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Pick a time:" />
+            android:text="Select a time:" />
 
         <ImageView
             android:layout_width="24dp"
@@ -154,7 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Not Time selected yet!"
-            android:textColor="@color/design_default_color_error" />
+            android:textColor="@color/delete_red" />
 
     </LinearLayout>
 
@@ -185,12 +214,14 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:padding="8dp"
                 android:text="How many participants would this event have:" />
 
             <NumberPicker
                 android:id="@+id/npAmountofPlayersCreateEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_gravity="center"
                 android:animateLayoutChanges="false" />
         </LinearLayout>
@@ -207,35 +238,30 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:padding="8dp"
                 android:text="What is the sport that will be played in this event:" />
 
             <NumberPicker
                 android:id="@+id/npSportPickerCreateEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_gravity="center" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <Button
             android:id="@+id/btnCreateEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:text="Create Event" />
 
-    </RelativeLayout>
 
+    </LinearLayout>
 
-
-
-</LinearLayout>
+</ScrollView>

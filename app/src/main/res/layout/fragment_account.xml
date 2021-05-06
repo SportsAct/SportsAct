@@ -1,125 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:shape="ring"
+        app:cardCornerRadius="75dp">
 
     <ImageView
         android:id="@+id/profilePic"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="63dp"
-        app:srcCompat="@drawable/empty_profile"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
 
-
-    <EditText
-        android:id="@+id/nameId"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+    <TextView
+        android:id="@+id/realNameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="17dp"
-        android:layout_toEndOf="@+id/profilePic"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="26dp"
+        tools:text="Erik Fors" />
+
+    <TextView
+        android:id="@+id/userNameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        tools:text="erikfors" />
+
+    <Button
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Bio:" />
 
     <TextView
         android:id="@+id/bioTextId"
-        android:layout_width="185dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="147dp"
-        android:layout_marginEnd="37dp"
-        android:layout_toEndOf="@+id/profilePic"
-        android:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!"
-        tools:text="I love playing basketball and football on the weekends in Bayfront Park. Let me know if you're free on the weekends!" />
+        android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
+        tools:text="I love playing basketball and football on the weekends in Bayfront Park.
+        Let me know if you're free on the weekends!" />
 
-    <Button
-        android:id="@+id/takePicId"
-        android:layout_width="112dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profilePic"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="19dp"
-        android:text="Upload"
-        tools:text="Upload" />
-        android:layout_marginBottom="284dp"
-         />
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Location:" />
 
-    <Button
-        android:id="@+id/addFriendId"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tvLocationAccountFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginBottom="87dp"
-        android:text="Add Friends" />
-        android:layout_centerVertical="true"
-        android:layout_marginStart="143dp"
-        android:layout_marginBottom="287dp"
-         />
+        android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
+        tools:text="Miami, Florida" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
 
-  
-    <Button
-        android:id="@+id/manageEventsId"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="41dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="87dp"
-        android:layout_toEndOf="@+id/addFriendId"
-        android:text="Manage Events" />
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="288dp"
-        />
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:paddingHorizontal="8dp"
+        android:text="Sport Preferences:" />
 
-    <HorizontalScrollView
-        android:layout_width="300dp"
-        android:layout_height="192dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="157dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSaveSportPreferencesAccountFragment"
+        android:layout_marginVertical="8dp" />
 
-        <LinearLayout
-            android:id="@+id/gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="286dp"
-        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"/>
 
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="40dp"
-        android:layout_height="34dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="360dp"
-        android:layout_marginEnd="52dp"
-         />
-
-</RelativeLayout>
+</LinearLayout>
 

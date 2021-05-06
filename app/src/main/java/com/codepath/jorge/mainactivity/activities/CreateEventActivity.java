@@ -8,16 +8,16 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
@@ -35,12 +35,11 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,6 +104,8 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
     private NumberPicker npSportsToBePlayed;
     private Button btnCreateEvent;
     ProgressBar progressBar;
+    private Toolbar tbToolbar;
+    private TextView switchText;
 
     //variable
     private List<SportGame> sportGames;
@@ -130,11 +131,18 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
         progressBar = findViewById(R.id.progressBarCreatingEvent);
+        tbToolbar = findViewById(R.id.tbToolbar);
+        switchText = findViewById(R.id.switchTextCreateEvent);
 
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
         allStates = new ArrayList<>();
+
+        //setting bar
+        tbToolbar.setTitle("Create Your Event");
+        setSupportActionBar(tbToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getting states
         getStates();
@@ -143,6 +151,20 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
        getSportData();
        
        //listeners
+
+        //switch changing title
+        swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if(b){
+                    switchText.setText("Public");
+                }
+                else {
+                    switchText.setText("Private");
+                }
+            }
+        });
 
         //title max count
         etEventTitle.addTextChangedListener(new TextWatcher() {
@@ -208,9 +230,44 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    private void checkIfLocationIsDuplicate(Location location) {
+
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
+        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
+        query.getFirstInBackground(new GetCallback<Location>() {
+            @Override
+            public void done(Location object, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Location is new!", e);
+
+                    //location not found
+                    eventBeingCreated.location = location;
+                    tvLocation.setText(location.getCityName() + ", " + location.getStateName());
+
+                    return;
+                }
+
+                //location found
+                eventBeingCreated.location = object;
+
+                tvLocation.setText(object.getCityName() + ", " + object.getStateName());
+
+            }
+        });
+    }
+
+    @Override
     public void saveLocation(Location location) {
-        eventBeingCreated.location = location;
-        tvLocation.setText(location.getCityName() + ", " + location.getState().getName());
+
+        checkIfLocationIsDuplicate(location);
+
     }
 
     //gather all informetion to create event

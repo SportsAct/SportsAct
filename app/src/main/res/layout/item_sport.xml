@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:padding="8dp"
+    android:layout_margin="4dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivSportImageItemSport"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        tools:srcCompat="@drawable/group" />
+
+    <TextView
+        android:id="@+id/tvSportNameItemSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSportImageItemSport"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginVertical="8dp"
+        android:fitsSystemWindows="false"
+        android:textColor="@color/black"
+        tools:text="American Football" />
+
+</RelativeLayout>

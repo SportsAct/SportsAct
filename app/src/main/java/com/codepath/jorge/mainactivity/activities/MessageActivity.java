@@ -4,14 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
 import com.codepath.jorge.mainactivity.adapters.MessageAdapter;
@@ -23,13 +25,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.livequery.ParseLiveQueryClient;
-import com.parse.livequery.SubscriptionHandling;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
@@ -88,6 +84,9 @@ public class MessageActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(false);
         rvMessages.setLayoutManager(linearLayoutManager);
 
+        //setting cursor to edit text
+        etMessage.requestFocus();
+
         //listeners
         //send button
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +109,6 @@ public class MessageActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            Log.d(TAG, "Called on main thread");
             getNewMessages();
             handler.postDelayed(this, 2000);
         }
@@ -134,7 +132,7 @@ public class MessageActivity extends AppCompatActivity {
                 
                 currentChat = object;
 
-                tbToolbar.setTitle(currentChat.getEvent().getTitle()); 
+                tbToolbar.setTitle(currentChat.getEvent().getTitle() + " Chat");
                 
                 //get messages
                 getMessages();
@@ -179,7 +177,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private void getNewMessages() {
 
-        if(currentChat == null || messageList == null){
+        if(currentChat == null || messageList.isEmpty()){
             return;
         }
 
