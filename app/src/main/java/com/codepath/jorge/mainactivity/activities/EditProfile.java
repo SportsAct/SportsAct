@@ -128,7 +128,10 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         userNameId2.setText(currentUser.getUsername());
 
         Location userLocation = (Location) currentUser.get("location");
+        if(userLocation != null)
         btnLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+        else
+            btnLocation.setText("Choose a location");
 
         //listeners
 
@@ -427,6 +430,8 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         saveSportPreferenceQuery(toCreateSports);
 
         deleteUnselectedSports(toDeleteSports);
+
+        saveEdits();
     }
 
     private void deleteUnselectedSports(List<SportGame> toDeleteSports) {
@@ -453,7 +458,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
                                 Toast.makeText(EditProfile.this, "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
                             }
 
-                            saveEdits();
                         }
                     });
 
@@ -487,7 +491,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
                 }
             });
 
-            saveEdits();
         }
     }
 

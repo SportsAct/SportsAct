@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.fragments.AccountFragment;
 import com.codepath.jorge.mainactivity.fragments.ChatFragment;
 import com.codepath.jorge.mainactivity.fragments.HomeFragment;
+import com.codepath.jorge.mainactivity.fragments.MapsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -63,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.mnu_action_account:
                         fragment = new AccountFragment();
+                        break;
+                    case R.id.mnu_action_map:
+                        fragment = new MapsFragment();
                         break;
                     default:
                         fragment = new HomeFragment();

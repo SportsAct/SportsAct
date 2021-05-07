@@ -131,7 +131,13 @@ public class AccountFragment extends Fragment {
         Glide.with(getActivity()).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);
 
         Location userLocation = (Location) currentUser.get("location");
-        tvLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+
+        if(userLocation != null) {
+            tvLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+        }
+        else {
+            tvLocation.setText("Not Location Selected");
+        }
     }
 
     private void getSportPreferenceOfUser() {
