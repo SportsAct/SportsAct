@@ -239,7 +239,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:padding="8dp"
-                android:text="What is the sport that will be played in this event:" />
+                android:text="What is the sport that will be played:" />
 
             <NumberPicker
                 android:id="@+id/npSportPickerCreateEvent"
