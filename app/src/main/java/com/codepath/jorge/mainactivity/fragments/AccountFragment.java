@@ -1,57 +1,35 @@
 package com.codepath.jorge.mainactivity.fragments;
 
-import android.app.DownloadManager;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Bundle;
 
+import android.content.Intent;
+import android.os.Bundle;
 import com.bumptech.glide.Glide;
-import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.activities.EditProfile;
-import com.codepath.jorge.mainactivity.activities.ManageEventActivity;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
-import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +55,8 @@ public class AccountFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       loadUserData();
+
+        loadUserData();
     }
 
     private void getSports() {
@@ -131,20 +110,6 @@ public class AccountFragment extends Fragment {
 
         loadUserData();
 
-
-        // CLICK LISTENER TO LAUNCH CAMERA
-       /* btnCaptureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCamera();
-                if (photoFile == null || profilePic.getDrawable() == null) {
-                    Toast.makeText(getContext(), "Ready to Upload?", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-            }
-        });
-*/
         // CLICK LISTENER TO
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,17 +118,6 @@ public class AccountFragment extends Fragment {
                 getActivity().startActivity(i);
             }
         });
-
-        /*
-        //listener to save sport preferences
-        btnSaveSportPreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveSportPreferences();
-            }
-        });
-
-         */
     }
 
     private void loadUserData() {
@@ -209,31 +163,12 @@ public class AccountFragment extends Fragment {
     }
 
 
-        // To save post from submitting picture
-        private void savePost(File photoFile) {
-        ParseUser parseUser = ParseUser.getCurrentUser();
-        parseUser.put("profilePicture", new ParseFile(photoFile));
-        parseUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if( e != null){
-                    Log.e(TAG, "Error while saving", e);
-                   Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
-               }
-               Log.i(TAG, "post save was successful!");
-                Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
-           }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account, container, false);
     }
-
-
 
 }
 
