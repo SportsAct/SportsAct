@@ -7,11 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,13 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
-import com.codepath.jorge.mainactivity.fragments.AccountFragment;
-import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
@@ -43,11 +38,11 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo also give option to choose photo from gallery
 public class EditProfile extends AppCompatActivity  implements LocationDialog.LocationDialogListener{
 
     //declaration
@@ -71,7 +66,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
     List<SportGame> selectedSportList;
     List<SportGame> oldOnes;
     ParseUser currentUser;
-    private ArrayList<AllStates> allStates;
+    //todo private ArrayList<AllStates> allStates;
     //picture related
     public String photoFileName = "photo.jpg";
     private File photoFile;
@@ -98,10 +93,10 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
         currentUser = ParseUser.getCurrentUser();
-        allStates = new ArrayList<>();
+        //todo allStates = new ArrayList<>();
 
-        //getting states
-        getStates();
+        //todo getting states
+       // getStates();
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(this, sportList, selectedSportList);
@@ -128,7 +123,10 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         userNameId2.setText(currentUser.getUsername());
 
         Location userLocation = (Location) currentUser.get("location");
+        if(userLocation != null)
         btnLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+        else
+            btnLocation.setText("Choose a location");
 
         //listeners
 
@@ -150,7 +148,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                //todo openDialog();
             }
         });
 
@@ -215,6 +213,8 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         });
     }
 
+    //todo mybe not needed
+    /*
     private void getStates(){
 
         ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
@@ -240,6 +240,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
 
     }
 
+//todo open the other activity or intent
     private void openDialog(){
 
         if(allStates == null || allStates.isEmpty()){
@@ -249,8 +250,9 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         LocationDialog locationDialog = new LocationDialog(allStates);
         locationDialog.show(getSupportFragmentManager(),TAG);
     }
+*/
 
-
+    //todo something is wrong that is taking white spaces to the sides
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -427,6 +429,8 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         saveSportPreferenceQuery(toCreateSports);
 
         deleteUnselectedSports(toDeleteSports);
+
+        saveEdits();
     }
 
     private void deleteUnselectedSports(List<SportGame> toDeleteSports) {
@@ -453,7 +457,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
                                 Toast.makeText(EditProfile.this, "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
                             }
 
-                            Toast.makeText(EditProfile.this, "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -487,7 +490,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
                 }
             });
 
-            saveEdits();
         }
     }
 

@@ -5,28 +5,37 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
+//todo add friend functionality
+//todo feels like needs something else
 public class SearchActivity extends AppCompatActivity {
-
 
     List<ParseUser> userList;
 
     public static final String TAG = "SearchActivity";
     AutoCompleteTextView autoCompleteTextView;
     AutoCompleteUserAdapter adapter;
+
+    private TextView userName;
+    private TextView bio;
+    private TextView fullName;
+    private ImageView profilePic;
+    private TextView location;
 
 
     private void getUsers(){
@@ -54,10 +63,31 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    private void loadUserProfile(ParseUser current) {
+
+        userName.setText((String) current.get("username"));
+        bio.setText((String) current.get("bio"));
+        fullName.setText((String) current.get("name"));
+
+        ParseFile profilePicture = (ParseFile) current.get("profilePicture");
+        Glide.with(SearchActivity.this).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);
+
+        Location userLocation = (Location) current.get("location");
+        location.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        userName = findViewById(R.id.userName);
+        bio = findViewById(R.id.bio);
+        fullName = findViewById(R.id.fullName);
+        profilePic = findViewById(R.id.profilePic);
+        location = findViewById(R.id.tvlocation);
+
         autoCompleteTextView = findViewById(R.id.friendSearch);
         userList = new ArrayList<>();
         getUsers();
@@ -68,6 +98,7 @@ public class SearchActivity extends AppCompatActivity {
                 ParseUser current = adapter.getSelectedUser();
 
                 Log.i(TAG, "Selected user: " + current.getUsername());
+                loadUserProfile(current);
             }
         });
 

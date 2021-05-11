@@ -2,23 +2,19 @@ package com.codepath.jorge.mainactivity.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.zip.Inflater;
 
-
+//todo different empty fragment depending the need
 public class EmptyFragment extends Fragment {
 
     //declaration

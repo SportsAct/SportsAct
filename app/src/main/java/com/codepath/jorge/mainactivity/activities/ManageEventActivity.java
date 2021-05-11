@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,11 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
-import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
@@ -43,7 +40,6 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +47,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+//todo might need to just delete those
+//todo give more space, separate sections
 public class ManageEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
 
     //declaration
@@ -93,7 +91,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
     Date dateTime; //to store the date if change
     int mHour = -1;
     int mMinutes;
-    private ArrayList<AllStates> allStates;
+    //todo private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +101,8 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         //getting event id
         String eventId = getIntent().getStringExtra("event_id");
 
-        //getting states
-        getStates();
+        //todo getting states maybe not needed
+        //getStates();
 
         //get event
         getEvent(eventId);
@@ -141,7 +139,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         //initializing sport event
         currentSportEvent = new SportEvent();
         selectedSport = new SportGame();
-        allStates = new ArrayList<>();
+       //todo allStates = new ArrayList<>();
 
         //setting bar
         tbToolbar.setTitle("Manage Your Event");
@@ -226,7 +224,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         btnChangeLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                //todo openDialog(); open new search
             }
         });
 
@@ -302,6 +300,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
             }
         });
 
+        //todo better deletion
         //delete button
         btnDeleteEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,6 +399,8 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         checkIfLocationIsDuplicate(location);
     }
 
+    //todo not  needed maybe
+    /*
     private void getStates(){
 
         ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
@@ -424,9 +425,10 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         });
 
     }
+     */
 
-    //open states selection dialog
-    private void openDialog(){
+    //todo open states selection dialog, change to the intent or activity
+   /* private void openDialog(){
 
         if(allStates == null || allStates.isEmpty()){
             return;
@@ -435,7 +437,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         LocationDialog locationDialog = new LocationDialog(allStates);
         locationDialog.show(getSupportFragmentManager(),TAG);
     }
-
+*/
     //shows the time picker
     private void showTimePicker() {
 
@@ -572,7 +574,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
         tvNameOfEvent.setText(currentSportEvent.getTitle());
         swtPrivacy.setChecked(currentSportEvent.getPrivacy());
-        tvSelectedLocation.setText(currentSportEvent.getLocation().getState().getName() + ", " + currentSportEvent.getLocation().getCityName());
+        //todo tvSelectedLocation.setText(currentSportEvent.getLocation().getState().getName() + ", " + currentSportEvent.getLocation().getCityName());
         tvDate.setText(date);
         tvTime.setText(time);
         tvMaxAmountOfPlayers.setText(Integer.toString( currentSportEvent.getMaxNumberOfParticipants()));
@@ -598,6 +600,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
     }
 
+    //todo need a different check
     private void checkIfLocationIsDuplicate(Location location) {
 
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
@@ -612,14 +615,14 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
                     //location not found
                     currentSportEvent.setLocation(location);
-                    tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
+                    //todo tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
 
                     return;
                 }
 
                 //location found
                 currentSportEvent.setLocation(object);
-                tvSelectedLocation.setText(object.getCityName() + ", " + object.getState().getName());
+                //todo tvSelectedLocation.setText(object.getCityName() + ", " + object.getState().getName());
 
             }
         });

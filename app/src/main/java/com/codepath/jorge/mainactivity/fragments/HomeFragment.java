@@ -23,7 +23,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +69,7 @@ public class HomeFragment extends Fragment {
         sportEventList = new ArrayList<>();
         sportPreferencesQueries = new ArrayList<>();
 
+        //todo also get where user is able to go
         //adding sports that are in user location
         ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
         locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    //todo filter this better
     private void getSportPreferenceOfUser() {
 
         ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
@@ -144,6 +145,7 @@ public class HomeFragment extends Fragment {
        getSportPreferenceOfUser();
     }
 
+    //todo different tabs that show different events
     private void getHomeFeed(){
 
         Date today = new Date();

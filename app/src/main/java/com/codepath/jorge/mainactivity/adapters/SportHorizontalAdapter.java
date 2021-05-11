@@ -1,9 +1,6 @@
 package com.codepath.jorge.mainactivity.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.ParseFile;
-
-import java.util.ArrayList;
 import java.util.List;
 
+//todo add an option to only see sports, not selecting or unselecting
 public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontalAdapter.ViewHolder> {
 
     //Declaration
