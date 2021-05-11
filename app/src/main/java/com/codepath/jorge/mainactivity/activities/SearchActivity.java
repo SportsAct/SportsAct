@@ -8,25 +8,22 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
+//todo add friend functionality
+//todo feels like needs something else
 public class SearchActivity extends AppCompatActivity {
-
 
     List<ParseUser> userList;
 

@@ -8,15 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+//todo open the name in 2, so they enter name last name
+//todo do some validation checks
+//todo ask for email
 public class SignUpActivity extends AppCompatActivity {
 
     public static final String TAG = "SignUpActivity";

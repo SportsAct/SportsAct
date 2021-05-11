@@ -17,17 +17,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//todo whole rework, do everything here, maybe new view
+//todo maybe change to a new activity, or fragment
 public class LocationDialog extends AppCompatDialogFragment {
 
     //tags
@@ -38,17 +37,18 @@ public class LocationDialog extends AppCompatDialogFragment {
     private AutoCompleteTextView actvCitySelection;
 
     //variables
-    private ArrayList<AllStates> stateList;
+    //todo private ArrayList<AllStates> stateList;
     private ArrayList<String> cityList;
 
     //listener
     private LocationDialogListener listener;
 
-    //constuctor
+    //todo constuctor
+    /*
    public LocationDialog(ArrayList<AllStates> states){
         this.stateList = states;
         cityList = new ArrayList<>();
-    }
+    }*/
 
     @NonNull
     @Override
@@ -93,10 +93,10 @@ public class LocationDialog extends AppCompatDialogFragment {
                 actvCitySelection.setText("");
 
                 //checking which state the user selected
-                AllStates allState = getState();
+               // todo AllStates allState = getState();
 
                 //get the cities for the state
-                getCities(allState.getAbreviation());
+               // todo getCities(allState.getAbreviation());
             }
         });
 
@@ -126,12 +126,12 @@ public class LocationDialog extends AppCompatDialogFragment {
                         String city = actvCitySelection.getText().toString();
 
                         //sending back the location
-                        AllStates allState = getState();
+                       //todo AllStates allState = getState();
 
                         Location location = new Location();
-                        location.setState(allState);
+                        // todo location.setState(allState);
                         location.setCityName(city);
-                        location.setStateName(allState.getName());
+                        // todo location.setStateName(allState.getName());
 
                         listener.saveLocation(location);
                     }
@@ -141,7 +141,8 @@ public class LocationDialog extends AppCompatDialogFragment {
         }
 
 
-    private AllStates getState() {
+        //todo this
+   /* private AllStates getState() {
 
        AllStates state = new AllStates();
 
@@ -155,20 +156,21 @@ public class LocationDialog extends AppCompatDialogFragment {
 
         return state;
     }
+*/
 
-    //get a string list of the states
+    //todo get a string list of the states
     private ArrayList<String> getStatesStrings(){
 
-        if(stateList.isEmpty())
+        //if(stateList.isEmpty())
             return null;
 
-        ArrayList<String> statesStrings = new ArrayList<>();
+        //ArrayList<String> statesStrings = new ArrayList<>();
 
-        for(int i = 0; i < stateList.size();i++){
-            statesStrings.add(stateList.get(i).getName());
-        }
+       // for(int i = 0; i < stateList.size();i++){
+       //     statesStrings.add(stateList.get(i).getName());
+       // }
 
-        return statesStrings;
+        //return statesStrings;
     }
 
     //get the cities from the state and loads them into the city text view

@@ -31,6 +31,7 @@ import com.parse.SaveCallback;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+//todo rework how it looks, and add an activity with all information
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
     //declaration

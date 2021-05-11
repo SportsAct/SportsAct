@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,31 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 import static com.parse.Parse.getApplicationContext;
 
 public class MapsFragment extends Fragment {
@@ -57,6 +47,7 @@ public class MapsFragment extends Fragment {
      * returned in Activity.onActivityResult
      */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     //widgets
     private SupportMapFragment mapFragment;
@@ -92,26 +83,45 @@ public class MapsFragment extends Fragment {
             if (map != null) {
                 // Map is ready
                 Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-                //todo fix distpacher
-                //MapDemoActivityPermissionsDispatcher.getMyLocationWithPermissionCheck(this);
+
+                //get location
+                getUserLocation();
+
                 //.startLocationUpdatesWithPermissionCheck(this);
 
                 //todo setting the map
-               // map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
+                // map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
                 map.getUiSettings().setMyLocationButtonEnabled(false);
 
                 //initializing everything
                 init();
             }
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         }
     };
+
+
+    private void getUserLocation() {
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            //ask user for permission if it doesnt have access
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+        }
+        else {
+            Toast.makeText(getActivity(), "location succed", Toast.LENGTH_SHORT).show();
+            map.setMyLocationEnabled(true);
+        }
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -121,6 +131,9 @@ public class MapsFragment extends Fragment {
 
         //finding views by id
         ivGPS = view.findViewById(R.id.gpsID);
+
+        //setting variables
+        locationLoaded = false;
 
         //check if location was loaded already
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
@@ -152,6 +165,9 @@ public class MapsFragment extends Fragment {
 
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(fields);
+
+        //todo see how to restrict to only cities
+       // autocompleteFragment.setTypeFilter(new TypeFilter("cities"));
 
         //set autocomplete to give a response
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {

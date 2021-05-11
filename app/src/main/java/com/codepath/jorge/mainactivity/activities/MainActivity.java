@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.fragments.AccountFragment;
 import com.codepath.jorge.mainactivity.fragments.ChatFragment;
