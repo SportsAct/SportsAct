@@ -16,6 +16,7 @@ import com.parse.ParseUser;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+//todo change where the time is, and add dates to different groups of messages
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     //declaration

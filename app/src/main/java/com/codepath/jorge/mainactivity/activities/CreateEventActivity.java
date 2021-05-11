@@ -18,10 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.LocationDialog;
-import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
@@ -82,6 +80,8 @@ class Event{
     }
 }
 
+//todo change hirarchy so user do only one thing at a time
+//todo change UI, to give more space
 public class CreateEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
 
     //declaration
@@ -110,7 +110,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
     //variable
     private List<SportGame> sportGames;
     private Event eventBeingCreated;
-    private ArrayList<AllStates> allStates;
+    //todo private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +137,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
-        allStates = new ArrayList<>();
+        //todo allStates = new ArrayList<>();
 
         //setting bar
         tbToolbar.setTitle("Create Your Event");
@@ -145,7 +145,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //getting states
-        getStates();
+        //todo getStates();
 
         //setting the Number Pickers
        getSportData();
@@ -223,7 +223,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         btnSelectLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                //openDialog();
             }
         });
 
@@ -235,6 +235,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         return true;
     }
 
+    //todo also need to change, maybe do the method on the location class, or intent
     private void checkIfLocationIsDuplicate(Location location) {
 
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
@@ -327,6 +328,8 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         });
     }
 
+    //todo maybe not needed
+    /*
     private void getStates(){
 
         ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
@@ -352,6 +355,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
 
     }
 
+//todo
     private void openDialog(){
 
         if(allStates == null || allStates.isEmpty()){
@@ -361,6 +365,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
         LocationDialog locationDialog = new LocationDialog(allStates);
         locationDialog.show(getSupportFragmentManager(),TAG);
     }
+*/
 
     private void joinHostToEvent(SportEvent sportEvent) {
 
@@ -477,7 +482,7 @@ public class CreateEventActivity extends AppCompatActivity implements LocationDi
 
        if(eventBeingCreated.location == null){
             Toast.makeText(this,"Missing a Location for the Event", Toast.LENGTH_SHORT).show();
-            openDialog();
+            //todo openDialog();
             return false;
         }
 

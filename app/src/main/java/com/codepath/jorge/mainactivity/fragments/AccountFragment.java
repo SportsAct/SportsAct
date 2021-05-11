@@ -28,11 +28,10 @@ import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo change it to look more like open sports
 public class AccountFragment extends Fragment {
 
     public static final String TAG = "AccountFragment";
