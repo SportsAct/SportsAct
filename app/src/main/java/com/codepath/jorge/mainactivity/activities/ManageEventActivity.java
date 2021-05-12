@@ -23,7 +23,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
@@ -49,7 +48,7 @@ import java.util.TimeZone;
 
 //todo might need to just delete those
 //todo give more space, separate sections
-public class ManageEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
+public class ManageEventActivity extends AppCompatActivity{
 
     //declaration
     //constants
@@ -91,7 +90,6 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
     Date dateTime; //to store the date if change
     int mHour = -1;
     int mMinutes;
-    //todo private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +98,6 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
         //getting event id
         String eventId = getIntent().getStringExtra("event_id");
-
-        //todo getting states maybe not needed
-        //getStates();
 
         //get event
         getEvent(eventId);
@@ -139,7 +134,6 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         //initializing sport event
         currentSportEvent = new SportEvent();
         selectedSport = new SportGame();
-       //todo allStates = new ArrayList<>();
 
         //setting bar
         tbToolbar.setTitle("Manage Your Event");
@@ -224,7 +218,7 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         btnChangeLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo openDialog(); open new search
+                openDialog();
             }
         });
 
@@ -394,50 +388,15 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
         mHour = -1;
     }
 
-    @Override
+
     public void saveLocation(Location location) {
         checkIfLocationIsDuplicate(location);
     }
 
-    //todo not  needed maybe
-    /*
-    private void getStates(){
-
-        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
-        query.findInBackground(new FindCallback<AllStates>() {
-            @Override
-            public void done(List<AllStates> objects, ParseException e) {
-
-                //something went wrong
-                if(e != null){
-                    Log.e(TAG,"There was a problem loading the states!!", e);
-                    Toast.makeText(ManageEventActivity.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                for(int i = 0 ; i < objects.size() ; i++){
-                    allStates.add(objects.get(i));
-                }
-
-                btnChangeLocation.setEnabled(true);
-
-            }
-        });
+  private void openDialog(){
 
     }
-     */
 
-    //todo open states selection dialog, change to the intent or activity
-   /* private void openDialog(){
-
-        if(allStates == null || allStates.isEmpty()){
-            return;
-        }
-
-        LocationDialog locationDialog = new LocationDialog(allStates);
-        locationDialog.show(getSupportFragmentManager(),TAG);
-    }
-*/
     //shows the time picker
     private void showTimePicker() {
 
@@ -540,7 +499,6 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
 
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
         query.include(SportEvent.KEY_SPORT);
-        query.include(SportEvent.KEY_LOCATION);
         query.whereEqualTo(SportEvent.KEY_ID,eventId);
         query.getFirstInBackground(new GetCallback<SportEvent>() {
             @Override
@@ -614,14 +572,14 @@ public class ManageEventActivity extends AppCompatActivity implements LocationDi
                     Log.e(TAG,"Location is new!", e);
 
                     //location not found
-                    currentSportEvent.setLocation(location);
+                    //currentSportEvent.setLocation(location);
                     //todo tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
 
                     return;
                 }
 
                 //location found
-                currentSportEvent.setLocation(object);
+                //currentSportEvent.setLocation(object);
                 //todo tvSelectedLocation.setText(object.getCityName() + ", " + object.getState().getName());
 
             }

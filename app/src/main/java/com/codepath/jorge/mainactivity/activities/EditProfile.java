@@ -2,14 +2,12 @@ package com.codepath.jorge.mainactivity.activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,17 +27,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.BetterActivityResult;
-import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
-import com.google.android.gms.common.stats.StatsEvent;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.DeleteCallback;
@@ -56,19 +50,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
-import static com.parse.Parse.getApplicationContext;
 
 //todo also give option to choose photo from gallery
-public class EditProfile extends AppCompatActivity  implements LocationDialog.LocationDialogListener{
+public class EditProfile extends AppCompatActivity  {
 
     //declaration
 
     //constants
     public static final String TAG = "AccountFragment";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     //widgets
     private Toolbar toolbar;
@@ -90,7 +79,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
     private File photoFile;
     // Set the fields to specify which types of place data to
     // return after the user has made a selection.
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.WEBSITE_URI, Place.Field.ADDRESS_COMPONENTS,Place.Field.PHOTO_METADATAS);
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS);
 
     //adapter
     private SportHorizontalAdapter adapter;
@@ -203,7 +192,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+
     public void saveLocation(Location location) {
 
         checkIfLocationIsDuplicate(location);
