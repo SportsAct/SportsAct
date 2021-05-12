@@ -119,7 +119,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvEventTitle.setText(sportEvent.getTitle());
             tvTimeOfEvent.setText(date);
             tvUserName.setText((String) sportEvent.getUser().get("name"));
-            tvLocation.setText(sportEvent.getLocation().getCityName() + ", " + sportEvent.getLocation().getStateName());
+            tvLocation.setText(sportEvent.getPlace().getName());
             tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();
