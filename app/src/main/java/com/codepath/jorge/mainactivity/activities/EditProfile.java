@@ -1,12 +1,13 @@
 package com.codepath.jorge.mainactivity.activities;
 
+import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,31 +26,38 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.adapters.LocationDialog;
+import com.codepath.jorge.mainactivity.adapters.BetterActivityResult;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 //todo also give option to choose photo from gallery
-public class EditProfile extends AppCompatActivity  implements LocationDialog.LocationDialogListener{
+public class EditProfile extends AppCompatActivity  {
 
     //declaration
 
     //constants
     public static final String TAG = "AccountFragment";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
     //widgets
     private Toolbar toolbar;
@@ -66,13 +74,16 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
     List<SportGame> selectedSportList;
     List<SportGame> oldOnes;
     ParseUser currentUser;
-    //todo private ArrayList<AllStates> allStates;
     //picture related
     public String photoFileName = "photo.jpg";
     private File photoFile;
+    // Set the fields to specify which types of place data to
+    // return after the user has made a selection.
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS);
 
     //adapter
     private SportHorizontalAdapter adapter;
+    protected final BetterActivityResult<Intent, ActivityResult> activityLauncher = BetterActivityResult.registerActivityForResult(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +104,11 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
         currentUser = ParseUser.getCurrentUser();
-        //todo allStates = new ArrayList<>();
 
-        //todo getting states
-       // getStates();
+        //if the places are not initialize yet, initialize them
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key), Locale.US);
+        }
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(this, sportList, selectedSportList);
@@ -148,7 +160,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo openDialog();
+                openDialog();
             }
         });
 
@@ -180,7 +192,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+
     public void saveLocation(Location location) {
 
         checkIfLocationIsDuplicate(location);
@@ -190,8 +202,7 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
     private void checkIfLocationIsDuplicate(Location location) {
 
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
-        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
+        query.whereEqualTo(Location.KEY_GOOGLE_ID, location.getGoogleId());
         query.getFirstInBackground(new GetCallback<Location>() {
             @Override
             public void done(Location object, ParseException e) {
@@ -213,56 +224,54 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         });
     }
 
-    //todo mybe not needed
-    /*
-    private void getStates(){
-
-        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
-        query.findInBackground(new FindCallback<AllStates>() {
-            @Override
-            public void done(List<AllStates> objects, ParseException e) {
-
-                //something went wrong
-                if(e != null){
-                    Log.e(TAG,"There was a problem loading the states!!", e);
-                    Toast.makeText(EditProfile.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                for(int i = 0 ; i < objects.size() ; i++){
-                    allStates.add(objects.get(i));
-                }
-
-                btnLocation.setClickable(true);
-
-            }
-        });
-
-    }
-
-//todo open the other activity or intent
+   //opens the location activity
     private void openDialog(){
 
-        if(allStates == null || allStates.isEmpty()){
-            return;
-        }
+        // Start the autocomplete intent.
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                .setHint("Enter a City")
+                .setTypeFilter(TypeFilter.REGIONS)
+                .build(this);
+       activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
+           @Override
+           public void onActivityResult(ActivityResult result) {
 
-        LocationDialog locationDialog = new LocationDialog(allStates);
-        locationDialog.show(getSupportFragmentManager(),TAG);
+               if (result.getResultCode() == EditProfile.RESULT_OK) {
+                   // There are no request codes
+                   Intent data = result.getData();
+
+                   Place place = Autocomplete.getPlaceFromIntent(data);
+
+                   Location location = new Location();
+                   location.setStateName(place.getAddressComponents().asList().get(2).getName());
+                   location.setCityName(place.getName());
+
+                   ParseGeoPoint parseGeoPoint = new ParseGeoPoint();
+                   parseGeoPoint.setLatitude(place.getLatLng().latitude);
+                   parseGeoPoint.setLongitude(place.getLatLng().longitude);
+
+                   location.setLatLon(parseGeoPoint);
+                   location.setKeyGoogleId(place.getId());
+
+                   saveLocation(location);
+               }
+
+           }
+       });
+
     }
-*/
-
-
 
     //todo something is wrong that is taking white spaces to the sides
-        private void launchCamera() {
+    //todo it has to do with the ratio
+    private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// Create a File reference for future access
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference for future access
         photoFile = getPhotoFileUri(photoFileName);
 
         // wrap File object into a content provider
         // required for API >= 24
-       // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
+        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
         Uri fileProvider = FileProvider.getUriForFile(this, "fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
@@ -270,7 +279,25 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getPackageManager()) != null) {
             // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                    if (result.getResultCode() == RESULT_OK) {
+
+                        // by this point we have the camera photo on disk
+                        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                        // RESIZE BITMAP, see section below
+                        // Load the taken image into a preview
+                        ivProfilePic.setImageBitmap(takenImage);
+
+                        savePost();
+
+                    } else { // Result was a failure
+                        Toast.makeText(EditProfile.this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
@@ -290,25 +317,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
-    //On activity result
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ivProfilePic.setImageBitmap(takenImage);
-
-                savePost();
-
-            } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private void savePost() {
         currentUser.put("profilePicture", new ParseFile(photoFile));
@@ -473,7 +481,6 @@ public class EditProfile extends AppCompatActivity  implements LocationDialog.Lo
         oldOnes.addAll(selectedSportList);
 
         for(SportGame sportGame : toCreateSports){
-            Log.i(TAG, "Just Checking");
             SportPreference newSportPreference = new SportPreference();
             newSportPreference.setSport(sportGame);
             newSportPreference.setUser(ParseUser.getCurrentUser());

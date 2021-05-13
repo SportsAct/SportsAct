@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
         //todo also get where user is able to go
         //adding sports that are in user location
         ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
-        locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
+        //todo locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
 
         //add events that the user created
         ParseQuery<SportEvent> ownEvents = ParseQuery.getQuery(SportEvent.class);
@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
         ParseQuery<SportEvent> query = ParseQuery.or(sportPreferencesQueries);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
-        query.include(SportEvent.KEY_LOCATION);
+        query.include(SportEvent.KEY_PLACE);
         query.whereGreaterThan(SportEvent.KEY_DATE,today);
         query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
         query.orderByAscending(SportEvent.KEY_DATE);

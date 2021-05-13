@@ -19,21 +19,35 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+
+        android:id="@+id/myCardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+
+        <!--android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:layout_marginTop="16dp"
         android:shape="ring"
-        app:cardCornerRadius="75dp">
+        app:cardCornerRadius="75dp">-->
 
         <ImageView
             android:id="@+id/profilePic"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars"/>
+            <!--android:layout_width="100dp"
             android:adjustViewBounds="true"
             android:layout_height="100dp"
-            android:scaleType="fitCenter"
-            tools:src="@tools:sample/avatars" />
+            android:scaleType="fitCenter"-->
+
     </androidx.cardview.widget.CardView>
 
     <Button
