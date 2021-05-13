@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,7 +128,7 @@ public class CreateEventActivity extends AppCompatActivity{
     private Event eventBeingCreated;
     // Set the fields to specify which types of place data to
     // return after the user has made a selection.
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.WEBSITE_URI, Place.Field.ADDRESS_COMPONENTS);
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.WEBSITE_URI);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +170,6 @@ public class CreateEventActivity extends AppCompatActivity{
        getSportData();
        
        //listeners
-
         //switch changing title
         swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -244,6 +244,7 @@ public class CreateEventActivity extends AppCompatActivity{
                 openDialog();
             }
         });
+
 
     }
 
@@ -361,7 +362,8 @@ public class CreateEventActivity extends AppCompatActivity{
 
                     //setting event place
                    eventBeingCreated.place.setLatLon(parseGeoPoint);
-                  // eventBeingCreated.place.setURL(place.getWebsiteUri().toString());
+                    if(place.getWebsiteUri() != null)
+                        eventBeingCreated.place.setURL(place.getWebsiteUri().toString());
                    eventBeingCreated.place.setName(place.getName());
                    eventBeingCreated.place.setKeyGoogleId(place.getId());
 
