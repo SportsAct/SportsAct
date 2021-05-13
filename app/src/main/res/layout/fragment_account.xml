@@ -101,6 +101,14 @@
         android:layout_marginHorizontal="8dp"
         android:padding="8dp"
         tools:text="Miami, Florida" />
+
+    <TextView
+        android:id="@+id/tvWillingToTravel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:padding="8dp"
+        tools:text="Willing to travel 5 miles" />
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

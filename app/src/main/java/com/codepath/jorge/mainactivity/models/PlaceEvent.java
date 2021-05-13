@@ -11,7 +11,6 @@ public class PlaceEvent extends ParseObject {
     public static final String KEY_LATLON = "LatLon";
     public static final String KEY_URL = "URL";
     public static final String KEY_NAME = "name";
-    public static final String KEY_PHOTO = "photo";
     public static final String KEY_GOOGLE_ID = "google_id";
 
     public String getId(){return getObjectId();}
@@ -27,10 +26,6 @@ public class PlaceEvent extends ParseObject {
     public String getName(){return getString(KEY_NAME);}
 
     public void setName(String name){put(KEY_NAME,name);}
-
-    public ParseFile getPhoto(){return getParseFile(KEY_PHOTO);}
-
-    public void setPhoto(ParseFile parseFile){put(KEY_PHOTO, parseFile);}
 
     public String getGoogleId(){return getString(KEY_GOOGLE_ID);}
 
