@@ -154,11 +154,10 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-
                 //clearing list first
                 sportEventList.clear();
 
-                //todo set posts within mile range
+                //set posts within mile range
                 int milesRange = (int) ParseUser.getCurrentUser().get("travel_miles");
 
                 Location userLocation = (Location) ParseUser.getCurrentUser().getParseObject("location");
@@ -167,7 +166,7 @@ public class HomeFragment extends Fragment {
 
                 Log.i(TAG,"User Lat Lon: " + userLocationLatLon.getLatitude() + ", " + userLocationLatLon.getLongitude());
 
-
+                //adding events withing a range to the home feed
                 for(int i = 0; i < events.size(); i++){
 
                     double distance = distance(userLocationLatLon.getLatitude(),userLocationLatLon.getLongitude(),events.get(i).getPlace().getLatLon().getLatitude(),events.get(i).getPlace().getLatLon().getLongitude(),'M');
