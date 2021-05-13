@@ -43,7 +43,15 @@ public class Location extends ParseObject {
 
     public void setKeyGoogleId(String id){put(KEY_GOOGLE_ID,id);}
 
-    public ParseGeoPoint getLatLon(){return getParseGeoPoint(KEY_LATLON);}
+    public ParseGeoPoint getLatLon(){
+        try {
+            return fetchIfNeeded().getParseGeoPoint(KEY_LATLON);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public void setLatLon(ParseGeoPoint geoPoint){put(KEY_LATLON, geoPoint);}
 }
