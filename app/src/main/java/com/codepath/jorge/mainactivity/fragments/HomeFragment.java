@@ -71,6 +71,12 @@ public class HomeFragment extends Fragment {
         sportEventList = new ArrayList<>();
         sportPreferencesQueries = new ArrayList<>();
 
+        //getting own queries
+        ParseQuery<SportEvent> ownEventsQury = ParseQuery.getQuery(SportEvent.class);
+        ownEventsQury.whereEqualTo(SportEvent.KEY_USER,ParseUser.getCurrentUser());
+
+        sportPreferencesQueries.add(ownEventsQury);
+
         //recycler view performance
         recyclerViewHome.setHasFixedSize(true);
 
