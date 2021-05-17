@@ -308,7 +308,7 @@ public class ManageEventActivity extends AppCompatActivity{
                         tvMaxCharactersTitle.setVisibility(View.GONE);
 
                         ivIconTitle.setClickable(false);
-                        ivIconTitle.setImageResource(R.drawable.edit);
+                        ivIconTitle.setImageResource(R.drawable.editpencil);
                     }
                 });
 
