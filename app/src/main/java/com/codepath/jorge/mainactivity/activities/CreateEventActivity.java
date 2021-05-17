@@ -344,7 +344,7 @@ public class CreateEventActivity extends AppCompatActivity{
 
         // Start the autocomplete intent.
         Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .setHint("Enter a City")
+                .setHint("Choose the place of the event")
                 .setTypeFilter(TypeFilter.ESTABLISHMENT)
                 .build(this);
         activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {

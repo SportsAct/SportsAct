@@ -347,6 +347,12 @@ public class MapsFragment extends Fragment {
         //setting variables
         locationLoaded = false;
 
+        //getting own queries
+        ParseQuery<SportEvent> ownEventsQury = ParseQuery.getQuery(SportEvent.class);
+        ownEventsQury.whereEqualTo(SportEvent.KEY_USER,ParseUser.getCurrentUser());
+
+        sportPreferencesQueries.add(ownEventsQury);
+
         //check if location was loaded already
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
