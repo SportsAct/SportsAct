@@ -43,6 +43,7 @@ public class AccountFragment extends Fragment {
     private TextView bioTextId;
     private TextView realNameId;
     private TextView tvLocation;
+    private TextView tvWillingToTravel;
 
     private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
@@ -92,6 +93,7 @@ public class AccountFragment extends Fragment {
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
         tvLocation = view.findViewById(R.id.tvLocationAccountFragment);
+        tvWillingToTravel = view.findViewById(R.id.tvWillingToTravel);
 
         //initializing arrays
         sportList = new ArrayList<>();
@@ -125,6 +127,7 @@ public class AccountFragment extends Fragment {
         userNameId.setText((String) currentUser.get("username"));
         bioTextId.setText((String) currentUser.get("bio"));
         realNameId.setText((String) currentUser.get("name"));
+        tvWillingToTravel.setText("Willing to travel " + (int) currentUser.get("travel_miles") + " miles.");
 
         ParseFile profilePicture = (ParseFile) currentUser.get("profilePicture");
         Glide.with(getActivity()).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);

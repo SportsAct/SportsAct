@@ -23,6 +23,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
@@ -68,6 +70,8 @@ public class EditProfile extends AppCompatActivity  {
     private EditText bioTextId2;
     private Button btnLocation;
     private RecyclerView imagesSports;
+    private TextView tvMilesRange;
+    private SeekBar sbMilesBar;
 
     //variables
     List<SportGame> sportList;
@@ -99,6 +103,8 @@ public class EditProfile extends AppCompatActivity  {
         etActualName = findViewById(R.id.etActualNameEditProfile);
         btnLocation = findViewById(R.id.btnChangeLocation);
         imagesSports = findViewById(R.id.rvSports);
+        tvMilesRange = findViewById(R.id.tvMiles);
+        sbMilesBar = findViewById(R.id.seekBar);
 
         //initializing arrays
         sportList = new ArrayList<>();
@@ -134,6 +140,9 @@ public class EditProfile extends AppCompatActivity  {
         bioTextId2.setText((String) currentUser.get("bio"));
         userNameId2.setText(currentUser.getUsername());
 
+        sbMilesBar.setProgress( (int) currentUser.get("travel_miles"));
+        tvMilesRange.setText(currentUser.get("travel_miles") + " miles");
+
         Location userLocation = (Location) currentUser.get("location");
         if(userLocation != null)
         btnLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
@@ -161,6 +170,24 @@ public class EditProfile extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 openDialog();
+            }
+        });
+
+        //seek bar
+        sbMilesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+
+                seekBar.setProgress(progress);
+                // updated continuously as the user slides the thumb
+                tvMilesRange.setText(progress + " miles");
+                currentUser.put("travel_miles",progress);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
 

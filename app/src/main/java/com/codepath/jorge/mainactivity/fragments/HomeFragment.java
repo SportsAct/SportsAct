@@ -16,11 +16,13 @@ import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
+import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import java.util.ArrayList;
@@ -69,20 +71,6 @@ public class HomeFragment extends Fragment {
         sportEventList = new ArrayList<>();
         sportPreferencesQueries = new ArrayList<>();
 
-        //todo also get where user is able to go
-        //adding sports that are in user location
-        ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
-        //todo locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
-
-        //add events that the user created
-        ParseQuery<SportEvent> ownEvents = ParseQuery.getQuery(SportEvent.class);
-        ownEvents.whereEqualTo(SportEvent.KEY_USER, ParseUser.getCurrentUser());
-
-        sportPreferencesQueries.add(ownEvents);
-
-        sportPreferencesQueries.add(locationQuery);
-
-
         //recycler view performance
         recyclerViewHome.setHasFixedSize(true);
 
@@ -102,11 +90,9 @@ public class HomeFragment extends Fragment {
 
         //getting events
         getSportPreferenceOfUser();
-      //getHomeFeed();
 
     }
 
-    //todo filter this better
     private void getSportPreferenceOfUser() {
 
         ParseQuery<SportPreference> query = ParseQuery.getQuery(SportPreference.class);
@@ -168,12 +154,32 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-
                 //clearing list first
                 sportEventList.clear();
 
-                //set posts
-                sportEventList.addAll(events);
+                //set posts within mile range
+                int milesRange = (int) ParseUser.getCurrentUser().get("travel_miles");
+
+                Location userLocation = (Location) ParseUser.getCurrentUser().getParseObject("location");
+
+                ParseGeoPoint userLocationLatLon = userLocation.getLatLon();
+
+                Log.i(TAG,"User Lat Lon: " + userLocationLatLon.getLatitude() + ", " + userLocationLatLon.getLongitude());
+
+                //adding events withing a range to the home feed
+                for(int i = 0; i < events.size(); i++){
+
+                    double distance = distance(userLocationLatLon.getLatitude(),userLocationLatLon.getLongitude(),events.get(i).getPlace().getLatLon().getLatitude(),events.get(i).getPlace().getLatLon().getLongitude(),'M');
+
+                    Log.i(TAG,"Event: " + events.get(i).getTitle() + " is " + distance + " miles of user location");
+
+                    if(distance < milesRange){
+
+                        sportEventList.add(events.get(i));
+                    }
+
+
+                }
 
                 //notify adapter
                 adapter.notifyDataSetChanged();
@@ -197,4 +203,33 @@ public class HomeFragment extends Fragment {
         });
 
         }
+
+        //calculates the distance between two points Lat Lon
+    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
 }
