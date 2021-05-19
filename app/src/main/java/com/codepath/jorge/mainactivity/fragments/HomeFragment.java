@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
         query.include(SportEvent.KEY_PLACE);
-        query.whereGreaterThan(SportEvent.KEY_DATE,today);
+        query.whereGreaterThanOrEqualTo(SportEvent.KEY_DATE,today);
         query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
         query.orderByAscending(SportEvent.KEY_DATE);
         query.findInBackground(new FindCallback<SportEvent>() {
