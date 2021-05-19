@@ -2,13 +2,18 @@ package com.codepath.jorge.mainactivity.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -16,7 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.models.SportEvent;
@@ -50,6 +59,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,10 +86,22 @@ public class MapsFragment extends Fragment {
     //widgets
     private SupportMapFragment mapFragment;
     private ImageView ivGPS;
+    //bottom view widgets
+    private RelativeLayout rlBottomSheet;
+    private TextView tvTitleBottom;
+    private TextView tvLocationBottom;
+    private TextView tvTimeEstimate;
+    private LinearLayout llBtnDirectionBottom;
+    private LinearLayout llBtnWebsiteBottom;
+    private LinearLayout llBtnSeeEventBottom;
+    private ImageButton ibCloseBottom;
 
     //variables
     private List<SportEvent> sportEventList;
     private List<ParseQuery<SportEvent>> sportPreferencesQueries;
+    private HashMap<String,String> markersEvents;
+    // Retrieve and cache the system's default "short" animation time.
+    int shortAnimationDuration ;
 
     //map related
     private GoogleMap map;
@@ -106,27 +128,181 @@ public class MapsFragment extends Fragment {
 
             map = googleMap;
 
-            //getting events
-            getSportPreferenceOfUser();
-
             if (map != null) {
                 // Map is ready
                 Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
+                //getting events
+                getSportPreferenceOfUser();
+
                 //get location
                 getUserLocation();
 
-                //.startLocationUpdatesWithPermissionCheck(this);
+                //set marker click listener
+                setMapClickListener();
 
                 //todo setting the map
                 // map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
                 map.getUiSettings().setMyLocationButtonEnabled(false);
+                map.getUiSettings().setMapToolbarEnabled(false);
 
                 //initializing everything
                 init();
             }
         }
     };
+
+    private void setMapClickListener() {
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+
+                //event that we will populate
+                SportEvent selectedSportEvent = new SportEvent();
+
+                //getting event id
+                String eventId = markersEvents.get(marker.getId());
+
+                marker.showInfoWindow();
+
+                //getting event
+                for(int i = 0;i < sportEventList.size();i++){
+
+                    if(sportEventList.get(i).getId().equals(eventId)){
+                        selectedSportEvent = sportEventList.get(i);
+                        break;
+                    }
+
+                }
+
+                if(selectedSportEvent == null){
+                    Toast.makeText(getContext(),"Event not found!",Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
+                //getting estimated time
+
+                //setting the bottom sheet
+                tvTitleBottom.setText(selectedSportEvent.getTitle());
+                tvLocationBottom.setText(selectedSportEvent.getPlace().getName());
+
+                //setting click listeners
+                //todo set direction intent
+                llBtnDirectionBottom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Open Google Maps?")
+                                .setCancelable(true)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                        String latitude = String.valueOf(marker.getPosition().latitude);
+                                        String longitude = String.valueOf(marker.getPosition().longitude);
+                                        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+
+                                        try{
+                                            if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                                startActivity(mapIntent);
+                                            }
+                                        }catch (NullPointerException e){
+                                            Log.e(TAG, "onClick: NullPointerException: Couldn't open map." + e.getMessage() );
+                                            Toast.makeText(getActivity(), "Couldn't open map", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        final AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                });
+                // set website intent
+                SportEvent finalSelectedSportEvent = selectedSportEvent;
+                llBtnWebsiteBottom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goToWebsite(finalSelectedSportEvent.getPlace().getURL());
+                    }
+                });
+                //todo send to event screen
+                llBtnSeeEventBottom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                //close the bottom sheet
+                ibCloseBottom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        animateBootomSheetOut();
+
+                    }
+                });
+
+                //setting view visible
+                loadBottomSheet();
+
+                return true;
+            }
+        });
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                animateBootomSheetOut();
+            }
+        });
+    }
+
+    private void goToWebsite(String url) {
+
+        //if it doesnt have url return and tell user
+        if(url.isEmpty()){
+            Toast.makeText(getActivity(),"Not website available for this place!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(urlIntent);
+    }
+
+    private void animateBootomSheetOut() {
+        rlBottomSheet.animate()
+                .alpha(0f)
+                .setDuration(shortAnimationDuration)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) { }
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        rlBottomSheet.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animator) { }
+                    @Override
+                    public void onAnimationRepeat(Animator animator) { }
+                });
+    }
+
+    private void loadBottomSheet() {
+        rlBottomSheet.setAlpha(0f);
+        rlBottomSheet.setVisibility(View.VISIBLE);
+
+        rlBottomSheet.animate()
+                .alpha(1f)
+                .setDuration(shortAnimationDuration)
+                .setListener(null);
+
+    }
 
     private void getSportPreferenceOfUser() {
 
@@ -240,6 +416,9 @@ public class MapsFragment extends Fragment {
                 .snippet(sport)
                 .icon(defaultMarker));
 
+        //setting a ling between the event and the marker
+        markersEvents.put(marker.getId(),sportEvent.getId());
+
         // Animate marker using drop effect
         // --> Call the dropPinEffect method here
         dropPinEffect(marker);
@@ -340,10 +519,21 @@ public class MapsFragment extends Fragment {
 
         //finding views by id
         ivGPS = view.findViewById(R.id.gpsID);
+        rlBottomSheet = view.findViewById(R.id.rlBottomSheet);
+        tvTitleBottom = view.findViewById(R.id.tvTitleBottomSheet);
+        tvLocationBottom = view.findViewById(R.id.tvPlaceBottomSheet);
+        tvTimeEstimate = view.findViewById(R.id.tvTimeExpectedBottomSheet);
+        ibCloseBottom = view.findViewById(R.id.ivCloseBottomSheet);
+        llBtnDirectionBottom = view.findViewById(R.id.llDirectionBottomSheet);
+        llBtnWebsiteBottom = view.findViewById(R.id.llWebsiteBottomSheet);
+        llBtnSeeEventBottom = view.findViewById(R.id.llSeeEventBottomSheet);
 
         //initializing event list
         sportEventList = new ArrayList<>();
         sportPreferencesQueries = new ArrayList<>();
+        markersEvents = new HashMap<>();
+        shortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
         //setting variables
         locationLoaded = false;
 
