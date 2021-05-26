@@ -12,6 +12,11 @@
         android:icon="@drawable/map_selector"
         android:title="Home"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title=""
+         />
     <item
         android:id="@+id/mnu_action_home"
         android:icon="@drawable/home_selector"

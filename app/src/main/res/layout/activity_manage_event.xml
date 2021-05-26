@@ -167,7 +167,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/calendar" />
+                app:srcCompat="@drawable/ic_calendar" />
 
             <TextView
                 android:id="@+id/tvDateManage"
@@ -194,7 +194,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/time" />
+                app:srcCompat="@drawable/ic_time_circle" />
 
             <TextView
                 android:id="@+id/tvTimeManage"
