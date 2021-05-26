@@ -31,6 +31,7 @@ import com.parse.SaveCallback;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+//todo rework how it looks, and add an activity with all information
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
     //declaration
@@ -68,6 +69,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         //declaring item widgets
         TextView tvEventTitle;
+        TextView tvDateOfEvent;
         TextView tvTimeOfEvent;
         ImageView ivUserProfilePic;
         TextView tvUserName;
@@ -86,6 +88,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
             //finding views by id
             tvEventTitle = itemView.findViewById(R.id.tvEventTitleHome);
+            tvDateOfEvent = itemView.findViewById(R.id.tvDateOfEventHome);
             tvTimeOfEvent = itemView.findViewById(R.id.tvTimeOfEventHome);
             ivUserProfilePic = itemView.findViewById(R.id.ivHostProfilePictureHome);
             tvUserName = itemView.findViewById(R.id.tvHostNameHome);
@@ -104,9 +107,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         public void bind(SportEvent sportEvent) {
 
             //setting date pattern
-            String pattern = "EEE MMM dd, yyyy 'at' hh:mm aaa";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            String date = simpleDateFormat.format(sportEvent.getEventDate());
+            String patternDate = "EEEE MMM dd";
+            String patternTime = "hh:mm aaa";
+
+            SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat(patternDate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(patternTime);
+
+            String dateDate = simpleDateFormatDate.format(sportEvent.getEventDate());
+            String dateTime = simpleDateFormat.format(sportEvent.getEventDate());
 
             //getting user profile image
             ParseFile profileImage = (ParseFile) sportEvent.getUser().get("profilePicture");
@@ -116,9 +124,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
             //binding the view
             tvEventTitle.setText(sportEvent.getTitle());
-            tvTimeOfEvent.setText(date);
+            tvDateOfEvent.setText(dateDate);
+            tvTimeOfEvent.setText(dateTime);
             tvUserName.setText((String) sportEvent.getUser().get("name"));
-            tvLocation.setText(sportEvent.getLocation().getCityName() + ", " + sportEvent.getLocation().getStateName());
+            tvLocation.setText(sportEvent.getPlace().getName());
             tvSportPlayed.setText(sportEvent.getSport().getSportName());
             tvParticipantGoing.setText(Integer.toString(sportEvent.getCurrentNumberOfParticipants()));
             int remainingSpots = sportEvent.getMaxNumberOfParticipants() - sportEvent.getCurrentNumberOfParticipants();

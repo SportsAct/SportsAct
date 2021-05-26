@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dark_black"
+    >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <include
         android:id="@+id/tbToolbar"
         layout="@layout/toolbar" />
@@ -13,12 +18,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tbToolbar"
-        android:layout_above="@+id/bottom_navigation"/>
+        android:layout_marginBottom="65dp"
+        />
+    </RelativeLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        android:backgroundTint="@color/middle_black"
+        app:elevation="8dp"
+        app:fabCradleMargin="12dp"
+        app:fabCradleRoundedCornerRadius="16dp"
+        >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            app:itemIconTint="@color/bottom_nav_colors"
+            app:menu="@menu/menu_bottom_navigation" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbAddEventButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_bottom_navigation" />
-</RelativeLayout>
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/bottomAppBar"
+        app:tint="@color/white"
+        android:src="@drawable/add"
+        app:fabSize="normal" />
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

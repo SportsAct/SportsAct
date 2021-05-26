@@ -17,10 +17,10 @@ public class SportEvent extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_PRIVACY = "eventPrivacy";
     public static final String KEY_SPORT = "sport";
-    public static final String KEY_LOCATION = "location";
     public static final String KEY_MAX_PARTICIPANTS = "eventMaxParticipants";
     public static final String KEY_CURRENT_PARTICIPANTS = "eventCurrentParticipants";
     public static final String KEY_ACTIVE = "Active";
+    public static final String KEY_PLACE = "place";
 
     public String getId(){return getObjectId();}
 
@@ -56,11 +56,6 @@ public class SportEvent extends ParseObject {
 
     public void setSport(SportGame sport){put(KEY_SPORT,sport);}
 
-    //stretch for location to get parks from google
-    public Location getLocation(){return (Location) getParseObject(KEY_LOCATION);}
-
-    public void setLocation(Location location){put(KEY_LOCATION,location);}
-
     public int getMaxNumberOfParticipants(){return getNumber(KEY_MAX_PARTICIPANTS).intValue();}
 
     public void setMaxNumberOfParticipants(int number){put(KEY_MAX_PARTICIPANTS,number);}
@@ -72,4 +67,8 @@ public class SportEvent extends ParseObject {
     public boolean isActive(){return getBoolean(KEY_ACTIVE);}
 
     public void setActive(boolean active){put(KEY_ACTIVE, active);}
+
+    public PlaceEvent getPlace(){return (PlaceEvent) getParseObject(KEY_PLACE);}
+
+    public void setPlace(PlaceEvent place){put(KEY_PLACE,place);}
 }

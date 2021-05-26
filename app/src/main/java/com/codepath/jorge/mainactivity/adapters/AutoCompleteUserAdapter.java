@@ -8,20 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
 
 public class AutoCompleteUserAdapter extends ArrayAdapter<ParseUser> {
     public static final String TAG = "AutoCompleteUserAdapter";
