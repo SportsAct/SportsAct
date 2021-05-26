@@ -1,7 +1,7 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,43 +24,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.adapters.BetterActivityResult;
+import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
+import com.codepath.jorge.mainactivity.fragments.AccountFragment;
+import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
-//todo also give option to choose photo from gallery
-public class EditProfile extends AppCompatActivity  {
+public class EditProfile extends AppCompatActivity  implements LocationDialog.LocationDialogListener{
 
     //declaration
 
     //constants
     public static final String TAG = "AccountFragment";
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
     //widgets
     private Toolbar toolbar;
@@ -70,24 +65,19 @@ public class EditProfile extends AppCompatActivity  {
     private EditText bioTextId2;
     private Button btnLocation;
     private RecyclerView imagesSports;
-    private TextView tvMilesRange;
-    private SeekBar sbMilesBar;
 
     //variables
     List<SportGame> sportList;
     List<SportGame> selectedSportList;
     List<SportGame> oldOnes;
     ParseUser currentUser;
+    private ArrayList<AllStates> allStates;
     //picture related
     public String photoFileName = "photo.jpg";
     private File photoFile;
-    // Set the fields to specify which types of place data to
-    // return after the user has made a selection.
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS);
 
     //adapter
     private SportHorizontalAdapter adapter;
-    protected final BetterActivityResult<Intent, ActivityResult> activityLauncher = BetterActivityResult.registerActivityForResult(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,18 +93,15 @@ public class EditProfile extends AppCompatActivity  {
         etActualName = findViewById(R.id.etActualNameEditProfile);
         btnLocation = findViewById(R.id.btnChangeLocation);
         imagesSports = findViewById(R.id.rvSports);
-        tvMilesRange = findViewById(R.id.tvMiles);
-        sbMilesBar = findViewById(R.id.seekBar);
 
         //initializing arrays
         sportList = new ArrayList<>();
         selectedSportList = new ArrayList<>();
         currentUser = ParseUser.getCurrentUser();
+        allStates = new ArrayList<>();
 
-        //if the places are not initialize yet, initialize them
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key), Locale.US);
-        }
+        //getting states
+        getStates();
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
         adapter = new SportHorizontalAdapter(this, sportList, selectedSportList);
@@ -140,14 +127,8 @@ public class EditProfile extends AppCompatActivity  {
         bioTextId2.setText((String) currentUser.get("bio"));
         userNameId2.setText(currentUser.getUsername());
 
-        sbMilesBar.setProgress( (int) currentUser.get("travel_miles"));
-        tvMilesRange.setText(currentUser.get("travel_miles") + " miles");
-
         Location userLocation = (Location) currentUser.get("location");
-        if(userLocation != null)
         btnLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
-        else
-            btnLocation.setText("Choose a location");
 
         //listeners
 
@@ -170,24 +151,6 @@ public class EditProfile extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 openDialog();
-            }
-        });
-
-        //seek bar
-        sbMilesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-
-                seekBar.setProgress(progress);
-                // updated continuously as the user slides the thumb
-                tvMilesRange.setText(progress + " miles");
-                currentUser.put("travel_miles",progress);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
 
@@ -219,7 +182,7 @@ public class EditProfile extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
     public void saveLocation(Location location) {
 
         checkIfLocationIsDuplicate(location);
@@ -229,7 +192,8 @@ public class EditProfile extends AppCompatActivity  {
     private void checkIfLocationIsDuplicate(Location location) {
 
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.whereEqualTo(Location.KEY_GOOGLE_ID, location.getGoogleId());
+        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
+        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
         query.getFirstInBackground(new GetCallback<Location>() {
             @Override
             public void done(Location object, ParseException e) {
@@ -251,45 +215,42 @@ public class EditProfile extends AppCompatActivity  {
         });
     }
 
-   //opens the location activity
-    private void openDialog(){
+    private void getStates(){
 
-        // Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .setHint("Enter a City")
-                .setTypeFilter(TypeFilter.REGIONS)
-                .build(this);
-       activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
-           @Override
-           public void onActivityResult(ActivityResult result) {
+        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
+        query.findInBackground(new FindCallback<AllStates>() {
+            @Override
+            public void done(List<AllStates> objects, ParseException e) {
 
-               if (result.getResultCode() == EditProfile.RESULT_OK) {
-                   // There are no request codes
-                   Intent data = result.getData();
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the states!!", e);
+                    Toast.makeText(EditProfile.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                   Place place = Autocomplete.getPlaceFromIntent(data);
+                for(int i = 0 ; i < objects.size() ; i++){
+                    allStates.add(objects.get(i));
+                }
 
-                   Location location = new Location();
-                   location.setStateName(place.getAddressComponents().asList().get(2).getName());
-                   location.setCityName(place.getName());
+                btnLocation.setClickable(true);
 
-                   ParseGeoPoint parseGeoPoint = new ParseGeoPoint();
-                   parseGeoPoint.setLatitude(place.getLatLng().latitude);
-                   parseGeoPoint.setLongitude(place.getLatLng().longitude);
-
-                   location.setLatLon(parseGeoPoint);
-                   location.setKeyGoogleId(place.getId());
-
-                   saveLocation(location);
-               }
-
-           }
-       });
+            }
+        });
 
     }
 
-    //todo something is wrong that is taking white spaces to the sides
-    //todo it has to do with the ratio
+    private void openDialog(){
+
+        if(allStates == null || allStates.isEmpty()){
+            return;
+        }
+
+        LocationDialog locationDialog = new LocationDialog(allStates);
+        locationDialog.show(getSupportFragmentManager(),TAG);
+    }
+
+
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -306,25 +267,7 @@ public class EditProfile extends AppCompatActivity  {
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getPackageManager()) != null) {
             // Start the image capture intent to take photo
-            activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-
-                    if (result.getResultCode() == RESULT_OK) {
-
-                        // by this point we have the camera photo on disk
-                        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                        // RESIZE BITMAP, see section below
-                        // Load the taken image into a preview
-                        ivProfilePic.setImageBitmap(takenImage);
-
-                        savePost();
-
-                    } else { // Result was a failure
-                        Toast.makeText(EditProfile.this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
 
@@ -344,6 +287,25 @@ public class EditProfile extends AppCompatActivity  {
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
+    //On activity result
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // by this point we have the camera photo on disk
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // RESIZE BITMAP, see section below
+                // Load the taken image into a preview
+                ivProfilePic.setImageBitmap(takenImage);
+
+                savePost();
+
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     private void savePost() {
         currentUser.put("profilePicture", new ParseFile(photoFile));
@@ -465,8 +427,6 @@ public class EditProfile extends AppCompatActivity  {
         saveSportPreferenceQuery(toCreateSports);
 
         deleteUnselectedSports(toDeleteSports);
-
-        saveEdits();
     }
 
     private void deleteUnselectedSports(List<SportGame> toDeleteSports) {
@@ -493,6 +453,7 @@ public class EditProfile extends AppCompatActivity  {
                                 Toast.makeText(EditProfile.this, "There was a problem deleting the unselected 2!", Toast.LENGTH_SHORT).show();
                             }
 
+                            Toast.makeText(EditProfile.this, "Sport preferences save successfully!", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -508,6 +469,7 @@ public class EditProfile extends AppCompatActivity  {
         oldOnes.addAll(selectedSportList);
 
         for(SportGame sportGame : toCreateSports){
+            Log.i(TAG, "Just Checking");
             SportPreference newSportPreference = new SportPreference();
             newSportPreference.setSport(sportGame);
             newSportPreference.setUser(ParseUser.getCurrentUser());
@@ -525,6 +487,7 @@ public class EditProfile extends AppCompatActivity  {
                 }
             });
 
+            saveEdits();
         }
     }
 

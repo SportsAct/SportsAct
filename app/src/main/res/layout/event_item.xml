@@ -11,19 +11,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@color/soft_black"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp">
 
         <TextView
             android:id="@+id/tvEventTitleHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/main_header"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
             tools:text="This is an event" />
 
             <ImageButton
@@ -31,33 +33,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
                 android:visibility="invisible"
-                android:background="@drawable/custom_ripple"
-                android:tint="@color/white"
-                android:src="@drawable/ic_three_dots" />
+                android:backgroundTint="@color/white"
+                android:src="@drawable/settings" />
 
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Schedule for:"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvTimeOfEventHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/black"
+                tools:text="Wed Feb 24, 2018 at 8:00 PM"/>
+        </LinearLayout>
+
+
+        
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:innerRadius="0dp"
                 android:shape="ring"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 app:cardCornerRadius="75dp">
 
                 <ImageView
                     android:id="@+id/ivHostProfilePictureHome"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     tools:srcCompat="@drawable/empty_profile" />
             </androidx.cardview.widget.CardView>
 
@@ -65,26 +89,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/bold_text"
-                android:text="Hosted By:"
-                />
+                android:layout_marginHorizontal="4dp"
+                android:text="Created By:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvHostNameHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="@style/text"
+                android:textColor="@color/black"
                 tools:text="Pedro Perez" />
+            
         </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp"
-            android:background="@color/dark_black"/>
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,66 +126,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/ic_calendar" />
-
-                <TextView
-                    android:id="@+id/tvDateOfEventHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="@style/text"
-                    tools:text="Wednesday Feb 24"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    app:srcCompat="@drawable/ic_time_circle" />
-
-                <TextView
-                    android:id="@+id/tvTimeOfEventHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/text"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    tools:text="8:00 PM"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:layout_marginVertical="8dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/ic_location" />
+                    app:srcCompat="@drawable/location" />
 
                 <TextView
                     android:id="@+id/tvLocationHome"
@@ -170,7 +134,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
-                    android:textAppearance="@style/text"
                     tools:text="Kendall Soccer Park" />
 
 
@@ -196,7 +159,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
-                    android:textAppearance="@style/text"
                     tools:text="Soccer" />
 
 
@@ -207,9 +169,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp"
-            android:background="@color/dark_black"/>
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -220,14 +182,13 @@
                 android:id="@+id/tvParticipantsGoingHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/text"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
                 tools:text="15" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/text"
                 android:text="going," />
 
             <TextView
@@ -235,7 +196,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textAppearance="@style/text"
                 android:text="39 spots open." />
 
             <Button
@@ -243,11 +203,9 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gradiant"
-                android:textSize="14sp"
-                android:textAllCaps="false"
+                android:layout_marginEnd="4dp"
                 android:autoSizeTextType="uniform"
-                android:text="See Participants"
+                android:text="SEE WHO IS GOING"
                 android:maxLines="1"
                 android:textAlignment="textEnd"/>
 
@@ -260,22 +218,20 @@
             android:layout_marginBottom="8dp"
             android:weightSum="2">
 
-            <android.widget.Button
+            <Button
                 android:id="@+id/btnChatWithGroupHome"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
-                android:theme="@style/button_main"
                 android:text="Chat with group" />
 
-            <android.widget.Button
+            <Button
                 android:id="@+id/btnJoinEventHome"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
-                android:theme="@style/button_main"
                 android:text="Join the event" />
 
         </LinearLayout>

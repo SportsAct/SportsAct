@@ -10,6 +10,7 @@ import java.util.Date;
 @ParseClassName("Messages")
 public class Message extends ParseObject {
 
+
     public static final String KEY_MESSAGE_BODY = "body";
     public static final String KEY_USER = "user";
     public static final String KEY_CHAT = "chat";

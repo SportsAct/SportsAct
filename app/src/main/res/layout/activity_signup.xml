@@ -23,15 +23,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
-
             <ImageView
                 android:layout_width="350dp"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
+                android:background="@color/middle_ground_transparent"
                 app:srcCompat="@drawable/sport_connect_logo" />
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Create an Account"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="42dp"
+            android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etRealName"

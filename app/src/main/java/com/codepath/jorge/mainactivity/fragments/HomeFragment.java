@@ -16,15 +16,14 @@ import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.activities.CreateEventActivity;
 import com.codepath.jorge.mainactivity.adapters.EventsAdapter;
 import com.codepath.jorge.mainactivity.adapters.LoadingDialog;
-import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportPreference;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +36,7 @@ public class HomeFragment extends Fragment {
 
     //widgets
     private RecyclerView recyclerViewHome;
+    private FloatingActionButton fabCreateEvent;
     LoadingDialog loadingDialog;
 
     //adapters
@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
 
         //finding views
         recyclerViewHome = view.findViewById(R.id.rvRecyclerViewHome);
+        fabCreateEvent = view.findViewById(R.id.fbAddEventButton);
 
         //progress indicator creation
         loadingDialog = new LoadingDialog(getActivity());
@@ -69,11 +70,18 @@ public class HomeFragment extends Fragment {
         sportEventList = new ArrayList<>();
         sportPreferencesQueries = new ArrayList<>();
 
-        //getting own queries
-        ParseQuery<SportEvent> ownEventsQury = ParseQuery.getQuery(SportEvent.class);
-        ownEventsQury.whereEqualTo(SportEvent.KEY_USER,ParseUser.getCurrentUser());
+        //adding sports that are in user location
+        ParseQuery<SportEvent> locationQuery = ParseQuery.getQuery(SportEvent.class);
+        locationQuery.whereEqualTo(SportEvent.KEY_LOCATION, ParseUser.getCurrentUser().get("location"));
 
-        sportPreferencesQueries.add(ownEventsQury);
+        //add events that the user created
+        ParseQuery<SportEvent> ownEvents = ParseQuery.getQuery(SportEvent.class);
+        ownEvents.whereEqualTo(SportEvent.KEY_USER, ParseUser.getCurrentUser());
+
+        sportPreferencesQueries.add(ownEvents);
+
+        sportPreferencesQueries.add(locationQuery);
+
 
         //recycler view performance
         recyclerViewHome.setHasFixedSize(true);
@@ -83,8 +91,18 @@ public class HomeFragment extends Fragment {
         recyclerViewHome.setAdapter(adapter);
         recyclerViewHome.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //listener create event
+        fabCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CreateEventActivity.class);
+                startActivity(i);
+            }
+        });
+
         //getting events
         getSportPreferenceOfUser();
+      //getHomeFeed();
 
     }
 
@@ -126,7 +144,6 @@ public class HomeFragment extends Fragment {
        getSportPreferenceOfUser();
     }
 
-    //todo different tabs that show different events
     private void getHomeFeed(){
 
         Date today = new Date();
@@ -134,8 +151,8 @@ public class HomeFragment extends Fragment {
         ParseQuery<SportEvent> query = ParseQuery.or(sportPreferencesQueries);
         query.include(SportEvent.KEY_SPORT);
         query.include(SportEvent.KEY_USER);
-        query.include(SportEvent.KEY_PLACE);
-        query.whereGreaterThanOrEqualTo(SportEvent.KEY_DATE,today);
+        query.include(SportEvent.KEY_LOCATION);
+        query.whereGreaterThan(SportEvent.KEY_DATE,today);
         query.whereEqualTo(SportEvent.KEY_ACTIVE, true);
         query.orderByAscending(SportEvent.KEY_DATE);
         query.findInBackground(new FindCallback<SportEvent>() {
@@ -149,32 +166,12 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
+
                 //clearing list first
                 sportEventList.clear();
 
-                //set posts within mile range
-                int milesRange = (int) ParseUser.getCurrentUser().get("travel_miles");
-
-                Location userLocation = (Location) ParseUser.getCurrentUser().getParseObject("location");
-
-                ParseGeoPoint userLocationLatLon = userLocation.getLatLon();
-
-                Log.i(TAG,"User Lat Lon: " + userLocationLatLon.getLatitude() + ", " + userLocationLatLon.getLongitude());
-
-                //adding events withing a range to the home feed
-                for(int i = 0; i < events.size(); i++){
-
-                    double distance = distance(userLocationLatLon.getLatitude(),userLocationLatLon.getLongitude(),events.get(i).getPlace().getLatLon().getLatitude(),events.get(i).getPlace().getLatLon().getLongitude(),'M');
-
-                    Log.i(TAG,"Event: " + events.get(i).getTitle() + " is " + distance + " miles of user location");
-
-                    if(distance < milesRange){
-
-                        sportEventList.add(events.get(i));
-                    }
-
-
-                }
+                //set posts
+                sportEventList.addAll(events);
 
                 //notify adapter
                 adapter.notifyDataSetChanged();
@@ -198,33 +195,4 @@ public class HomeFragment extends Fragment {
         });
 
         }
-
-        //calculates the distance between two points Lat Lon
-    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == 'K') {
-            dist = dist * 1.609344;
-        } else if (unit == 'N') {
-            dist = dist * 0.8684;
-        }
-        return (dist);
-    }
-
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts decimal degrees to radians             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts radians to decimal degrees             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
 }

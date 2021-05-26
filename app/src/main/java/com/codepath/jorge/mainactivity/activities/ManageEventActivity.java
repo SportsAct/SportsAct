@@ -1,15 +1,17 @@
 package com.codepath.jorge.mainactivity.activities;
 
-import androidx.activity.result.ActivityResult;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,18 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.codepath.jorge.mainactivity.R;
-import com.codepath.jorge.mainactivity.adapters.BetterActivityResult;
+import com.codepath.jorge.mainactivity.adapters.LocationDialog;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
+import com.codepath.jorge.mainactivity.models.AllStates;
 import com.codepath.jorge.mainactivity.models.Location;
-import com.codepath.jorge.mainactivity.models.PlaceEvent;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -42,24 +40,21 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
-//todo might need to just delete those
-//todo give more space, separate sections
-public class ManageEventActivity extends AppCompatActivity{
+public class ManageEventActivity extends AppCompatActivity implements LocationDialog.LocationDialogListener {
 
     //declaration
     //constants
@@ -93,19 +88,15 @@ public class ManageEventActivity extends AppCompatActivity{
 
     //adapter
     SportHorizontalAdapter adapter;
-    protected final BetterActivityResult<Intent, ActivityResult> activityLauncher = BetterActivityResult.registerActivityForResult(this);
 
     //variables
     List<SportGame> sportGamesList;
     SportEvent currentSportEvent;
     SportGame selectedSport;
-    PlaceEvent placeEvent;
     Date dateTime; //to store the date if change
     int mHour = -1;
     int mMinutes;
-    // Set the fields to specify which types of place data to
-    // return after the user has made a selection.
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.WEBSITE_URI);
+    private ArrayList<AllStates> allStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +105,9 @@ public class ManageEventActivity extends AppCompatActivity{
 
         //getting event id
         String eventId = getIntent().getStringExtra("event_id");
+
+        //getting states
+        getStates();
 
         //get event
         getEvent(eventId);
@@ -150,12 +144,7 @@ public class ManageEventActivity extends AppCompatActivity{
         //initializing sport event
         currentSportEvent = new SportEvent();
         selectedSport = new SportGame();
-        placeEvent = new PlaceEvent();
-
-        //if the places are not initialize yet, initialize them
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getString(R.string.google_maps_key), Locale.US);
-        }
+        allStates = new ArrayList<>();
 
         //setting bar
         tbToolbar.setTitle("Manage Your Event");
@@ -308,7 +297,7 @@ public class ManageEventActivity extends AppCompatActivity{
                         tvMaxCharactersTitle.setVisibility(View.GONE);
 
                         ivIconTitle.setClickable(false);
-                        ivIconTitle.setImageResource(R.drawable.editpencil);
+                        ivIconTitle.setImageResource(R.drawable.edit);
                     }
                 });
 
@@ -316,7 +305,6 @@ public class ManageEventActivity extends AppCompatActivity{
             }
         });
 
-        //todo better deletion
         //delete button
         btnDeleteEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -374,7 +362,6 @@ public class ManageEventActivity extends AppCompatActivity{
 
         currentSportEvent.setPrivacy(swtPrivacy.isChecked());
         currentSportEvent.setSport(adapter.getSelectedSport());
-        currentSportEvent.setPlace(placeEvent);
 
         currentSportEvent.saveInBackground(new SaveCallback() {
             @Override
@@ -411,68 +398,45 @@ public class ManageEventActivity extends AppCompatActivity{
         mHour = -1;
     }
 
+    @Override
+    public void saveLocation(Location location) {
+        checkIfLocationIsDuplicate(location);
+    }
 
-    public void savePlace() {
+    private void getStates(){
 
-        ParseQuery<PlaceEvent> query = ParseQuery.getQuery(PlaceEvent.class);
-        query.whereEqualTo(PlaceEvent.KEY_GOOGLE_ID, placeEvent.getGoogleId());
-        query.getFirstInBackground(new GetCallback<PlaceEvent>() {
+        ParseQuery<AllStates> query = ParseQuery.getQuery(AllStates.class);
+        query.findInBackground(new FindCallback<AllStates>() {
             @Override
-            public void done(PlaceEvent object, ParseException e) {
+            public void done(List<AllStates> objects, ParseException e) {
 
+                //something went wrong
                 if(e != null){
-                    Log.e(TAG,"Place is new!", e);
-
-                    //location not found
-                    tvSelectedLocation.setText(placeEvent.getName());
-
+                    Log.e(TAG,"There was a problem loading the states!!", e);
+                    Toast.makeText(ManageEventActivity.this, "There was a problem loading the states", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //location found
-                placeEvent = object;
+                for(int i = 0 ; i < objects.size() ; i++){
+                    allStates.add(objects.get(i));
+                }
 
-                tvSelectedLocation.setText(placeEvent.getName());
+                btnChangeLocation.setEnabled(true);
 
             }
         });
 
     }
 
-  private void openDialog(){
+    //open states selection dialog
+    private void openDialog(){
 
-      // Start the autocomplete intent.
-      Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-              .setHint("Enter a City")
-              .setTypeFilter(TypeFilter.ESTABLISHMENT)
-              .build(this);
-      activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
-          @Override
-          public void onActivityResult(ActivityResult result)  {
+        if(allStates == null || allStates.isEmpty()){
+            return;
+        }
 
-              if (result.getResultCode() == EditProfile.RESULT_OK) {
-                  // There are no request codes
-                  Intent data = result.getData();
-
-                  Place place = Autocomplete.getPlaceFromIntent(data);
-                  ParseGeoPoint parseGeoPoint = new ParseGeoPoint();
-                  parseGeoPoint.setLatitude(place.getLatLng().latitude);
-                  parseGeoPoint.setLongitude(place.getLatLng().longitude);
-
-                  //setting event place
-                 placeEvent.setLatLon(parseGeoPoint);
-                 if(place.getWebsiteUri() != null)
-                     placeEvent.setURL(place.getWebsiteUri().toString());
-
-                  placeEvent.setName(place.getName());
-                  placeEvent.setKeyGoogleId(place.getId());
-
-                  savePlace();
-              }
-
-          }
-      });
-
+        LocationDialog locationDialog = new LocationDialog(allStates);
+        locationDialog.show(getSupportFragmentManager(),TAG);
     }
 
     //shows the time picker
@@ -577,7 +541,7 @@ public class ManageEventActivity extends AppCompatActivity{
 
         ParseQuery<SportEvent> query = ParseQuery.getQuery(SportEvent.class);
         query.include(SportEvent.KEY_SPORT);
-        query.include(SportEvent.KEY_PLACE);
+        query.include(SportEvent.KEY_LOCATION);
         query.whereEqualTo(SportEvent.KEY_ID,eventId);
         query.getFirstInBackground(new GetCallback<SportEvent>() {
             @Override
@@ -611,7 +575,7 @@ public class ManageEventActivity extends AppCompatActivity{
 
         tvNameOfEvent.setText(currentSportEvent.getTitle());
         swtPrivacy.setChecked(currentSportEvent.getPrivacy());
-        tvSelectedLocation.setText(currentSportEvent.getPlace().getName());
+        tvSelectedLocation.setText(currentSportEvent.getLocation().getState().getName() + ", " + currentSportEvent.getLocation().getCityName());
         tvDate.setText(date);
         tvTime.setText(time);
         tvMaxAmountOfPlayers.setText(Integer.toString( currentSportEvent.getMaxNumberOfParticipants()));
@@ -635,6 +599,33 @@ public class ManageEventActivity extends AppCompatActivity{
         //gettingsports
         getSports();
 
+    }
+
+    private void checkIfLocationIsDuplicate(Location location) {
+
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.whereEqualTo(Location.KEY_STATE_NAME, location.getStateName());
+        query.whereEqualTo(Location.KEY_CITY_NAME, location.getCityName());
+        query.getFirstInBackground(new GetCallback<Location>() {
+            @Override
+            public void done(Location object, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Location is new!", e);
+
+                    //location not found
+                    currentSportEvent.setLocation(location);
+                    tvSelectedLocation.setText(location.getCityName() + ", " + location.getState().getName());
+
+                    return;
+                }
+
+                //location found
+                currentSportEvent.setLocation(object);
+                tvSelectedLocation.setText(object.getCityName() + ", " + object.getState().getName());
+
+            }
+        });
     }
 
     //get the sports from db to populate horizontal rv
