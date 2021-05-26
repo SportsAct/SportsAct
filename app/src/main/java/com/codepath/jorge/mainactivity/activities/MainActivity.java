@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.fragments.AccountFragment;
@@ -18,6 +19,7 @@ import com.codepath.jorge.mainactivity.fragments.ChatFragment;
 import com.codepath.jorge.mainactivity.fragments.HomeFragment;
 import com.codepath.jorge.mainactivity.fragments.MapsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     //widgets
     private BottomNavigationView bottomNavigationView;
     private Toolbar tbToolbar;
+    private FloatingActionButton fabCreateEvent;
 
     //managers and adapters
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         //finding views by id
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         tbToolbar = findViewById(R.id.tbToolbar);
+        fabCreateEvent = findViewById(R.id.fbAddEventButton);
+
+        bottomNavigationView.setBackground(null);
+        bottomNavigationView.getMenu().getItem(2).setEnabled(false);
 
         //setting bar
         setSupportActionBar(tbToolbar);
@@ -76,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
+            }
+        });
+
+        //listener create event
+        fabCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, CreateEventActivity.class);
+                startActivity(i);
             }
         });
 

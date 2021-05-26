@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment {
 
     //widgets
     private RecyclerView recyclerViewHome;
-    private FloatingActionButton fabCreateEvent;
     LoadingDialog loadingDialog;
 
     //adapters
@@ -60,7 +59,6 @@ public class HomeFragment extends Fragment {
 
         //finding views
         recyclerViewHome = view.findViewById(R.id.rvRecyclerViewHome);
-        fabCreateEvent = view.findViewById(R.id.fbAddEventButton);
 
         //progress indicator creation
         loadingDialog = new LoadingDialog(getActivity());
@@ -84,15 +82,6 @@ public class HomeFragment extends Fragment {
         adapter = new EventsAdapter(getContext(),sportEventList);
         recyclerViewHome.setAdapter(adapter);
         recyclerViewHome.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //listener create event
-        fabCreateEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), CreateEventActivity.class);
-                startActivity(i);
-            }
-        });
 
         //getting events
         getSportPreferenceOfUser();

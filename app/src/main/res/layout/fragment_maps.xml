@@ -176,7 +176,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/calendar" />
+                    app:srcCompat="@drawable/ic_calendar" />
 
                 <TextView
                     android:id="@+id/tvLocationHome"
