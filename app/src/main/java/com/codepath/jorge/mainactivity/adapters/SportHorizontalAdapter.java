@@ -30,6 +30,17 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
     SportGame selectedSport;
     boolean multipleSelections;
     boolean firstSetUp = true;
+    boolean justChecking = false;
+
+    public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, List<SportGame> selectedSportsList, Boolean checking){
+        this.context = context;
+        this.sportGameList = sportGameList;
+        this.selectedSportsList = selectedSportsList;
+
+        multipleSelections = true;
+        firstSetUp = false;
+        justChecking = true;
+    }
 
     public SportHorizontalAdapter(Context context, List<SportGame> sportGameList, SportGame selectedSport) {
         this.context = context;
@@ -129,6 +140,10 @@ public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontal
             container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    if(justChecking){
+                        return;
+                    }
 
                     if(multipleSelections){
                         if(isSportSelected(sportGame)){

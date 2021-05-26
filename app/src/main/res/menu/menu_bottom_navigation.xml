@@ -10,7 +10,7 @@
     <item
         android:id="@+id/mnu_action_map"
         android:icon="@drawable/map_selector"
-        android:title="Home"
+        android:title="Map"
         app:showAsAction="always" />
 
     <item

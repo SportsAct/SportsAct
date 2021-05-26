@@ -57,6 +57,7 @@ public class AccountFragment extends Fragment {
         super.onResume();
 
         loadUserData();
+        getSportPreferenceOfUser();
     }
 
     private void getSports() {
@@ -101,7 +102,7 @@ public class AccountFragment extends Fragment {
         currentUser = ParseUser.getCurrentUser();
 
         // SETTING ADAPTER FOR FAVORITE SPORT ON PROFILE
-        adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList);
+        adapter = new SportHorizontalAdapter(getActivity(), sportList, selectedSportList, true);
         imagesSports.setAdapter(adapter);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
