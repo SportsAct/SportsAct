@@ -7,6 +7,7 @@ import com.parse.ParseUser;
 @ParseClassName("SportPreference")
 public class SportPreference extends ParseObject {
 
+    public static final String KEY_ID = "objectId";
     public static final String KEY_USER = "user";
     public static final String KEY_SPORT = "sport";
 

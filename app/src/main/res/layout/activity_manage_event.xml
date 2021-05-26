@@ -71,7 +71,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:clickable="false"
-            app:srcCompat="@drawable/editpencil" />
+            app:srcCompat="@drawable/edit" />
 
     </RelativeLayout>
 
@@ -118,6 +118,7 @@
         android:textColor="@color/orange_dark"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
+        android:enabled="false"
         android:text="Change the location for this event" />
 
     <TextView
@@ -167,7 +168,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_calendar" />
+                app:srcCompat="@drawable/calendar" />
 
             <TextView
                 android:id="@+id/tvDateManage"
@@ -194,7 +195,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_time_circle" />
+                app:srcCompat="@drawable/time" />
 
             <TextView
                 android:id="@+id/tvTimeManage"

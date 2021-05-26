@@ -50,9 +50,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_gravity="center_horizontal"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:shape="ring"
         app:cardCornerRadius="75dp">
 
         <ImageView
@@ -60,7 +60,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             tools:srcCompat="@drawable/empty_profile" />
     </androidx.cardview.widget.CardView>
 

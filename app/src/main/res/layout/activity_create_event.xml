@@ -95,6 +95,7 @@
         android:textColor="@color/orange_dark"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
+        android:enabled="false"
         android:text="Select the location of the event" />
 
     <TextView
@@ -143,7 +144,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginHorizontal="8dp"
-            app:srcCompat="@drawable/ic_calendar" />
+            app:srcCompat="@drawable/calendar" />
 
         <TextView
             android:id="@+id/tvSelectedDateCreateEvent"
@@ -175,7 +176,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginHorizontal="8dp"
-            app:srcCompat="@drawable/ic_time_circle" />
+            app:srcCompat="@drawable/time" />
 
         <TextView
             android:id="@+id/tvTimeSelectedCreateEvent"
@@ -238,7 +239,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:padding="8dp"
-                android:text="What is the sport that will be played:" />
+                android:text="What is the sport that will be played in this event:" />
 
             <NumberPicker
                 android:id="@+id/npSportPickerCreateEvent"

@@ -28,10 +28,11 @@ import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo change it to look more like open sports
 public class AccountFragment extends Fragment {
 
     public static final String TAG = "AccountFragment";
@@ -43,7 +44,6 @@ public class AccountFragment extends Fragment {
     private TextView bioTextId;
     private TextView realNameId;
     private TextView tvLocation;
-    private TextView tvWillingToTravel;
 
     private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
@@ -93,7 +93,6 @@ public class AccountFragment extends Fragment {
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
         tvLocation = view.findViewById(R.id.tvLocationAccountFragment);
-        tvWillingToTravel = view.findViewById(R.id.tvWillingToTravel);
 
         //initializing arrays
         sportList = new ArrayList<>();
@@ -127,19 +126,12 @@ public class AccountFragment extends Fragment {
         userNameId.setText((String) currentUser.get("username"));
         bioTextId.setText((String) currentUser.get("bio"));
         realNameId.setText((String) currentUser.get("name"));
-        tvWillingToTravel.setText("Willing to travel " + (int) currentUser.get("travel_miles") + " miles.");
 
         ParseFile profilePicture = (ParseFile) currentUser.get("profilePicture");
         Glide.with(getActivity()).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);
 
         Location userLocation = (Location) currentUser.get("location");
-
-        if(userLocation != null) {
-            tvLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
-        }
-        else {
-            tvLocation.setText("Not Location Selected");
-        }
+        tvLocation.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
     }
 
     private void getSportPreferenceOfUser() {

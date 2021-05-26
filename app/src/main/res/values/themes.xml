@@ -2,21 +2,16 @@
     <!-- Base application theme. -->
     <style name="Theme.MainActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_gradiant</item>
-        <item name="colorPrimaryVariant">@color/soft_gradiant</item>
+        <item name="colorPrimary">@color/orange_dark</item>
+        <item name="colorPrimaryVariant">@color/orange_light</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondary">@color/teal_dark</item>
         <item name="colorSecondaryVariant">@color/teal_light</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/middle_black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="fontFamily">@font/montserrat</item>
-
-        <item name="android:buttonStyle">@style/button_main</item>
-        <item name="buttonStyle">@style/button_main</item>
-
+        <item name="fontFamily" >@font/montserrat</item>
     </style>
-
 </resources>
