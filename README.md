@@ -105,9 +105,9 @@ Optional:
 
 * Login/Register is forced
    * Login to register, and register to login
-   * When user login or register will be taken to the game events feed
+   * When user logs in or registers, they will be taken to the game events feed
 * Event Screen(looking for games screen)
-   * Park detail screen (stretch story)
+   * Park detail screen
    * Chat of that game when user join, or wants to message the group
 * Chat Screen
    * User can go to the specific message chat that he select, either a group or a friend
@@ -120,90 +120,7 @@ Optional:
    * When user confirm, user is taken to the chat of the group
    * User has an option to invite people to join the event
 
-### Models
 
-#### Users
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     |UserID              |
-|  name             | Text     |Real Name of user              |
-|  username         | Text     |in app username              |
-|  profile picture  | file     |profile picture              |
-|  sport preferences| text[]   |list of sport preferences    |
-|  bio              | text     |short bio                    | 
-|  location         | location |where user is going to play  | 
- 
- #### Events
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     |eventID              |
-|  location         | Text     |location of event              |
-|  time             | Date     |date of event              |
-|  createdAt        | Date     |creation of event              |
-|  title            | text     |a title              |
-|  sport            | text     |sport to be played              | 
-|  author           | user     |host of event              | 
-|  amount of users  | integer  |number of user in event              | 
-|  privacy          | bool     |public or private event              | 
-
- #### Chats
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     |chatID              |
-|  event            | Event    |event of chat              |
-|  createdAt        | Date     |creation of chat              |
-
-#### Message
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     | messageID             |
-|  chat             | Chat     |the chat of the message              |
-|  time             | Date     |when send              |
-|  attachment       | File     |if any pic              |
-|  message          | text     |body of message              |
-|  user             | user     |sender of message              |
-
-#### EventParticipant
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     | EventParticipantID             |
-|  user             | user     |participant of event              |
-|  event            | event    |event user is enrolled              |
-
-#### ChatUserJoin
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     |ChatUserJoin             |
-|  user             | user     |participant of chat              |
-|  event            | event    |chat user is enrolled              |
-
-### Stretch Models:
-
-#### Post
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     | postID             |
-|  author           | user     |creator              |
-|  caption          | Text     |caption of post              |
-|  createdAt        | Date     | creation time             |
-|  image            | file     |image of post              |
-|  location         | location |where the post is from              |
-|  likecount        | int      |like count              | 
-|  commentcount     | int      |comments count              |
-
- #### Likes
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     |likeID              |
-|  user             | user     | user that like             |
-|  post             | post     | post that was liked             |
-
-#### Comments
-| Property          |Type      | Description  |
-|      ---          | ---      |---           |
-|  id               | Text     | commentID              |
-|  user             | user     | user that comment             |
-|  post             | post     | post that was commented             |
 
 
 ![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
