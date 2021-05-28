@@ -23,7 +23,8 @@
         android:layout_height="100dp"
         app:cardCornerRadius="50dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginHorizontal="16dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp">
         <ImageView
             android:id="@+id/profilePic"
             android:layout_width="match_parent"
@@ -52,59 +53,96 @@
         android:textAppearance="@style/bold_text"
         tools:text="erikfors" />
 
-    <android.widget.Button
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:theme="@style/button_main"
-        android:layout_marginTop="8dp"
-        android:padding="0dp"
-        android:textSize="14sp"
-        android:text="Edit Profile" />
-
         </LinearLayout>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:background="@color/soft_black"/>
+        <android.widget.Button
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/button_main"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:text="Edit Profile" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/second_header"
-        android:paddingHorizontal="8dp"
-        android:text="Bio:" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_account_empty" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/second_header"
+                android:text="About:" />
+
+        </LinearLayout>
 
     <TextView
         android:id="@+id/bioTextId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textAppearance="@style/text"
+        android:paddingHorizontal="8dp"
+        android:textAppearance="@style/text_cursive"
         tools:text="I love playing basketball and football on the weekends in Bayfront Park.
-        Let me know if you're free on the weekends!" />
+Let me know if you're free on the weekends!" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="8dp"
-        android:textAppearance="@style/second_header"
-        android:text="Location:" />
 
-    <TextView
-        android:id="@+id/tvLocationAccountFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:padding="8dp"
-        android:textAppearance="@style/text"
-        tools:text="Miami, Florida" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/ic_location" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvLocationAccountFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/second_header"
+                    android:text="Miami, FL" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:textAppearance="@style/text"
+                    android:text="Address" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tvWillingToTravel"
@@ -114,19 +152,33 @@
         android:padding="8dp"
         tools:text="Willing to travel 5 miles" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:background="@color/soft_black"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:textAppearance="@style/second_header"
-        android:paddingHorizontal="8dp"
-        android:text="Sport Preferences:" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_star" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/second_header"
+                android:text="Sport Preferences:" />
+
+        </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSports"
