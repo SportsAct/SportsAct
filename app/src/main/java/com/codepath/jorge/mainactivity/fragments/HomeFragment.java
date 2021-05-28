@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
 
                 ParseGeoPoint userLocationLatLon = userLocation.getLatLon();
 
-                Log.i(TAG,"User Lat Lon: " + userLocationLatLon.getLatitude() + ", " + userLocationLatLon.getLongitude());
+               Log.i(TAG,"User Lat Lon: " + userLocationLatLon.getLatitude() + ", " + userLocationLatLon.getLongitude());
 
                 //adding events withing a range to the home feed
                 for(int i = 0; i < events.size(); i++){

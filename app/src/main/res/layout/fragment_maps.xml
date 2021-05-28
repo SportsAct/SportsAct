@@ -14,27 +14,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:elevation="10dp"
-        android:background="@drawable/white_border"
-        android:id="@+id/relLayout1">
-
-        <fragment android:id="@+id/autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            />
-
-    </RelativeLayout>
 
     <ImageView
         android:id="@+id/gpsID"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/relLayout1"
         android:clickable="true"
         android:focusable="true"
         android:layout_alignParentEnd="true"
@@ -52,7 +36,7 @@
         android:layout_marginBottom="30dp"
         android:clipToPadding="false"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/white_border">
+        android:background="@drawable/soft_black_border">
 
 
         <RelativeLayout
@@ -60,25 +44,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:background="@color/orange_dark">
+            android:background="@color/dark_black">
 
             <TextView
                 android:id="@+id/tvTitleBottomSheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="18sp"
                 android:text="Soccer at Kendall"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textAppearance="@style/main_header" />
 
-            <ImageButton
-                android:id="@+id/ivCloseBottomSheet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_ripple"
-                app:srcCompat="@drawable/quantum_ic_clear_grey600_24" />
 
             <TextView
                 android:id="@+id/tvPlaceBottomSheet"
@@ -87,7 +62,7 @@
                 android:layout_below="@+id/tvTitleBottomSheet"
                 android:layout_marginStart="8dp"
                 android:text="Nothing"
-                android:textColor="@color/white" />
+                android:textAppearance="@style/bold_text" />
 
             <TextView
                 android:id="@+id/tvTimeExpectedBottomSheet"
@@ -96,9 +71,10 @@
                 android:layout_toEndOf="@+id/tvPlaceBottomSheet"
                 android:layout_below="@+id/tvTitleBottomSheet"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
                 android:textAlignment="textEnd"
-                android:textColor="@color/white"
-                android:text="25 min" />
+                android:textAppearance="@style/bold_text"
+                android:text="loading..." />
 
         </RelativeLayout>
 
@@ -131,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="4dp"
+                android:textAppearance="@style/text"
                 android:text="Directions" />
 
 
@@ -150,9 +127,10 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/ic_website" />
+                    app:srcCompat="@drawable/ic_internet" />
 
                 <TextView
+                    android:textAppearance="@style/text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -179,6 +157,7 @@
                     app:srcCompat="@drawable/ic_calendar" />
 
                 <TextView
+                    android:textAppearance="@style/text"
                     android:id="@+id/tvLocationHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

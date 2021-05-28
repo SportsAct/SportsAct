@@ -40,6 +40,16 @@
         </item>
     </style>
 
+    <style name="text_cursive">
+        <item name="android:textSize">
+            16sp
+        </item>
+        <item name="android:textColor">
+            @color/soft_grey
+        </item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
 
     <style name="sub_header">
         <item name="android:textSize">
@@ -56,6 +66,27 @@
         </item>
         <item name="android:textColor">
             @color/white
+        </item>
+    </style>
+
+    <style name="soft_et_text">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            @color/grey
+        </item>
+
+    </style>
+
+    <style name="text_clickable_button">
+        <item name="android:textColor">
+            @color/soft_gradiant
+        </item>
+        <item name="android:textSize">
+            16sp
         </item>
     </style>
 

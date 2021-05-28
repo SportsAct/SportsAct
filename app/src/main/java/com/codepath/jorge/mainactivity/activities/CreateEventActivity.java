@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -19,11 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.BetterActivityResult;
+import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
@@ -40,6 +45,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.parse.FindCallback;
@@ -93,8 +99,6 @@ class Event{
     }
 }
 
-//todo change hirarchy so user do only one thing at a time
-//todo change UI, to give more space
 public class CreateEventActivity extends AppCompatActivity{
 
     //declaration
@@ -104,6 +108,7 @@ public class CreateEventActivity extends AppCompatActivity{
     private final int MAX_COUNT = 25;
 
     //widgets
+    private RecyclerView rvSportsGames;
     private EditText etEventTitle;
     private TextView tvMaxCount;
     private Switch swtPrivacy;
@@ -112,19 +117,21 @@ public class CreateEventActivity extends AppCompatActivity{
     private LinearLayout ivClock;
     private TextView tvTimeSelected;
     private TextView tvLocation;
-    private Button btnSelectLocation;
-    private NumberPicker npAmountOfParticipants;
-    private NumberPicker npSportsToBePlayed;
+    private LinearLayout btnSelectLocation;
     private Button btnCreateEvent;
     ProgressBar progressBar;
     private Toolbar tbToolbar;
     private TextView switchText;
+    private Slider sbParticipantsNumber;
+    private TextView tvParticipantNumber;
 
     //adapter
     protected final BetterActivityResult<Intent, ActivityResult> activityLauncher = BetterActivityResult.registerActivityForResult(this);
+    SportHorizontalAdapter adapter;
 
     //variable
     private List<SportGame> sportGames;
+    private SportGame selectedSport;
     private Event eventBeingCreated;
     // Set the fields to specify which types of place data to
     // return after the user has made a selection.
@@ -136,6 +143,7 @@ public class CreateEventActivity extends AppCompatActivity{
         setContentView(R.layout.activity_create_event);
 
         //finding views by id
+        rvSportsGames = findViewById(R.id.rvSports);
         etEventTitle = findViewById(R.id.etEventTitleCreateEvent);
         tvMaxCount = findViewById(R.id.tvTitleMaxCount);
         swtPrivacy = findViewById(R.id.swtPrivacyCreateEvent);
@@ -145,16 +153,17 @@ public class CreateEventActivity extends AppCompatActivity{
         tvTimeSelected = findViewById(R.id.tvTimeSelectedCreateEvent);
         btnSelectLocation = findViewById(R.id.btnLocationCreateEvent);
         tvLocation = findViewById(R.id.tvLocationCreateEvent);
-        npAmountOfParticipants = findViewById(R.id.npAmountofPlayersCreateEvent);
-        npSportsToBePlayed = findViewById(R.id.npSportPickerCreateEvent);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
         progressBar = findViewById(R.id.progressBarCreatingEvent);
         tbToolbar = findViewById(R.id.tbToolbar);
         switchText = findViewById(R.id.switchTextCreateEvent);
+        sbParticipantsNumber = findViewById(R.id.sbChooseParticipants);
+        tvParticipantNumber = findViewById(R.id.tvParticipantsNumberCreate);
 
         //initialising variables
         sportGames = new ArrayList<>();
         eventBeingCreated = new Event();
+        selectedSport = new SportGame();
 
         //if the places are not initialize yet, initialize them
         if (!Places.isInitialized()) {
@@ -166,8 +175,15 @@ public class CreateEventActivity extends AppCompatActivity{
         setSupportActionBar(tbToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //setting the Number Pickers
-       getSportData();
+        //setting adapter
+        adapter = new SportHorizontalAdapter(this,sportGames, selectedSport);
+        rvSportsGames.setAdapter(adapter);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvSportsGames.setLayoutManager(layoutManager);
+
+        //gettingsports
+        getSports();
        
        //listeners
         //switch changing title
@@ -245,6 +261,17 @@ public class CreateEventActivity extends AppCompatActivity{
             }
         });
 
+        //SeekBar
+        sbParticipantsNumber.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                if(fromUser){
+                    tvParticipantNumber.setText(String.format("%2.0f",value));
+                    eventBeingCreated.maxParticipants = Math.round(value);
+                }
+            }
+        });
+
 
     }
 
@@ -252,6 +279,33 @@ public class CreateEventActivity extends AppCompatActivity{
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    //get the sports from db to populate horizontal rv
+    private void getSports() {
+
+        //query to get Sport Data
+        ParseQuery<SportGame> query = ParseQuery.getQuery(SportGame.class);
+        query.findInBackground(new FindCallback<SportGame>() {
+            @Override
+            public void done(List<SportGame> sportGameList, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading the Sports!!", e);
+                    Toast.makeText(CreateEventActivity.this, "There was a problem loading the Sports", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                sportGames.addAll(sportGameList);
+
+                //notifying adapter
+                adapter.notifyDataSetChanged();
+
+                progressBar.setVisibility(View.INVISIBLE);
+
+            }
+        });
     }
 
     public void savePlace() {
@@ -294,9 +348,7 @@ public class CreateEventActivity extends AppCompatActivity{
         // get data
         eventBeingCreated.eventTitle = etEventTitle.getText().toString();
         eventBeingCreated.privacy = swtPrivacy.isChecked();
-        eventBeingCreated.maxParticipants = npAmountOfParticipants.getValue();
-        eventBeingCreated.sportGame = getPickedSport();
-        //todo set an image
+        eventBeingCreated.sportGame = adapter.getSelectedSport();
         eventBeingCreated.getFullDate();
 
         //create event
@@ -453,19 +505,6 @@ public class CreateEventActivity extends AppCompatActivity{
         });
     }
 
-    //gets the sport from the number picker
-    private SportGame getPickedSport() {
-
-        SportGame pickedGame = null;
-
-        for(int i = 0; i < sportGames.size(); i++){
-
-            if(sportGames.get(i).getSportName().equals(getSportString()[npSportsToBePlayed.getValue()])){
-                pickedGame = sportGames.get(i);
-            }
-        }
-        return pickedGame;
-    }
 
     //make sure user fill data fields that they must fill
     private boolean validateData() {
@@ -541,10 +580,7 @@ public class CreateEventActivity extends AppCompatActivity{
         }
 
         //change display textview
-        tvTimeSelected.setText("Selected Time: " + hourString + ":" + pad(minute) + " " + AM_PM);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            tvTimeSelected.setTextColor(getColor(R.color.black));
-        }
+        tvTimeSelected.setText(hourString + ":" + pad(minute) + " " + AM_PM);
     }
 
     //helper function to make an integer return with two places if is less than 10 Ex (2 --> 02) (10 --> 10)
@@ -592,72 +628,11 @@ public class CreateEventActivity extends AppCompatActivity{
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = simpleDateFormat.format(d);
         //change text view
-        tvDateSelected.setText("Selected date: " + date);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            tvDateSelected.setTextColor(getColor(R.color.black));
-        }
-    }
-
-    //set the number pickers with the appropiate data
-    private void setNumberPickers() {
-
-        //setting amount of players min and max value
-        npAmountOfParticipants.setMaxValue(50);
-        npAmountOfParticipants.setMinValue(2);
-
-        //setting sports
-        npSportsToBePlayed.setMaxValue(sportGames.size() - 1);
-        npSportsToBePlayed.setMinValue(0);
-        String[] sportVals = getSportString();
-        npSportsToBePlayed.setDisplayedValues(sportVals);
-        npSportsToBePlayed.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                int valuePicker1 = npSportsToBePlayed.getValue();
-                Log.d("picker value", sportVals[valuePicker1]);
-            }
-        });
+        tvDateSelected.setText(date);
 
     }
 
-    //gets the sport data from the database
-    private void getSportData() {
 
-        //query to get Sport Data
-        ParseQuery<SportGame> query = ParseQuery.getQuery(SportGame.class);
-        query.findInBackground(new FindCallback<SportGame>() {
-            @Override
-            public void done(List<SportGame> sportGameList, ParseException e) {
 
-                //something went wrong
-                if(e != null){
-                    Log.e(TAG,"There was a problem loading the Sports!!", e);
-                    Toast.makeText(CreateEventActivity.this, "There was a problem loading the Sports", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                sportGames.addAll(sportGameList);
-
-                //setting the number pickers
-                setNumberPickers();
-
-            }
-        });
-    }
-
-    //helper function to extract all the sport names of the SportGame objects returned from the database
-    private String[] getSportString() {
-
-        String[] sportNames = new String[sportGames.size()];
-
-        //goes throug all the sports and gets their name
-        for(int i = 0; i < sportGames.size(); i++){
-            sportNames[i] = sportGames.get(i).getSportName();
-        }
-
-        Arrays.sort(sportNames,0,sportNames.length);
-
-        return sportNames;
-    }
 }

@@ -6,7 +6,8 @@
         android:startColor = "#ED6B4E"
         android:endColor = "#F4A58A"
         android:angle = "135"
-        android:type = "linear" />
+        android:type = "linear"
+        />
 
     <corners
         android:radius="16dp"/>

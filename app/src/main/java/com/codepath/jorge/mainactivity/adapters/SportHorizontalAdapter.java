@@ -16,7 +16,6 @@ import com.codepath.jorge.mainactivity.models.SportGame;
 import com.parse.ParseFile;
 import java.util.List;
 
-//todo add an option to only see sports, not selecting or unselecting
 public class SportHorizontalAdapter extends RecyclerView.Adapter<SportHorizontalAdapter.ViewHolder> {
 
     //Declaration
