@@ -44,24 +44,25 @@ Objective of this app is to organize people so they can go play sports/games. So
  - [X] when user is typing, there is an auto filler with users starting by  that
  - [ ] User gets a suggestion of users on the same location
  - [ ] user can also search by real names
-  - [ ] User can set up location from parse location database
+  - [X] User can set up location from parse location database
  - [x] In the events user can select location
- - [ ] Events appear by location
+ - [X] Events appear by location
  - [ ] Have a setting screen to let people change their language preference
 - [ ] Allow user to change app notification setting in the setting screen 
 - [X] Allows user to edit their profile 
 - [X] Allow user to manage their event 
  - [ ] Send invitations via email or username once signed up
  - [X] User can delete event
- - [ ] User can set up location from parse location database
+ - [X] User can set up location from parse location database
  - [x] In the events user can select location
- - [ ] Events appear by location
+ - [X] Events appear by location
 
 
 **Optional Nice-to-have Stories**
 
-- [ ] Set Location (Google Maps Api)
+- [x] Set Location (Google Maps Api)
 - [ ] User can import contacts
+- [ ] User's get notifications when other users create events
 
 
 
@@ -70,22 +71,20 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Login 
 * Register - User signs up or logs into their account
    * Upon Download/Reopening of the application, the user is prompted to log in to gain access to their profile information to be properly matched with another person. 
-   * or go to the register screen, where it can create an account
-* Looking fo games screen
-  * User can see the current public games or private friends games that are going to happen in the future
+   * or go to a register screen, where it can create an account
+* Looking for games screen
+  * Timeline of events is populated by SportsConnect users own events and their friends
 * Creating game screen
-    * User can create games or events for others to see
-* Confirmation game created screen
-    * User can confirm the event that they created, and invit people to join that event 
+    * User can create games or events for others to see and add time and date, sport being played, amount of users, and location of park.
 * Messaging Screen - Chat for users to communicate (direct 1-on-1 or via group game)
    * Upon entering a group game, the user is going to be part of that group chat
-   * Also users can chat between them
+   * Also users who are invited or join can chat among themselves
 * Chat Screen
-   * Screen where user can see all chats he is part of
+   * Screen where user can see all chats he is apart of
 * Profile Screen 
-   * Allows user to upload a photo and fill in sport information that is interesting to them and others, also you can manage your friends
+   * Screen where users profile picture, bio, location, friends, sport preference, username, and amount of miles willing to travel.
 * Edit profile screen
-    * Lets the user edit their profile
+    * Lets the user edit their profile such as uploading picture, changing their location, sport preference, bio, username, and amount of miles willing to travel
 * Settings Screen
    * Lets people change language, and app notification settings.
 
@@ -96,9 +95,9 @@ Objective of this app is to organize people so they can go play sports/games. So
 * Chat/Messaging Tab
 * Home Tab
 * Profile Tab
+* Map tab
 
 Optional:
-* Google map to see games close in a map
 * Feed for people to share their best plays
 
 **Flow Navigation** (Screen to Screen)
@@ -107,18 +106,18 @@ Optional:
    * Login to register, and register to login
    * When user logs in or registers, they will be taken to the game events feed
 * Event Screen(looking for games screen)
-   * Park detail screen
-   * Chat of that game when user join, or wants to message the group
+   * Events from different users show up based on location, friends, and sport preference.
+   * Each event is populated with important information such as Date, Time, Location, Sport, and users can join the event and chat with the group.
 * Chat Screen
-   * User can go to the specific message chat that he select, either a group or a friend
+   * User can go to the specific message chat that they select, either a group or a friend
 * Profile Screen
    * User can to a screen where he can search and add friends
-   * User can go to a screen to update his profile
+   * User can go to a screen to view their profile
+* Edit Screen
+   * User can edit their profile
 * Create event screen
-   * When finish user go to confirmation screen
-* Confirm Creation Screen
-   * When user confirm, user is taken to the chat of the group
-   * User has an option to invite people to join the event
+   * User is able to create an event with details such as Location, Time, Name of event, Location, participants, sport, and if its private or public
+
 
 
 
