@@ -15,7 +15,7 @@ Objective of this app is to organize people so they can go play sports/games. So
 - **Category:** Lifestyle/ Social Media
 - **Mobile:** This app would be primarily developed for mobile, because you are going to need to stay alert for notifications of someone inviting you to a game.
 - **Story:** Creates groups for people to play at 'x' time at 'x' place, and people can say if they would be joining a game or not, in an easier way.
-- **Market:** For people that play sport, and want to play sport even if they don't have a group of friends.
+- **Market:** For people that play sports, and want to play sports even if they don't have a group of friends. Schools, professional sports teams, and local community parks
 - **Habit:** For people that play sports weekly, they can open the app at least one a week, to be able to join the game events, and if a feed is implemented, they can see videos of people playing more often during the week, and of course they may play more than once a week.
 - **Scope:** We can start scoping for creating events, and joining events, then creating a message system, and then a feed to post stuff (and if we can stretch even more a tournament system). Trying to only make it to be for sport/games.
 
