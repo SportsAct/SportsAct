@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:layout_toEndOf="@+id/cardView"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textStyle="bold"
+        android:textAppearance="@style/second_header"
         tools:text="Soccer at Kendall Soccer Park" />
 
     <TextView
@@ -25,6 +24,7 @@
         android:layout_below="@+id/tvChatNameChat"
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@+id/cardView"
+        android:textAppearance="@style/text"
         android:lines="1"
         android:text="Everybody please be there 10 min before 8, do not be late " />
 
@@ -35,6 +35,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginVertical="8dp"
         android:paddingHorizontal="16dp"
+        android:textAppearance="@style/text"
         tools:text="11:31 AM" />
 
     <View
@@ -44,7 +45,7 @@
         android:layout_alignStart="@+id/tvLastMessage"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/black" />
+        android:background="@color/soft_black" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

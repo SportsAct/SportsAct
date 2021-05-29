@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Soccer at Kendall"
-                android:textAppearance="@style/main_header" />
+                android:textAppearance="@style/second_header" />
 
 
             <TextView
@@ -157,7 +157,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/ic_calendar" />
+                    app:tint="@color/soft_grey"
+                    app:srcCompat="@drawable/ic_trophy" />
 
                 <TextView
                     android:textAppearance="@style/text"
