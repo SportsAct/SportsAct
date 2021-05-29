@@ -121,7 +121,6 @@ Optional:
 
 
 
-![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough.gif)
-![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthrough2.gif)
-![progress1](https://github.com/SportsAct/SportsAct/blob/main/walkthroughgif1.gif)
+![progress1](https://github.com/SportsAct/SportsAct/blob/main/gifforgit.gif)
+
 
