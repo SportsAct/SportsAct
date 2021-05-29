@@ -399,6 +399,7 @@ public class CreateEventActivity extends AppCompatActivity{
                 .setHint("Choose the place of the event")
                 .setTypeFilter(TypeFilter.ESTABLISHMENT)
                 .build(this);
+
         activityLauncher.launch(intent, new BetterActivityResult.OnActivityResult<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result)  {

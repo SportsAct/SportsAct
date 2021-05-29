@@ -135,6 +135,7 @@ Let me know if you're free on the weekends!" />
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:textAppearance="@style/text"
+                    android:layout_marginTop="-4dp"
                     android:text="Address" />
             </LinearLayout>
 
