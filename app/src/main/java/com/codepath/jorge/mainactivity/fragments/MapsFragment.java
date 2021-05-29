@@ -130,7 +130,7 @@ public class MapsFragment extends Fragment {
                 Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
                 //setting geoapicontext
-                if(geoApiContext == null){
+                if (geoApiContext == null) {
                     geoApiContext = new GeoApiContext.Builder()
                             .apiKey(getString(R.string.google_maps_key))
                             .build();
@@ -184,7 +184,7 @@ public class MapsFragment extends Fragment {
                     return false;
                 }
 
-                //getting estimated time
+                //getting estimated time{
                 calculateDirections(marker);
 
                 //setting the bottom sheet
@@ -244,7 +244,7 @@ public class MapsFragment extends Fragment {
         });
     }
 
-    private void calculateDirections(Marker marker){
+    private void calculateDirections(Marker marker) {
         Log.d(TAG, "calculateDirections: calculating directions.");
 
         com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
@@ -266,16 +266,24 @@ public class MapsFragment extends Fragment {
             public void onResult(DirectionsResult result) {
 
                 //set duration
-                tvTimeEstimate.setText(result.routes[0].legs[0].duration.toString());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvTimeEstimate.setText(result.routes[0].legs[0].duration.toString());
+
+                    }
+                });
 
             }
 
             @Override
             public void onFailure(Throwable e) {
-                Log.e(TAG, "calculateDirections: Failed to get directions: " + e.getMessage() );
+                Log.e(TAG, "calculateDirections: Failed to get directions: " + e.getMessage());
 
             }
         });
+
+
     }
 
     private void goToWebsite(String url) {
