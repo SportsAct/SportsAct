@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,9 +14,13 @@ import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
+import com.codepath.jorge.mainactivity.models.Requests;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import java.util.ArrayList;
@@ -36,6 +41,12 @@ public class SearchActivity extends AppCompatActivity {
     private TextView fullName;
     private ImageView profilePic;
     private TextView location;
+    //TODO: Variables for AddFriend feature
+    private Button btnAddFriend;
+    private Button btnDeclineFriend;
+    private String CURRENT_STATE;
+    private String senderUserId, receiverUserId;
+
 
 
     private void getUsers(){
@@ -90,6 +101,17 @@ public class SearchActivity extends AppCompatActivity {
 
         autoCompleteTextView = findViewById(R.id.friendSearch);
         userList = new ArrayList<>();
+
+        //TODO: Add/Decline Friend Request buttons
+        btnAddFriend = findViewById(R.id.addFriend);
+        btnDeclineFriend = findViewById(R.id.declineFriend);
+
+        //TODO: Sender is the current user screen
+        senderUserId = ParseUser.getCurrentUser().getUsername();
+        //TODO: Receiver
+
+        CURRENT_STATE = "not_friends";
+
         getUsers();
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,8 +124,33 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //TODO: Friends - Sender cannot be receiver
+        if (!senderUserId.equals(receiverUserId)) {
+            btnAddFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnAddFriend.setEnabled(false);
+                    
+                    if (CURRENT_STATE.equals("not_friends")) {
+                        SendFriendRequest();
+                    }
+                }
+            });
+
+        } else {
+            btnDeclineFriend.setVisibility((View.INVISIBLE));
+            btnAddFriend.setVisibility(View.INVISIBLE);
+        }
+
     }
 
+    //TODO: Method that sends a friend request
+    private void SendFriendRequest() {
+        ParseQuery<Requests> query = ParseQuery.getQuery(Requests.class);
+        query.include(Requests.KEY_TO_USER);
+        query.include(Requests.KEY_STATUS);
+
+    }
 }
 
 
