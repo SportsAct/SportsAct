@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/white"
+    android:background="@color/soft_black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,47 +15,102 @@
         android:layout_below="@+id/tbToolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/otherReletive"
+        android:layout_above="@+id/horizontalDivider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"/>
+
+    <View
+        android:id="@+id/horizontalDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_black"
+        android:layout_above="@+id/otherReletive"
+        android:layout_marginBottom="16dp"/>
+
 
     <RelativeLayout
         android:id="@+id/otherReletive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="0dp"
-        android:paddingTop="5dp"
-        android:paddingRight="0dp"
-        android:background="@color/middle_ground_transparent"
-        android:paddingBottom="10dp">
+        android:background="@drawable/soft_black_border"
+        android:layout_toEndOf="@+id/imageLayout"
+        android:layout_marginBottom="16dp"
+        android:layout_alignBottom="@+id/sendImageLayout"
+        android:layout_toStartOf="@+id/sendImageLayout">
 
         <EditText
             android:id="@+id/etMessage"
+            android:background="@drawable/et_rounded_rectangle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btSend"
-            android:layout_toStartOf="@+id/btSend"
             android:ems="10"
             android:hint="@string/message_hint"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/soft_grey"
             android:imeOptions="actionDone"
             android:inputType="textImeMultiLine|textMultiLine"
-            android:lines="4"
-            android:maxLines="4"/>
+            android:padding="16dp"
+            />
 
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ib_button_circle"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        >
+
+        <ImageButton
+            android:id="@+id/btSendImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00ffffff"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/send"
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_send_image_button"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sendImageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ib_button_circle_gradient"
+        android:layout_marginStart="8dp"
+        android:padding="16dp">
         <ImageButton
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="1dp"
+            android:backgroundTint="#00ffffff"
+            android:background="#00ffffff"
             android:contentDescription="@string/send"
             android:gravity="center"
-            android:backgroundTint="@color/middle_ground_transparent"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_baseline_send_24"
-            android:textSize="18sp" />
-
-
+            android:src="@drawable/ic_send"
+            android:textSize="18sp"
+            android:tint="@color/white"/>
 
     </RelativeLayout>
 

@@ -39,7 +39,8 @@
         android:layout_toEndOf="@+id/cardview"
         android:textStyle="bold"
         android:paddingBottom="4dp"
-        tools:text="Johny Lindsey" />
+        tools:text="Johny Lindsey"
+        android:textColor="@color/soft_grey"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
