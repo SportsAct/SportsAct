@@ -14,6 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:layout_toEndOf="@+id/cardView"
+        android:lines="1"
+        android:ellipsize="end"
+        android:layout_toStartOf="@+id/tvTimeChat"
         android:textAppearance="@style/second_header"
         tools:text="Soccer at Kendall Soccer Park" />
 
@@ -40,7 +43,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_below="@+id/tvLastMessage"
         android:layout_alignStart="@+id/tvLastMessage"
         android:layout_marginTop="20dp"
