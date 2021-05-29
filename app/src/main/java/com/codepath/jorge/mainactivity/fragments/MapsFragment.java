@@ -270,7 +270,6 @@ public class MapsFragment extends Fragment {
                     @Override
                     public void run() {
                         tvTimeEstimate.setText(result.routes[0].legs[0].duration.toString());
-
                     }
                 });
 
@@ -279,10 +278,8 @@ public class MapsFragment extends Fragment {
             @Override
             public void onFailure(Throwable e) {
                 Log.e(TAG, "calculateDirections: Failed to get directions: " + e.getMessage());
-
             }
         });
-
 
     }
 

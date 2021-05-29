@@ -49,8 +49,7 @@
             android:layout_marginVertical="8dp"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            app:tint="@color/grey"
-            app:srcCompat="@drawable/ic_star" />
+            app:srcCompat="@drawable/ic_trophy" />
 
         <EditText
             android:id="@+id/etEventTitleCreateEvent"
