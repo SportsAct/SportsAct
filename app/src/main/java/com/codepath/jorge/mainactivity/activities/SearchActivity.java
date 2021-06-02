@@ -1,5 +1,6 @@
 package com.codepath.jorge.mainactivity.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,41 +14,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
 import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
+import com.codepath.jorge.mainactivity.models.FriendsRequests;
 import com.codepath.jorge.mainactivity.models.Location;
-import com.codepath.jorge.mainactivity.models.Requests;
+import com.codepath.jorge.mainactivity.models.RequestStatus;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //todo add friend functionality
-//todo feels like needs something else
+//todo change overall view, show person
 public class SearchActivity extends AppCompatActivity {
 
-    List<ParseUser> userList;
 
+//declaration
+    //constants
     public static final String TAG = "SearchActivity";
-    AutoCompleteTextView autoCompleteTextView;
-    AutoCompleteUserAdapter adapter;
 
+    //widgets
     private TextView userName;
     private TextView bio;
     private TextView fullName;
     private ImageView profilePic;
     private TextView location;
-    //TODO: Variables for AddFriend feature
-    private Button btnAddFriend;
-    private Button btnDeclineFriend;
+    private Button btnFriendButton;
+    AutoCompleteTextView autoCompleteTextView;
+
+    //adapter
+    AutoCompleteUserAdapter adapter;
+
+    //variables
     private String CURRENT_STATE;
-    private String senderUserId, receiverUserId;
-
-
+    List<ParseUser> userList;
 
     private void getUsers(){
         ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
@@ -76,6 +81,9 @@ public class SearchActivity extends AppCompatActivity {
 
     private void loadUserProfile(ParseUser current) {
 
+        String senderUserId = ParseUser.getCurrentUser().getObjectId();
+        String receiverUserId = current.getObjectId();
+
         userName.setText((String) current.get("username"));
         bio.setText((String) current.get("bio"));
         fullName.setText((String) current.get("name"));
@@ -85,8 +93,153 @@ public class SearchActivity extends AppCompatActivity {
 
         Location userLocation = (Location) current.get("location");
         location.setText(userLocation.getCityName() + ", " + userLocation.getStateName());
+
+        //Friends - Sender cannot be receiver
+        if (!senderUserId.equals(receiverUserId)) {
+            //check if user is a friend
+            checkFriendStatus(current);
+
+        } else {
+            //if it is your own profile, dont show button
+            btnFriendButton.setVisibility(View.GONE);
+        }
     }
 
+    //checking friend status request
+    private void checkFriendStatus(ParseUser current) {
+
+        //set button visible
+        btnFriendButton.setVisibility(View.VISIBLE);
+
+        ParseQuery<FriendsRequests> query = ParseQuery.getQuery(FriendsRequests.class);
+        query.whereEqualTo(FriendsRequests.KEY_FROM_USER,ParseUser.getCurrentUser());
+        query.whereEqualTo(FriendsRequests.KEY_TO_USER,current);
+        query.getFirstInBackground(new GetCallback<FriendsRequests>() {
+            @Override
+            public void done(FriendsRequests object, ParseException e) {
+
+                if(e != null){
+                    btnFriendButton.setText(RequestStatus.NOT_FRIENDS);
+                    CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                    setButton(current);
+                    return;
+                }
+
+                //if found the request
+                switch (object.getStatus()){
+                    case RequestStatus.TAG_STATUS_FRIENDS:
+                      CURRENT_STATE = RequestStatus.TAG_STATUS_FRIENDS;
+                        break;
+                    case RequestStatus.TAG_STATUS_REQUEST_SENT:
+                       CURRENT_STATE = RequestStatus.TAG_STATUS_REQUEST_SENT;
+                        break;
+                    case RequestStatus.TAG_STATUS_REQUEST_RECEIVED:
+                        CURRENT_STATE = RequestStatus.TAG_STATUS_REQUEST_RECEIVED;
+                        break;
+                    default:
+                        CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                }
+
+                //set button listener
+                setButton(current);
+            }
+        });
+    }
+
+    private void setButton(ParseUser current) {
+
+        switch (CURRENT_STATE){
+            case RequestStatus.TAG_STATUS_FRIENDS:
+                btnFriendButton.setText(RequestStatus.FRIENDS);
+                btnFriendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //todo, give option to go to profile or to message
+                    }
+                });
+                break;
+            case RequestStatus.TAG_STATUS_REQUEST_SENT:
+                btnFriendButton.setText(RequestStatus.REQUEST_SENT);
+                btnFriendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //todo, give option to cancel request, view profile, message
+                    }
+                });
+                break;
+            case RequestStatus.TAG_STATUS_REQUEST_RECEIVED:
+                btnFriendButton.setText(RequestStatus.REQUEST_RECEIVED);
+                btnFriendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //accept or decline friend request
+                        MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(SearchActivity.this);
+                        alertDialogBuilder.setTitle("Friend Request!")
+                                .setMessage("Accept or Decline Friend Request.")
+                                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //todo accept friend request
+                                    }
+                                })
+                                .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //todo decline friend request
+
+                                    }
+                                });
+                        alertDialogBuilder.show();
+                    }
+                });
+                break;
+            default:
+                btnFriendButton.setText(RequestStatus.NOT_FRIENDS);
+                btnFriendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sendFriendRequest(current);
+                    }
+                });
+        }
+    }
+
+    //Method that sends a friend request
+    private void sendFriendRequest(ParseUser current) {
+
+        FriendsRequests newFriendRequest = new FriendsRequests();
+        newFriendRequest.setFromUser(ParseUser.getCurrentUser());
+        newFriendRequest.setToUser(current);
+        newFriendRequest.setStatus(RequestStatus.TAG_STATUS_REQUEST_SENT);
+        newFriendRequest.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"There was a problem sending the request!", e);
+                    Toast.makeText(SearchActivity.this, "There was a problem sending the request!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //friend request sent
+
+                //changing button to say it was sent
+                CURRENT_STATE = RequestStatus.TAG_STATUS_REQUEST_SENT;
+                setButton(current);
+
+
+                //create the other point of view of the request
+                FriendsRequests otherpointOfView = new FriendsRequests();
+                otherpointOfView.setFromUser(current);
+                otherpointOfView.setToUser(ParseUser.getCurrentUser());
+                otherpointOfView.setStatus(RequestStatus.TAG_STATUS_REQUEST_RECEIVED);
+                otherpointOfView.saveEventually();
+
+            }
+        });
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,19 +251,12 @@ public class SearchActivity extends AppCompatActivity {
         fullName = findViewById(R.id.fullName);
         profilePic = findViewById(R.id.profilePic);
         location = findViewById(R.id.tvlocation);
+        btnFriendButton = findViewById(R.id.btnFriendRequestButtonSearch);
 
         autoCompleteTextView = findViewById(R.id.friendSearch);
         userList = new ArrayList<>();
 
-        //TODO: Add/Decline Friend Request buttons
-        btnAddFriend = findViewById(R.id.addFriend);
-        btnDeclineFriend = findViewById(R.id.declineFriend);
-
-        //TODO: Sender is the current user screen
-        senderUserId = ParseUser.getCurrentUser().getUsername();
-        //TODO: Receiver
-
-        CURRENT_STATE = "not_friends";
+        CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
 
         getUsers();
 
@@ -123,32 +269,6 @@ public class SearchActivity extends AppCompatActivity {
                 loadUserProfile(current);
             }
         });
-
-        //TODO: Friends - Sender cannot be receiver
-        if (!senderUserId.equals(receiverUserId)) {
-            btnAddFriend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnAddFriend.setEnabled(false);
-                    
-                    if (CURRENT_STATE.equals("not_friends")) {
-                        SendFriendRequest();
-                    }
-                }
-            });
-
-        } else {
-            btnDeclineFriend.setVisibility((View.INVISIBLE));
-            btnAddFriend.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
-    //TODO: Method that sends a friend request
-    private void SendFriendRequest() {
-        ParseQuery<Requests> query = ParseQuery.getQuery(Requests.class);
-        query.include(Requests.KEY_TO_USER);
-        query.include(Requests.KEY_STATUS);
 
     }
 }
