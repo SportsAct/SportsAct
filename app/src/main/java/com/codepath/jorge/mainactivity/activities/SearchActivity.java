@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.codepath.jorge.mainactivity.adapters.AutoCompleteUserAdapter;
 import com.codepath.jorge.mainactivity.models.FriendsRequests;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.RequestStatus;
+import com.codepath.jorge.mainactivity.models.UserInfo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -179,13 +181,15 @@ public class SearchActivity extends AppCompatActivity {
                                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        //todo accept friend request
+                                        //accept friend request
+                                        updatingFriendRequest(current, true);
                                     }
                                 })
                                 .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        //todo decline friend request
+                                        //decline friend request
+                                        updatingFriendRequest(current, false);
 
                                     }
                                 });
@@ -204,9 +208,191 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    private void updatingFriendRequest(ParseUser current,Boolean accepting) {
+
+        ParseQuery<FriendsRequests> query = ParseQuery.getQuery(FriendsRequests.class);
+        query.whereEqualTo(FriendsRequests.KEY_FROM_USER,current);
+        query.whereEqualTo(FriendsRequests.KEY_TO_USER,ParseUser.getCurrentUser());
+        query.getFirstInBackground(new GetCallback<FriendsRequests>() {
+            @Override
+            public void done(FriendsRequests foundRequest, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"There was a problem declining the request!", e);
+                    Toast.makeText(SearchActivity.this, "There was a problem declining the request!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //checking if accepting or declining
+                if(accepting) {
+                    foundRequest.setStatus(RequestStatus.TAG_STATUS_FRIENDS);
+                    CURRENT_STATE = RequestStatus.FRIENDS;
+                }
+                else
+                    foundRequest.setStatus(RequestStatus.TAG_STATUS_NOT_FRIENDS);
+
+                    foundRequest.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        if(e != null){
+                            Log.e(TAG,"There was a problem declining the request!", e);
+                            Toast.makeText(SearchActivity.this, "There was a problem declining the request!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //setting the button
+                        if(accepting) {
+                            CURRENT_STATE = RequestStatus.FRIENDS;
+                        //todo update friend number
+                            updateFriendNumbers(current);
+                        }
+                        else {
+                            CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                        }
+
+                        setButton(current);
+
+                    }
+                });
+
+            }
+        });
+
+        ParseQuery<FriendsRequests> secondQuery = ParseQuery.getQuery(FriendsRequests.class);
+        secondQuery.whereEqualTo(FriendsRequests.KEY_TO_USER,current);
+        secondQuery.whereEqualTo(FriendsRequests.KEY_FROM_USER,ParseUser.getCurrentUser());
+        secondQuery.getFirstInBackground(new GetCallback<FriendsRequests>() {
+            @Override
+            public void done(FriendsRequests receiverRequest, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"There was a problem getting the second request!", e);
+                    Toast.makeText(SearchActivity.this, "There was a problem updating the request!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //changing sender request
+                if(accepting) {
+                    CURRENT_STATE = RequestStatus.FRIENDS;
+                    receiverRequest.setStatus(RequestStatus.TAG_STATUS_FRIENDS);
+                }
+                else {
+                    receiverRequest.setStatus(RequestStatus.TAG_STATUS_NOT_FRIENDS);
+                    CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                }
+
+                receiverRequest.saveInBackground();
+                setButton(current);
+            }
+        });
+    }
+
+    private void updateFriendNumbers(ParseUser current) {
+
+        ParseQuery<UserInfo> queryOwn = ParseQuery.getQuery(UserInfo.class);
+        queryOwn.whereEqualTo(UserInfo.KEY_USER, ParseUser.getCurrentUser());
+        queryOwn.getFirstInBackground(new GetCallback<UserInfo>() {
+            @Override
+            public void done(UserInfo currentUserInfo, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Error updating current profile!", e);
+                    Toast.makeText(SearchActivity.this, "Error updating current profile!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                currentUserInfo.setFriendsNumber1();
+                currentUserInfo.saveEventually();
+            }
+        });
+
+        ParseQuery<UserInfo> queryCurrent = ParseQuery.getQuery(UserInfo.class);
+        queryCurrent.whereEqualTo(UserInfo.KEY_USER, current);
+        queryCurrent.getFirstInBackground(new GetCallback<UserInfo>() {
+            @Override
+            public void done(UserInfo otherUserInfo, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Error updating user profile!", e);
+                    Toast.makeText(SearchActivity.this, "Error updating user profile!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                otherUserInfo.setFriendsNumber1();
+                otherUserInfo.saveEventually();
+            }
+        });
+
+
+    }
+
     //Method that sends a friend request
     private void sendFriendRequest(ParseUser current) {
 
+        //check to see if there is already a request from this two users
+        ParseQuery<FriendsRequests> query = ParseQuery.getQuery(FriendsRequests.class);
+        query.whereEqualTo(FriendsRequests.KEY_FROM_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(FriendsRequests.KEY_TO_USER, current);
+        query.getFirstInBackground(new GetCallback<FriendsRequests>() {
+            @Override
+            public void done(FriendsRequests foundRequest, ParseException e) {
+
+                if(e != null){
+                    Log.e(TAG,"Didnt find the request, creating a new one!", e);
+                    sendRequest(current);
+                    return;
+                }
+
+                //if it find it, update it
+                foundRequest.setStatus(RequestStatus.TAG_STATUS_REQUEST_SENT);
+                foundRequest.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        if(e != null){
+                            Log.e(TAG,"Error on found First!", e);
+                            Toast.makeText(SearchActivity.this, "An error has occurred!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //changing button to say it was sent
+                        CURRENT_STATE = RequestStatus.TAG_STATUS_REQUEST_SENT;
+                        setButton(current);
+
+                        //change the other one
+                        ParseQuery<FriendsRequests> otherQuery = ParseQuery.getQuery(FriendsRequests.class);
+                        otherQuery.whereEqualTo(FriendsRequests.KEY_TO_USER, ParseUser.getCurrentUser());
+                        otherQuery.whereEqualTo(FriendsRequests.KEY_FROM_USER, current);
+                        otherQuery.getFirstInBackground(new GetCallback<FriendsRequests>() {
+                            @Override
+                            public void done(FriendsRequests otherSide, ParseException e) {
+
+                                if(e != null){
+                                    Log.e(TAG,"Error on otherQuery!", e);
+                                    Toast.makeText(SearchActivity.this, "An error has occurred!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                //changing the other person query
+                                otherSide.setStatus(RequestStatus.TAG_STATUS_REQUEST_RECEIVED);
+                                otherSide.saveInBackground();
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+
+
+
+
+    }
+
+    private void sendRequest(ParseUser current) {
         FriendsRequests newFriendRequest = new FriendsRequests();
         newFriendRequest.setFromUser(ParseUser.getCurrentUser());
         newFriendRequest.setToUser(current);
@@ -237,8 +423,6 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     @Override
