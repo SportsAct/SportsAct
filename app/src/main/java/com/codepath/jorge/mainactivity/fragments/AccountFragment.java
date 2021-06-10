@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.activities.EditProfile;
+import com.codepath.jorge.mainactivity.activities.FriendsActivity;
 import com.codepath.jorge.mainactivity.adapters.SportHorizontalAdapter;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
+import com.codepath.jorge.mainactivity.models.UserInfo;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.codepath.jorge.mainactivity.R;
@@ -39,12 +44,13 @@ public class AccountFragment extends Fragment {
     private RecyclerView imagesSports;
     private ImageView profilePic;
     private Button editText;
-    private TextView userNameId;
+   // private TextView userNameId;
     private TextView bioTextId;
     private TextView realNameId;
     private TextView tvLocation;
     private TextView tvWillingToTravel;
     private TextView friendCount;
+    private LinearLayout llFriendButton;
 
     private SportHorizontalAdapter adapter;
     List<SportGame> sportList;
@@ -90,13 +96,14 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profilePic = view.findViewById(R.id.profilePic);
         editText = view.findViewById(R.id.editText);
-        userNameId = view.findViewById(R.id.userNameId);
+       // userNameId = view.findViewById(R.id.userNameId);
         bioTextId = view.findViewById(R.id.bioTextId);
         realNameId = view.findViewById(R.id.realNameId);
         imagesSports = view.findViewById(R.id.rvSports);
         tvLocation = view.findViewById(R.id.tvLocationAccountFragment);
         tvWillingToTravel = view.findViewById(R.id.tvWillingToTravel);
         friendCount = view.findViewById(R.id.friendCount);
+        llFriendButton = view.findViewById(R.id.llFriendLayoutAccount);
 
         //initializing arrays
         sportList = new ArrayList<>();
@@ -114,11 +121,22 @@ public class AccountFragment extends Fragment {
 
         loadUserData();
 
-        // CLICK LISTENER TO
+        // CLICK LISTENERS
+
+        //edit profile button
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), EditProfile.class);
+                getActivity().startActivity(i);
+            }
+        });
+
+        //friends layout
+        llFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), FriendsActivity.class);
                 getActivity().startActivity(i);
             }
         });
@@ -127,12 +145,13 @@ public class AccountFragment extends Fragment {
     private void loadUserData() {
 
         //Gets the username, real name, and bio from database
-        userNameId.setText((String) currentUser.get("username"));
+        //userNameId.setText((String) currentUser.get("username"));
         bioTextId.setText((String) currentUser.get("bio"));
         realNameId.setText((String) currentUser.get("name"));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(currentUser.getUsername());
         tvWillingToTravel.setText("Willing to travel " + (int) currentUser.get("travel_miles") + " miles.");
-        friendCount.setText(Integer.toString((Integer) currentUser.get("friends_number")));
 
+        getFriendNumber();
 
         ParseFile profilePicture = (ParseFile) currentUser.get("profilePicture");
         Glide.with(getActivity()).load(profilePicture.getUrl()).placeholder(R.drawable.empty_profile).into(profilePic);
@@ -145,6 +164,26 @@ public class AccountFragment extends Fragment {
         else {
             tvLocation.setText("Not Location Selected");
         }
+    }
+
+    private void getFriendNumber() {
+
+        ParseQuery<UserInfo> query = ParseQuery.getQuery(UserInfo.class);
+        query.whereEqualTo(UserInfo.KEY_USER, ParseUser.getCurrentUser());
+        query.getFirstInBackground(new GetCallback<UserInfo>() {
+            @Override
+            public void done(UserInfo object, ParseException e) {
+
+                //something went wrong
+                if(e != null){
+                    Log.e(TAG,"There was a problem loading your friends!", e);
+                    return;
+                }
+
+                friendCount.setText(Integer.toString(object.getFriendNumber()));
+
+            }
+        });
     }
 
     private void getSportPreferenceOfUser() {

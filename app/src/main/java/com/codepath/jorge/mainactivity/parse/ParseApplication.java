@@ -5,12 +5,14 @@ import android.app.Application;
 import com.codepath.jorge.mainactivity.models.Chat;
 import com.codepath.jorge.mainactivity.models.ChatUserJoin;
 import com.codepath.jorge.mainactivity.models.EventParticipant;
+import com.codepath.jorge.mainactivity.models.FriendsRequests;
 import com.codepath.jorge.mainactivity.models.Location;
 import com.codepath.jorge.mainactivity.models.Message;
 import com.codepath.jorge.mainactivity.models.PlaceEvent;
 import com.codepath.jorge.mainactivity.models.SportEvent;
 import com.codepath.jorge.mainactivity.models.SportGame;
 import com.codepath.jorge.mainactivity.models.SportPreference;
+import com.codepath.jorge.mainactivity.models.UserInfo;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -31,6 +33,8 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Chat.class);
         ParseObject.registerSubclass(ChatUserJoin.class);
         ParseObject.registerSubclass(SportPreference.class);
+        ParseObject.registerSubclass(FriendsRequests.class);
+        ParseObject.registerSubclass(UserInfo.class);
 
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax

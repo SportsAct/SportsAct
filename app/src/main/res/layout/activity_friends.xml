@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_black"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tbToolbar"
+        layout="@layout/toolbar" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:orientation="vertical"
+   >
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/soft_black_border">
+
+        <ImageView
+            android:id="@+id/dmy_iv_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginVertical="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/etSearchForFriendsFriendsScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/dmy_iv_icon"
+            android:layout_marginVertical="8dp"
+            android:hint="Search for friends..."
+            android:inputType="textShortMessage"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:textColor="@color/soft_grey"
+            android:outlineProvider="none"
+            app:backgroundTint="@color/soft_black"
+            android:textColorHint="@color/grey"
+            android:layout_marginHorizontal="8dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_add_user" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/second_header"
+            android:text="Friend Requests:" />
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNoFriendRequestFriendScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/text_cursive"
+        android:text="You don't have friend requests at the moment." />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFriendRequestsFriendScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_account_empty" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/second_header"
+            android:text="All Friends:" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNoFriendTextFriendsScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:textAppearance="@style/text_cursive"
+        android:text="You don't have any friends in the app yet. This app is better with a group of friends." />
+
+    <android.widget.Button
+        android:id="@+id/btnFindFriends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        android:text="Find Some Friends" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAllFriendsFriendScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        />
+
+</LinearLayout>
+</ScrollView>
+    </LinearLayout>

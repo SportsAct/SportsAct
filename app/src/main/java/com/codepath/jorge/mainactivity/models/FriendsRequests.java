@@ -5,12 +5,13 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.PointerEncoder;
 
-@ParseClassName("Requests")
-public class Requests extends ParseObject {
+@ParseClassName("FriendsRequests")
+public class FriendsRequests extends ParseObject {
 
-    private static final String KEY_FROM_USER = "fromUser";
+    public static final String KEY_FROM_USER = "fromUser";
     public static final String KEY_TO_USER = "toUser";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     public String getId(){return getObjectId();}
 
@@ -28,8 +29,7 @@ public class Requests extends ParseObject {
         put(KEY_TO_USER,parseUser);
     }
 
-    public ParseUser getStatus(){return (ParseUser) getParseObject(KEY_STATUS);}
-
-    public void setStatus(ParseUser toUser){put(KEY_STATUS,toUser);}
+    public String getStatus(){return getString(KEY_STATUS);}
+    public void setStatus(String status){put(KEY_STATUS,status);}
 
 }

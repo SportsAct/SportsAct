@@ -15,14 +15,6 @@
 
 
 
-            <TextView
-                android:id="@+id/userNameId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/bold_text"
-                tools:text="erikfors"
-                android:layout_gravity="center"/>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,9 +42,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="4dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="8dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -63,18 +55,18 @@
 
 
                 <LinearLayout
+                    android:id="@+id/llFriendLayoutAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/custom_ripple"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/friendCount"
-                        android:textColor="@color/white"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
+                        android:textAppearance="@style/second_header"
                         android:text="13"/>
 
                     <TextView
@@ -95,10 +87,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/postCount"
-                        android:textColor="@color/white"
+                        android:textAppearance="@style/second_header"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
                         android:text="13"/>
 
                     <TextView
@@ -142,11 +132,10 @@
             android:id="@+id/realNameId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="8dp"
             android:textAppearance="@style/main_header"
             tools:text="Erik Fors" />
-
-
-
 
 
         <LinearLayout
