@@ -2,6 +2,8 @@ package com.codepath.jorge.mainactivity.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import com.codepath.jorge.mainactivity.R;
 
@@ -24,6 +26,7 @@ public class LoadingDialog {
         builder.setCancelable(false);
 
         alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
     }
 

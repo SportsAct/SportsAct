@@ -29,7 +29,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
 
     //widgets
     private RecyclerView rvEventParticipants;
-    LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
     private TextView tvEventTitle;
     private TextView tvCount;
     private Toolbar tbToolbar;
@@ -72,7 +72,7 @@ public class EventParticipantsActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         
         //setting adapter
-        adapter = new UserListAdapter(this,userList);
+        adapter = new UserListAdapter(this,userList,1);
         rvEventParticipants.setAdapter(adapter);
         rvEventParticipants.setLayoutManager(new LinearLayoutManager(this));
 

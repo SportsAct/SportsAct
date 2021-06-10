@@ -11,6 +11,7 @@ public class FriendsRequests extends ParseObject {
     public static final String KEY_FROM_USER = "fromUser";
     public static final String KEY_TO_USER = "toUser";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     public String getId(){return getObjectId();}
 
