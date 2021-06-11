@@ -1,6 +1,7 @@
 package com.codepath.jorge.mainactivity.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.jorge.mainactivity.R;
+import com.codepath.jorge.mainactivity.activities.SearchActivity;
+import com.codepath.jorge.mainactivity.models.FriendsRequests;
+import com.codepath.jorge.mainactivity.models.RequestStatus;
+import com.codepath.jorge.mainactivity.models.UserInfo;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import java.util.List;
 
 public class UserListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -147,10 +160,17 @@ public class UserListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class FriendRequestViewHolder extends RecyclerView.ViewHolder {
 
+        //declaration
+        //widgets
         private TextView tvName, tvUserName;
         private ImageView ivProfilePic;
         private Button btnAcceptButton;
         private ImageButton btnDeclineRequest;
+        RelativeLayout viewOverlay;
+        ImageView ivCheckMark;
+
+        //variables
+        String CURRENT_STATE;
 
         public FriendRequestViewHolder(View v) {
             super(v);
@@ -159,6 +179,10 @@ public class UserListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
             ivProfilePic = v.findViewById(R.id.ivParticipantUserItemRequest);
             btnAcceptButton = v.findViewById(R.id.btnAcceptFriendRequest);
             btnDeclineRequest = v.findViewById(R.id.btnCancelFriendRequest);
+            viewOverlay = v.findViewById(R.id.unit_overlay);
+            ivCheckMark = v.findViewById(R.id.ivCheckMarkFriendAdded);
+
+            CURRENT_STATE = RequestStatus.TAG_STATUS_REQUEST_RECEIVED;
         }
 
        public void bind(ParseUser user){
@@ -184,7 +208,7 @@ public class UserListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
            btnAcceptButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   //todo implement accept
+                   updatingFriendRequest(user,true);
                }
            });
 
@@ -192,10 +216,167 @@ public class UserListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
            btnDeclineRequest.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   //todo implement decline
+                   updatingFriendRequest(user,false);
                }
            });
 
+           ((Animatable) ivCheckMark.getDrawable()).start();
+
        }
+
+        private void updatingFriendRequest(ParseUser current,Boolean accepting) {
+
+            ParseQuery<FriendsRequests> query = ParseQuery.getQuery(FriendsRequests.class);
+            query.whereEqualTo(FriendsRequests.KEY_FROM_USER,current);
+            query.whereEqualTo(FriendsRequests.KEY_TO_USER,ParseUser.getCurrentUser());
+            query.getFirstInBackground(new GetCallback<FriendsRequests>() {
+                @Override
+                public void done(FriendsRequests foundRequest, ParseException e) {
+
+                    if(e != null){
+                        Log.e(TAG,"There was a problem declining the request!", e);
+                        Toast.makeText(context, "There was a problem declining the request!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    //checking if accepting or declining
+                    if(accepting) {
+                        foundRequest.setStatus(RequestStatus.TAG_STATUS_FRIENDS);
+                        CURRENT_STATE = RequestStatus.FRIENDS;
+                    }
+                    else
+                        foundRequest.setStatus(RequestStatus.TAG_STATUS_NOT_FRIENDS);
+
+                    foundRequest.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            if(e != null){
+                                Log.e(TAG,"There was a problem declining the request!", e);
+                                Toast.makeText(context, "There was a problem declining the request!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            //setting the button
+                            if(accepting) {
+                                CURRENT_STATE = RequestStatus.FRIENDS;
+                                //update friend number
+                                updateFriendNumbers(current);
+                            }
+                            else {
+                                CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                            }
+
+                            if(accepting) {
+                                changeButtonAcept();
+                            }
+                            else {
+                                removeFromRecycler();
+                            }
+
+                        }
+                    });
+
+                }
+            });
+
+            ParseQuery<FriendsRequests> secondQuery = ParseQuery.getQuery(FriendsRequests.class);
+            secondQuery.whereEqualTo(FriendsRequests.KEY_TO_USER,current);
+            secondQuery.whereEqualTo(FriendsRequests.KEY_FROM_USER,ParseUser.getCurrentUser());
+            secondQuery.getFirstInBackground(new GetCallback<FriendsRequests>() {
+                @Override
+                public void done(FriendsRequests receiverRequest, ParseException e) {
+
+                    if(e != null){
+                        Log.e(TAG,"There was a problem getting the second request!", e);
+                        Toast.makeText(context, "There was a problem updating the request!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    //changing sender request
+                    if(accepting) {
+                        CURRENT_STATE = RequestStatus.FRIENDS;
+                        receiverRequest.setStatus(RequestStatus.TAG_STATUS_FRIENDS);
+                    }
+                    else {
+                        receiverRequest.setStatus(RequestStatus.TAG_STATUS_NOT_FRIENDS);
+                        CURRENT_STATE = RequestStatus.TAG_STATUS_NOT_FRIENDS;
+                    }
+
+                    receiverRequest.saveInBackground();
+                    //todo update button setButton(current);
+                }
+            });
+        }
+
+        private void removeFromRecycler() {
+            userList.remove(getAdapterPosition());
+            notifyDataSetChanged();
+        }
+
+        private void changeButtonAcept() {
+
+            int shortAnimationDuration;
+            shortAnimationDuration = context.getResources().getInteger(
+                    android.R.integer.config_longAnimTime
+
+            );
+
+            //making view visible
+            viewOverlay.setAlpha(0f);
+            viewOverlay.setVisibility(View.VISIBLE);
+
+            // Animate the content view to 100% opacity, and clear any animation
+            // listener set on the view.
+            viewOverlay.animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration)
+                    .setListener(null);
+
+            //animate
+            ((Animatable) ivCheckMark.getDrawable()).start();
+
+        }
+
+        private void updateFriendNumbers(ParseUser current) {
+
+            ParseQuery<UserInfo> queryOwn = ParseQuery.getQuery(UserInfo.class);
+            queryOwn.whereEqualTo(UserInfo.KEY_USER, ParseUser.getCurrentUser());
+            queryOwn.getFirstInBackground(new GetCallback<UserInfo>() {
+                @Override
+                public void done(UserInfo currentUserInfo, ParseException e) {
+
+                    if(e != null){
+                        Log.e(TAG,"Error updating current profile!", e);
+                        Toast.makeText(context, "Error updating current profile!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    currentUserInfo.setFriendsNumber1();
+                    currentUserInfo.saveEventually();
+                }
+            });
+
+            ParseQuery<UserInfo> queryCurrent = ParseQuery.getQuery(UserInfo.class);
+            queryCurrent.whereEqualTo(UserInfo.KEY_USER, current);
+            queryCurrent.getFirstInBackground(new GetCallback<UserInfo>() {
+                @Override
+                public void done(UserInfo otherUserInfo, ParseException e) {
+
+                    if(e != null){
+                        Log.e(TAG,"Error updating user profile!", e);
+                        Toast.makeText(context, "Error updating user profile!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    otherUserInfo.setFriendsNumber1();
+                    otherUserInfo.saveEventually();
+                }
+            });
+
+
+        }
     }
+
+
 }

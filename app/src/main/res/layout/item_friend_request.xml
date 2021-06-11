@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/soft_black_border"
-    android:padding="8dp"
     android:layout_marginBottom="8dp"
-    android:orientation="horizontal">
+    android:background="@drawable/soft_black_border"
+   >
+
+
+    <LinearLayout
+        android:id="@+id/dmyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -93,4 +101,37 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/unit_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignLeft="@+id/dmyLayout"
+        android:layout_alignRight="@+id/dmyLayout"
+        android:layout_alignTop="@+id/dmyLayout"
+        android:layout_alignBottom="@+id/dmyLayout"
+        android:background="@drawable/gradiant_border" >
+
+        <TextView
+            android:id="@+id/dmyTvFriendAdded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/main_header"
+            android:text="Friend Added!"/>
+
+        <ImageView
+            android:id="@+id/ivCheckMarkFriendAdded"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dmyTvFriendAdded"
+            android:visibility="visible"
+            app:srcCompat="@drawable/animated_check" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

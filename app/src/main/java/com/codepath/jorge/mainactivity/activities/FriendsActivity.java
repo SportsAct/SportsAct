@@ -144,6 +144,11 @@ public class FriendsActivity extends AppCompatActivity {
                 btnFindMoreFriends.setVisibility(View.GONE);
                 tvNoFriendsYet.setVisibility(View.GONE);
 
+                if(friendsList.size() == 0){
+                    btnFindMoreFriends.setVisibility(View.VISIBLE);
+                    tvNoFriendsYet.setVisibility(View.VISIBLE);
+                }
+
                 //hide bar
                 loadingDialog.dismissDialog();
 
@@ -180,6 +185,10 @@ public class FriendsActivity extends AppCompatActivity {
                 friendsRequestAdapter.notifyDataSetChanged();
 
                 tvNoFriendRequests.setVisibility(View.GONE);
+
+                if(userRequestList.size() == 0){
+                    tvNoFriendRequests.setVisibility(View.VISIBLE);
+                }
 
                 //hide bar
                 loadingDialog.dismissDialog();
